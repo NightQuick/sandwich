@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="style.css">
+    <title>Burgers</title>
+</head>
+<body>
+    <header>
+        <h1 id="heading">
+            СДЕЛАЙТЕ ЗАКАЗ НАПРЯМУЮ ИЗ РЕСТОРАНА
+        </h1>
+    </header>
+    <div id="main-sheet">
+        <div id="active-panel">
+            <table id="menu-swicher">
+                <tr><td class="menu-button" id="menu-swicher-pancakes-button">Блины</td></tr>
+                <tr><td class="menu-button" id="menu-swicher-shawarma-button">Шаурма</td></tr>
+                <tr><td class="menu-button" id="menu-swicher-sandwich-button">Сендвичи</td></tr>
+                <tr><td class="menu-button" id="menu-swicher-burgers-button">Бургеры</td></tr>
+                <tr><td class="menu-button" id="menu-swicher-chicken-potato-button">Курица & Картофель</td></tr>
+                <tr><td class="menu-button" id="menu-swicher-tortilia-salads-button">Тортилья & Салаты</td></tr>
+                <tr><td class="menu-button" id="menu-swicher-drinks-desserts-button">Напитки & Десерты</td></tr>
+            </table>
+            <div id="basket">
+                <div id="basket-description">
+                    <div id="basket-image">
+                        <img id="basket-logo" src="i/shopping-basket.svg" alt="">
+                        <div id="basket-shadow"></div>
+                        <h1 id="basket-name">Корзина</h1>
+                    </div>
+                    
+                   
+                </div>
+                <table id="basket-products">
+                    <thead>
+                        <tr id="basket-products-head">
+                            <td class="basket-products-columns" id="name">Название</td>
+                            <td class="basket-products-columns" id="count">Количество</td>
+                        </tr>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </thead>
+                </table>
+                <div id="order-information">
+                    <h1 id="order-status">Итого: 0 руб.</h1>
+                    <button id="place-an-order"> ОФОРМИТЬ ЗАКАЗ</button>
+                </div>
+                
+            </div>
+        </div>
+        <div id="menu">
+            <div class="position-card">
+                <img class="logo" src="i/markets/subway_logo.png" alt="subway">
+                <img class="product-image" src="i/sandwiches/ovoshnoy.png" alt="">
+                <h1 class="product-name">Овощной</h1>
+                <div class="product-ingridients">
+                    <a href="">Соус и овощи на выбор</a>
+                </div>
+                <h1 class="product-price">Цена: 110 руб.</h1>
+                <h1 class="counter-description">КОЛИЧЕСТВО</h1>
+                
+                <div class="product-counter">
+                    <span class="minus-button counter-buttons">-</span>
+                    <input name="counter" class="product-counter-input" type="number" inputmode="numeric">
+                    <span class="minus-button counter-buttons">+</span>
+                </div>
+                
+                <button class="product-add-to-basket">В КОРЗИНУ</button>
+            </div>
+        </div>
+    </div>
+    
+
+    
+
+</body>
+</html>
