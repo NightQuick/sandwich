@@ -1,3 +1,4 @@
+import { counter } from "./counter.js";
 import { addProduct } from "./basket.js";
 
 const settings = {
@@ -45,7 +46,7 @@ let swicherHandler = (event) => {
 //Функция открытия окна
 export function openModal(data) {
   cardData = data;
-  
+
   //Изменение вида хранения компонентов, для хранения их названий
   for (let component in cardData.components) {
     if (typeof cardData.components[component] == "string") {
@@ -56,7 +57,7 @@ export function openModal(data) {
     }
   }
   currentKey = "size";
-  
+
   //отображение окна
   const modal = document.getElementById("modal");
   modal.style.display = "flex";
@@ -150,24 +151,7 @@ function renderModalready() {
   const counterDescription = document.createElement("span");
   counterDescription.id = "modal-counter-description";
   counterDescription.textContent = "КОЛИЧЕСТВО";
-
-  const counterWrapper = document.createElement("div");
-  const buttonMinus = document.createElement("button");
-  buttonMinus.className = "minus-button counter-buttons";
-  const buttonMinusContent = document.createElement("h1");
-  buttonMinusContent.className = "counter-buttons-text";
-  buttonMinusContent.textContent = "-";
-  const input = document.createElement("input");
-  input.name = "counter";
-  input.className = "product-counter-input";
-  input.type = "number";
-  input.inputmode = "numeric";
-  input.value = "1";
-  const buttonPlus = document.createElement("button");
-  buttonPlus.className = "minus-button counter-buttons";
-  const buttonPlusContent = document.createElement("h1");
-  buttonPlusContent.className = "counter-buttons-text";
-  buttonPlusContent.textContent = "+";
+  const counterElem = counter();
 
   const priceWrapper = document.createElement("div");
   priceWrapper.textContent = "Итого: " + cardData.price + " руб.";
@@ -181,15 +165,8 @@ function renderModalready() {
   }
   document.getElementById("finish").style.backgroundColor = "#FFC000";
 
-  buttonMinus.addEventListener("click", () => {
-    if (input.value > 1) {
-      input.value--;
-    }
-  });
-  buttonPlus.addEventListener("click", () => {
-    input.value++;
-  });
   toBasket.addEventListener("click", () => {
+    const input = counterElem.querySelector(".product-counter-input");
     addProduct(cardData.name, input.value, cardData.price);
     closeModal();
   });
@@ -202,14 +179,8 @@ function renderModalready() {
   modalProductContent.appendChild(name);
   modalReady.appendChild(modalProductContent);
 
-  buttonMinus.appendChild(buttonMinusContent);
-  buttonPlus.appendChild(buttonPlusContent);
-
-  counterWrapper.appendChild(buttonMinus);
-  counterWrapper.appendChild(input);
-  counterWrapper.appendChild(buttonPlus);
   footer.appendChild(counterDescription);
-  footer.appendChild(counterWrapper);
+  footer.appendChild(counterElem);
 
   priceWrapper.appendChild(toBasket);
   footer.appendChild(priceWrapper);

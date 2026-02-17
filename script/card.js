@@ -1,4 +1,5 @@
 import { addProduct } from "./basket.js";
+import { counter } from "./counter.js";
 import { openModal } from "./modal.js";
 
 //Карточки товаров(не ингридиентов модального окна)
@@ -61,31 +62,28 @@ export class Card {
     counterDescription.className = "counter-description";
     counterDescription.innerText = "КОЛИЧЕСТВО";
 
-    const counter = document.createElement("div");
-    counter.className = "product-counter";
+    const counterElem = counter();
 
-    //кнопки счетчика
-    const minusButton = document.createElement("button");
-    minusButton.className = "minus-button counter-buttons";
+    // const minusButton = document.createElement("button");
+    // minusButton.className = "minus-button counter-buttons";
 
-    const minusButtonText = document.createElement("h1");
-    minusButtonText.innerText = "-";
-    minusButtonText.className = "counter-buttons-text";
+    // const minusButtonText = document.createElement("h1");
+    // minusButtonText.innerText = "-";
+    // minusButtonText.className = "counter-buttons-text";
 
-    //поле счетчика
-    const counterInput = document.createElement("input");
-    counterInput.name = "counter";
-    counterInput.className = "product-counter-input";
-    counterInput.type = "number";
-    counterInput.inputmode = "numeric";
-    counterInput.value = "1";
+    // const counterInput = document.createElement("input");
+    // counterInput.name = "counter";
+    // counterInput.className = "product-counter-input";
+    // counterInput.type = "number";
+    // counterInput.inputmode = "numeric";
+    // counterInput.value = "1";
 
-    const plusButton = document.createElement("button");
-    plusButton.className = "plus-button counter-buttons";
+    // const plusButton = document.createElement("button");
+    // plusButton.className = "plus-button counter-buttons";
 
-    const plusButtonText = document.createElement("h1");
-    plusButtonText.innerText = "+";
-    plusButtonText.className = "counter-buttons-text";
+    // const plusButtonText = document.createElement("h1");
+    // plusButtonText.innerText = "+";
+    // plusButtonText.className = "counter-buttons-text";
 
     //кнопка добавления товара в корзину
     const addToBasket = document.createElement("button");
@@ -105,27 +103,24 @@ export class Card {
     card.appendChild(price);
     card.appendChild(counterDescription);
 
-    minusButton.appendChild(minusButtonText);
-    plusButton.appendChild(plusButtonText);
-    counter.appendChild(minusButton);
-    counter.appendChild(counterInput);
-    counter.appendChild(plusButton);
+    // minusButton.appendChild(minusButtonText);
+    // plusButton.appendChild(plusButtonText);
+    // counter.appendChild(minusButton);
+    // counter.appendChild(counterInput);
+    // counter.appendChild(plusButton);
 
-    card.appendChild(counter);
+    card.appendChild(counterElem);
     card.appendChild(addToBasket);
 
-    minusButton.addEventListener("click", () => {
-      if (counterInput.value > 1) {
-        counterInput.value -= 1;
-      }
-    });
-    plusButton.addEventListener("click", () => {
-      counterInput.value = +counterInput.value + 1;
-    });
+    // minusButton.addEventListener("click", () => {
+    //   if (counterInput.value > 1) {
+    //     counterInput.value -= 1;
+    //   }
+    // });
+    // plusButton.addEventListener("click", () => {
+    //   counterInput.value = +counterInput.value + 1;
+    // });
 
-    counterInput.addEventListener("input", () => {
-      counterInput.value = Math.abs(counterInput.value);
-    });
     if (this.data["components"]) {
       ingridient.addEventListener("click", () => {
         openModal(this.data);
@@ -136,6 +131,7 @@ export class Card {
     }
 
     addToBasket.addEventListener("click", () => {
+      const counterInput = counterElem.querySelector(".product-counter-input");
       if (counterInput.value == 0) {
         counterInput.value = 1;
       }
