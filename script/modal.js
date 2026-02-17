@@ -90,9 +90,9 @@ async function renderModal(type, data = cardData) {
     document.getElementById("modal-menu-wrapper").appendChild(menu);
 
     await initialize();
-    console.log(type);
-    console.log(data);
-    console.log(data.price);
+    // console.log(type);
+    // console.log(data);
+    // console.log(data.price);
     const header = document.getElementById("header-text");
     header.textContent = type.title;
     const footer = document.getElementById("modal-footer");
@@ -270,7 +270,7 @@ async function loadData() {
     }
   }
 
-  console.log(data);
+  // console.log(data);
   return data;
 }
 class IngridientCard {
@@ -304,7 +304,7 @@ class IngridientCard {
     if (this.data.choosed) {
       card.style.backgroundColor = "#FDD55C";
       card.style.boxShadow = "0px 0px 5px rgba(0, 0, 0, 0.5)";
-      console.log(this.data);
+      // console.log(this.data);
     }
     if (!this.data.choosed) {
       card.addEventListener("click", () => {

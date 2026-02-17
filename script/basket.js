@@ -1,7 +1,4 @@
 export function addProduct(name, value, price) {
-  //   alert(
-  //     `Добавляем в корзину:\n Название:${name}\n Количество:${value},Цена:${price}`,
-  //   );
   //Создние строки с продкутом, добавляемым в корзину
   const basket = document.getElementById("basket-content");
   const template = document.getElementById("basket-content-template");
@@ -17,4 +14,7 @@ export function addProduct(name, value, price) {
   currentPrice += value * price;
   basketPrice.dataset.price = currentPrice;
   basketPrice.textContent = `Итого: ${currentPrice} руб.`;
+
+  const orderButton = document.getElementById("place-an-order");
+  orderButton.style.backgroundColor = "#FFC000";
 }

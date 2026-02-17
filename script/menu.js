@@ -35,7 +35,7 @@ export class Menu {
       this.data.push(cardElement);
     }
 
-    console.log(data);
+    // console.log(data);
     return data;
   }
 
