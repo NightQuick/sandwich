@@ -112,6 +112,7 @@ header {
    border-collapse: collapse;
    margin-left: 3px;
    margin-right: 3px;
+   color: #545045;
 }
 
 #basket-products-head {
@@ -131,7 +132,9 @@ header {
    float: right;
    margin-right: 0px;
 }
-
+.basket-products-columns-count{
+   text-align: end;
+}
 #order-information {
    display: grid;
    place-items: center;
@@ -164,6 +167,7 @@ header {
    display: flex;
    flex-wrap: wrap;
    justify-content: center;
+   width: 100%;
 }
 
 /* Карточка товара  */
@@ -171,19 +175,28 @@ header {
    margin: 20px;
    display: grid;
    place-items: center;
-   width: fit-content;
+   width: calc(100%/4);
    height: fit-content;
 }
 
 .logo {
-   width: 100%;
+   width: 50%;
 }
 
-.product-image {
+.product-image-wrapper{
+   display: flex;
+  justify-content: center;
+  align-items: center;
+   background-color: white;
    width: 80%;
+   aspect-ratio: 1/1;
    border-radius: 1000px;
    border: 15px solid #FFC000;
    filter: drop-shadow(0px 0px 3px rgba(0, 0, 0, 0.3));
+   overflow: hidden;
+}
+.product-image {
+   width: 100%;
 }
 
 .product-name {
@@ -192,6 +205,9 @@ header {
 }
 
 .product-ingridients {
+   text-decoration-line:underline ;
+   cursor: pointer;
+   color: #0000EE;
    text-align: center;
    height: 60px;
    width: 100%;
@@ -348,16 +364,23 @@ input[type="number"]::-webkit-inner-spin-button {
 
 /* Таблица последовательности выбора ингридиентов */
 #ingridients-swicher{
+   border-collapse: separate;
    background-color: white;
    color: #454545;
    width: 95%;
-   border-radius: 5px;
+   
    font-size: 20px;
    text-align: center;
-   padding: 10px;
+   padding: 0px;
    margin: 10px;
    margin-left: 2.5%;
    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+   border-spacing: 0;
+   border-radius: 5px;
+   overflow: hidden;
+}
+.ingridients{
+   padding: 10px;
 }
 
 /* Кнопки для переходов между этапами */
@@ -433,15 +456,18 @@ input[type="number"]::-webkit-inner-spin-button {
 
 /* Карточка ингридиентов */
 .modal-card{
-   margin: 20px;
-   padding-top: 20px;
-   width: calc(100%/5);
-   height: fit-content;
+   display: flex;
+   flex-direction: column;
+   text-align: center; /* Важно для центрирования inline-элементов */
+    margin: 20px;
+    padding-top: 20px;
+    width: calc(100%/5);
+    height: fit-content;
+    border-radius: 5px;
+    box-shadow: none;
+    align-items: center; 
    /* background-color: #FDD55C; */
-   background-color: none;
-   border-radius: 5px;
    /* box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3); */
-   box-shadow: none;
 }
 
 .modal-card-img{
@@ -468,18 +494,20 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .modal-card-description{
-   padding: 5px;
-   padding-bottom: 10px;
-   margin: auto;
-   text-align: center;
-   width: 80%;
-   color: #454545;
-   font-size: 25px;
-   font-weight: 100;
-   border-bottom: #454545 solid 2px;
+   /* display: inline-block;  */
+    max-width: 100%;       
+    white-space: nowrap;
+    text-align: center;    
+    padding: 5px;
+    padding-bottom: 10px;
+    color: #454545;
+    font-size: 20px;
+    font-weight: 100;
 }
 
 .modal-card-price{
+   border-top: #454545 solid 2px;
+   width: 80%;
    margin: auto;
    text-align: center;
    color: #E6614C;
@@ -512,6 +540,8 @@ input[type="number"]::-webkit-inner-spin-button {
 
 
 #modal-ready-information{
+   width: 50%;
+   float: right;
    color: #454545;
    margin-top: 20px ;
    width: 60%;

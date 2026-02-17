@@ -14,15 +14,15 @@
     <div id="main-sheet">
         <div id="active-panel">
             <table id="menu-swicher">
-                <tr><td class="menu-button" id="menu-swicher-pancakes-button">Блины</td></tr>
-                <tr><td class="menu-button" id="menu-swicher-shawarma-button">Шаурма</td></tr>
-                <tr><td class="menu-button" id="menu-swicher-sandwich-button">Сендвичи</td></tr>
+                <tr><td class="menu-button" id="menu-swicher-pizza-button">Пицца</td></tr>
+                <tr><td class="menu-button" id="menu-swicher-shaurma-button">Шаурма</td></tr>
+                <tr><td class="menu-button" id="menu-swicher-sandwiches-button">Сендвичи</td></tr>
                 <tr><td class="menu-button" id="menu-swicher-burgers-button">Бургеры</td></tr>
-                <tr><td class="menu-button" id="menu-swicher-chicken&potato-button">Курица & Картофель</td></tr>
-                <tr><td class="menu-button" id="menu-swicher-tortilia&salads-button">Тортилья & Салаты</td></tr>
-                <tr><td class="menu-button" id="menu-swicher-drinks&desserts-button">Напитки & Десерты</td></tr>
+                <tr><td class="menu-button" id="menu-swicher-chicken-button">Курица & Картофель</td></tr>
+                <tr><td class="menu-button" id="menu-swicher-salads-button">Тортилья & Салаты</td></tr>
+                <tr><td class="menu-button" id="menu-swicher-drinks-button">Напитки & Десерты</td></tr>
             </table>
-            <script src="script/menuSwicher.js"></script>
+            <script src="script/menuSwicher.js" type="module"></script>
             <div id="basket">
                 <div id="basket-description">
                     <div id="basket-image">
@@ -39,11 +39,14 @@
                             <td class="basket-products-columns" id="name">Название</td>
                             <td class="basket-products-columns" id="count">Количество</td>
                         </tr>
-                        <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                            </tr>
+                        <tbody id="basket-content">
+                            <template id="basket-content-template">
+                                <tr>
+                                    <td></td>
+                                    <td class="basket-products-columns-count"></td>
+                                </tr>
+                            </template>
+                            
                         </tbody>
                     </thead>
                 </table>
@@ -57,23 +60,26 @@
         <div id="menu-wrapper">
             <div id="menu">
                 <div class="position-card">
-                    <img class="logo" src="i/markets/subway_logo.png" alt="subway">
+                <img class="logo" src="i/markets/subway_logo.png" alt="subway">
+                <div class="product-image-wrapper">
                     <img class="product-image" src="i/sandwiches/ovoshnoy.png" alt="">
-                    <h1 class="product-name">Овощной</h1>
-                    <div class="product-ingridients">
-                        <a href="">Соус и овощи на выбор</a>
-                    </div>
-                    <h1 class="product-price">Цена: 110 руб.</h1>
-                    <h1 class="counter-description">КОЛИЧЕСТВО</h1>
-                    
-                    <div class="product-counter">
-                        <button class="minus-button counter-buttons"><h1 class="counter-buttons-text">-</h1></button>
-                        <input name="counter" class="product-counter-input" type="number" inputmode="numeric" value="1">
-                        <button class="minus-button counter-buttons"><h1 class="counter-buttons-text">+</h1></button>
-                    </div>
-                    
-                    <button class="product-add-to-basket">В КОРЗИНУ</button>
                 </div>
+                
+                <h1 class="product-name">Овощной</h1>
+                <div class="product-ingridients">
+                    <a href="">Соус и овощи на выбор</a>
+                </div>
+                <h1 class="product-price">Цена: 110 руб.</h1>
+                <h1 class="counter-description">КОЛИЧЕСТВО</h1>
+                
+                <div class="product-counter">
+                    <button class="minus-button counter-buttons"><h1 class="counter-buttons-text">-</h1></button>
+                    <input name="counter" class="product-counter-input" type="number" inputmode="numeric" value="1">
+                    <button class="plus-button counter-buttons"><h1 class="counter-buttons-text">+</h1></button>
+                </div>
+                
+                <button class="product-add-to-basket">В КОРЗИНУ</button>
+            </div>
             </div>
         </div>
         
@@ -87,12 +93,12 @@
             <div id="modal-content">
                 <table id="ingridients-swicher">
                     <tr>
-                        <td class="ingridients">Размер</td>
-                        <td class="ingridients">Хлеб</td>
-                        <td class="ingridients">Овощи</td>
-                        <td class="ingridients">Соусы</td>
-                        <td class="ingridients">Начинка</td>
-                        <td class="ingridients">Готово!</td>
+                        <td class="ingridients" id="size">Размер</td>
+                        <td class="ingridients" id="bread">Хлеб</td>
+                        <td class="ingridients" id="vegetable">Овощи</td>
+                        <td class="ingridients" id="sauce">Соусы</td>
+                        <td class="ingridients" id="filling">Начинка</td>
+                        <td class="ingridients" id="finish">Готово!</td>
                     </tr>
                 </table>
                 <div id="modal-buttons">
@@ -108,7 +114,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">Итого:110 руб.</div>
+                <div class="modal-footer" id="modal-footer">Итого:110 руб.</div>
             </div>
             <!-- <div id="modal-ready">
                 <div class="modal-card-img modal-ready"><img src="i/sizes/1x.jpg" alt=""></div>
@@ -141,6 +147,26 @@
         </div>
     </div>
     
+    <template id="card-template">
+        <div class="position-card">
+                <img class="logo" src="i/markets/subway_logo.png" alt="subway">
+                <img class="product-image" src="i/sandwiches/ovoshnoy.png" alt="">
+                <h1 class="product-name">Овощной</h1>
+                <div class="product-ingridients">
+                    <a href="">Соус и овощи на выбор</a>
+                </div>
+                <h1 class="product-price">Цена: 110 руб.</h1>
+                <h1 class="counter-description">КОЛИЧЕСТВО</h1>
+                
+                <div class="product-counter">
+                    <button class="minus-button counter-buttons"><h1 class="counter-buttons-text">-</h1></button>
+                    <input name="counter" class="product-counter-input" type="number" inputmode="numeric" value="1">
+                    <button class="minus-button counter-buttons"><h1 class="counter-buttons-text">+</h1></button>
+                </div>
+                
+                <button class="product-add-to-basket">В КОРЗИНУ</button>
+            </div>
+    </template>
 
     
 
