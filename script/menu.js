@@ -1,4 +1,4 @@
-import { Card } from "./card.js";
+import { Card } from './card.js';
 
 //Меню продуктов
 export class Menu {
@@ -15,7 +15,7 @@ export class Menu {
   async loadData() {
     let jsonData;
     try {
-      const response = await fetch("data.json");
+      const response = await fetch('data.json');
       jsonData = await response.json();
     } catch (error) {
       console.error(`Не удается прочитать data.json\n\n${error}`);
@@ -24,11 +24,10 @@ export class Menu {
     let data = [];
 
     //Отбор продуктов из нужной категории
-    for (let product of jsonData["menu"]) {
+    for (let product of jsonData['menu']) {
       if (
-        (product["category"] === this.category[0] ||
-          product["category"] === this.category[1]) &&
-        product["image"].includes(this.category)
+        (product['category'] === this.category[0] || product['category'] === this.category[1]) &&
+        product['image'].includes(this.category)
       ) {
         data.push(product);
       }
@@ -48,8 +47,8 @@ export class Menu {
   async render() {
     await this.initialized;
 
-    let menu = document.getElementById("menu");
-    menu.innerHTML = "";
+    let menu = document.getElementById('menu');
+    menu.innerHTML = '';
 
     for (let card of this.data) {
       let cardElement = card.render();

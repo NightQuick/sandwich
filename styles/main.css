@@ -1,0 +1,64 @@
+body {
+   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+   background-color: #EBEAE8;
+   margin: 0;
+}
+
+header {
+   width: 100%;
+   text-align: center;
+   background-color: #f1f1f1;
+}
+
+#heading {
+
+   font-size: 32px;
+   color: rgb(63, 63, 63);
+   margin: 0;
+   padding-top: 20px;
+}
+
+#main-sheet {
+   display: flex;
+   margin-left: 1vw;
+   margin-right: 1vw;
+}
+
+/* Панель слева */
+#active-panel {
+   width: 250px;
+}
+
+/* Таблица для выбора категорий */
+#menu-swicher {
+   margin-top: 1em;
+   background-color: white;
+   border-radius: 0.2em;
+   box-shadow: 0px 0px 4px black;
+   width: 250px;
+   margin-bottom: 30px;
+   font-size: 20px;
+}
+
+.menu-button {
+   display: flex;
+   justify-content: center;
+   margin: 0.5em;
+   cursor: pointer;
+}
+
+/* Меню */
+#menu-wrapper{
+   display: grid;
+   margin-left: 20px;
+   margin-right: 20px;
+   width: calc(100% - 250px);
+}
+
+#menu {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   width: 100%;
+}
+
