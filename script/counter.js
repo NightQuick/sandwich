@@ -1,8 +1,8 @@
 export function counter() {
   const counterWrapper = document.createElement("div");
   const buttonMinus = document.createElement("button");
-  buttonMinus.className = "minus-button counter-buttons";
-  const buttonMinusContent = document.createElement("h1");
+  buttonMinus.className = "counter-buttons";
+  const buttonMinusContent = document.createElement("span");
   buttonMinusContent.className = "counter-buttons-text";
   buttonMinusContent.textContent = "-";
   const input = document.createElement("input");
@@ -12,8 +12,8 @@ export function counter() {
   input.inputmode = "numeric";
   input.value = "1";
   const buttonPlus = document.createElement("button");
-  buttonPlus.className = "minus-button counter-buttons";
-  const buttonPlusContent = document.createElement("h1");
+  buttonPlus.className = "counter-buttons";
+  const buttonPlusContent = document.createElement("span");
   buttonPlusContent.className = "counter-buttons-text";
   buttonPlusContent.textContent = "+";
 
@@ -27,7 +27,7 @@ export function counter() {
   });
 
   input.addEventListener("input", () => {
-    counterInput.value = Math.abs(counterInput.value);
+    input.value = Math.abs(input.value);
   });
 
   buttonMinus.appendChild(buttonMinusContent);

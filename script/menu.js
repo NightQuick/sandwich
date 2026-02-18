@@ -13,16 +13,21 @@ export class Menu {
   }
   //функция загрузки данных
   async loadData() {
-    const response = await fetch("data.json");
-    const jsonData = await response.json();
+    let jsonData;
+    try {
+      const response = await fetch("data.json");
+      jsonData = await response.json();
+    } catch (error) {
+      console.error(`Не удается прочитать data.json\n\n${error}`);
+    }
 
     let data = [];
 
     //Отбор продуктов из нужной категории
     for (let product of jsonData["menu"]) {
       if (
-        (product["category"] == this.category[0] ||
-          product["category"] == this.category[1]) &&
+        (product["category"] === this.category[0] ||
+          product["category"] === this.category[1]) &&
         product["image"].includes(this.category)
       ) {
         data.push(product);

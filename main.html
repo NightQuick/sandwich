@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8" name="viewport" />
     <link rel="stylesheet" href="style.css">
     <title>Burgers</title>
 </head>
 <body>
     <header>
-        <h1 id="heading">
+        <span id="heading">
             СДЕЛАЙТЕ ЗАКАЗ НАПРЯМУЮ ИЗ РЕСТОРАНА
-        </h1>
+        </span>
     </header>
     <div id="main-sheet">
         <div id="active-panel">
@@ -28,7 +28,7 @@
                     <div id="basket-image">
                         <img id="basket-logo" src="i/shopping-basket.svg" alt="">
                         <div id="basket-shadow"></div>
-                        <h1 id="basket-name">Корзина</h1>
+                        <span id="basket-name">Корзина</span>
                     </div>
                     
                    
@@ -39,6 +39,7 @@
                             <td class="basket-products-columns" id="name">Название</td>
                             <td class="basket-products-columns" id="count">Количество</td>
                         </tr>
+                    </thead>
                         <tbody id="basket-content">
                             <template id="basket-content-template">
                                 <tr>
@@ -48,10 +49,9 @@
                             </template>
                             
                         </tbody>
-                    </thead>
                 </table>
                 <div id="order-information">
-                    <h1 id="order-status">Итого: 0 руб.</h1>
+                    <span id="order-status">Итого: 0 руб.</span>
                     <button id="place-an-order"> ОФОРМИТЬ ЗАКАЗ</button>
                 </div>
                 
@@ -65,17 +65,17 @@
                     <img class="product-image" src="i/sandwiches/ovoshnoy.png" alt="">
                 </div>
                 
-                <h1 class="product-name">Овощной</h1>
+                <span class="product-name">Овощной</span>
                 <div class="product-ingridients">
                     <a href="">Соус и овощи на выбор</a>
                 </div>
-                <h1 class="product-price">Цена: 110 руб.</h1>
-                <h1 class="counter-description">КОЛИЧЕСТВО</h1>
+                <span class="product-price">Цена: 110 руб.</span>
+                <span class="counter-description">КОЛИЧЕСТВО</span>
                 
                 <div class="product-counter">
-                    <button class="minus-button counter-buttons"><h1 class="counter-buttons-text">-</h1></button>
+                    <button class=" counter-buttons"><span class="counter-buttons-text">-</span></button>
                     <input name="counter" class="product-counter-input" type="number" inputmode="numeric" value="1">
-                    <button class="plus-button counter-buttons"><h1 class="counter-buttons-text">+</h1></button>
+                    <button class="plus-button counter-buttons"><span class="counter-buttons-text">+</span></button>
                 </div>
                 
                 <button class="product-add-to-basket">В КОРЗИНУ</button>
@@ -109,40 +109,13 @@
                     <div id="modal-menu">
                         <div class="modal-card">
                             <div class="modal-card-img"><img src="i/sizes/1x.jpg" alt=""></div>
-                            <h1 class="modal-card-description">15 См</h1>
-                            <h1 class="modal-card-price">Цена: 110 руб.</h1>
+                            <span class="modal-card-description">15 См</span>
+                            <span class="modal-card-price">Цена: 110 руб.</span>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer" id="modal-footer">Итого:110 руб.</div>
             </div>
-            <!-- <div id="modal-ready">
-                <div class="modal-card-img modal-ready"><img src="i/sizes/1x.jpg" alt=""></div>
-                <div id="modal-ready-information">
-                    <span>Ваш сендвич готов!</span>
-                    <ul id="modal-ready-information-ingridients">
-                        <li>Размер: 15 См</li>
-                        <li>Хлеб: Белый итальянский</li>
-                        <li>Овощи: Нет</li>
-                        <li>Соусы: Барбекю</li>
-                        <li>Начинка: Нет</li>
-                    </ul>
-                    <span id="modal-ready-name">Овощной</span>
-                </div>
-
-                <div class="modal-footer" id="modal-ready-footer">
-                    <span id="modal-counter-description">КОЛИЧЕСТВО</span>
-                    <div>
-                        <button class="minus-button counter-buttons"><h1 class="counter-buttons-text">-</h1></button>
-                        <input name="counter" class="product-counter-input" type="number" inputmode="numeric" value="1">
-                        <button class="minus-button counter-buttons"><h1 class="counter-buttons-text">+</h1></button>
-                    </div>
-                    <div> Итого:110 руб.
-                        <button id="modal-add-to-basket" class="product-add-to-basket">В КОРЗИНУ</button>
-                    </div>
-                   
-                </div>
-            </div> -->
             
         </div>
     </div>
@@ -151,17 +124,17 @@
         <div class="position-card">
                 <img class="logo" src="i/markets/subway_logo.png" alt="subway">
                 <img class="product-image" src="i/sandwiches/ovoshnoy.png" alt="">
-                <h1 class="product-name">Овощной</h1>
+                <span class="product-name">Овощной</span>
                 <div class="product-ingridients">
                     <a href="">Соус и овощи на выбор</a>
                 </div>
-                <h1 class="product-price">Цена: 110 руб.</h1>
-                <h1 class="counter-description">КОЛИЧЕСТВО</h1>
+                <span class="product-price">Цена: 110 руб.</span>
+                <span class="counter-description">КОЛИЧЕСТВО</span>
                 
                 <div class="product-counter">
-                    <button class="minus-button counter-buttons"><h1 class="counter-buttons-text">-</h1></button>
+                    <button class=" counter-buttons"><span class="counter-buttons-text">-</span></button>
                     <input name="counter" class="product-counter-input" type="number" inputmode="numeric" value="1">
-                    <button class="minus-button counter-buttons"><h1 class="counter-buttons-text">+</h1></button>
+                    <button class=" counter-buttons"><span class="counter-buttons-text">+</span></button>
                 </div>
                 
                 <button class="product-add-to-basket">В КОРЗИНУ</button>

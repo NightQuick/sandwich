@@ -4,8 +4,8 @@ export function addProduct(name, value, price) {
   const template = document.getElementById("basket-content-template");
   const newContent = template.content.cloneNode(true);
   const td = newContent.querySelectorAll("td");
-  td[0].innerText = name;
-  td[1].innerText = value;
+  td[0].textContent = name;
+  td[1].textContent = value;
   basket.appendChild(newContent);
   const basketPrice = document.getElementById("order-status");
   let currentPrice = parseInt(basketPrice.dataset.price) || 0;

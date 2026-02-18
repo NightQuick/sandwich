@@ -1,6 +1,6 @@
 import { Menu } from "./menu.js";
 //Создание эвентов для таблицы выбора категорий
-
+let loadedMenus = {};
 let table = document.getElementById("menu-swicher");
 table.firstElementChild.onclick = function (event) {
   if (event.target.nodeName != "TD") return;
@@ -12,8 +12,12 @@ table.firstElementChild.onclick = function (event) {
 
   let category = event.target.id.split("-")[2].split("&");
 
-  let menu = new Menu(category);
-  menu.render();
+  if (!loadedMenus[category]) {
+    console.log("Чтение JSON");
+    let menu = new Menu(category);
+    loadedMenus[category] = menu;
+  }
+  loadedMenus[category].render();
 };
 //При запуске страницы открывается меню с пиццей
 document.getElementById("menu-swicher-pizza-button").click();

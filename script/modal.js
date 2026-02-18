@@ -1,6 +1,332 @@
 import { counter } from "./counter.js";
 import { addProduct } from "./basket.js";
 
+export class SandwichBuilder {
+  constructor(data) {
+    this.settings = settings;
+    this.cardData = JSON.parse(JSON.stringify(data));
+    for (let component in this.cardData.components) {
+      if (typeof this.cardData.components[component] === "string") {
+        this.cardData.components[component] = [
+          this.cardData.components[component],
+          "",
+          0,
+        ];
+      } else {
+        this.cardData.components[component] = this.cardData.components[
+          component
+        ].map((item) => [item, "", 0]);
+      }
+    }
+    this.cardCollections = {};
+    this.currentKey = "size";
+  }
+
+  static IngridientCard = class {
+    constructor(data, multiple, builder) {
+      this.builder = builder;
+      this.data = data;
+      this.multiple = multiple;
+    }
+
+    renderModalCard() {
+      const card = document.createElement("div");
+      card.className = "modal-card";
+
+      const cardImg = document.createElement("div");
+      cardImg.className = "modal-card-img";
+
+      const img = document.createElement("img");
+      img.src = this.data["image"];
+
+      const cardDescription = document.createElement("span");
+      cardDescription.className = "modal-card-description";
+      cardDescription.textContent = this.data["name"];
+
+      const cardPrice = document.createElement("span");
+      cardPrice.className = "modal-card-price";
+      cardPrice.textContent = "Цена: " + this.data["price"] + "руб.";
+
+      cardImg.appendChild(img);
+      card.appendChild(cardImg);
+      card.appendChild(cardDescription);
+      card.appendChild(cardPrice);
+      const modalMenu = document.getElementById("modal-menu");
+      modalMenu.appendChild(card);
+      if (this.data.choosed) {
+        card.style.backgroundColor = "#FDD55C";
+        card.style.boxShadow = "0px 0px 5px rgba(0, 0, 0, 0.5)";
+        // console.log(this.data);
+      }
+      if (!this.data.choosed) {
+        card.addEventListener("click", () => {
+          if (this.multiple === false || !this.multiple) {
+            this.builder.cardData.price -=
+              this.builder.cardData.components[this.builder.currentKey][2];
+            for (let cardElement of modalMenu.children) {
+              cardElement.style.backgroundColor = "#EBEAE8";
+              cardElement.style.boxShadow = "none";
+            }
+          }
+          card.style.backgroundColor = "#FDD55C";
+          card.style.boxShadow = "0px 0px 5px rgba(0, 0, 0, 0.5)";
+
+          if (
+            typeof this.builder.cardData.components[
+              this.builder.currentKey
+            ][0] === "string"
+          ) {
+            this.builder.cardData.components[this.builder.currentKey] = [
+              this.data.id,
+              this.data.name,
+            ];
+          } else {
+            this.builder.cardData.components[this.builder.currentKey].push([
+              this.data.id,
+              this.data.name,
+            ]);
+          }
+          this.builder.cardData.price += this.data.price;
+          this.builder.renderBuilder();
+        });
+      } else {
+        card.addEventListener("click", () => {
+          if (
+            this.builder.currentKey === "size" ||
+            this.builder.currentKey === "bread"
+          )
+            return;
+          card.style.backgroundColor = "#EBEAE8";
+          card.style.boxShadow = "none";
+          this.builder.cardData.price -= this.data.price;
+          this.data.choosed = false;
+          this.builder.cardData.components[this.builder.currentKey] =
+            this.builder.cardData.components[this.builder.currentKey].filter(
+              (item) => item[0] != this.data.id,
+            );
+          this.builder.renderBuilder();
+        });
+      }
+    }
+  };
+
+  async loadData() {
+    this.cardCollections = {};
+    let jsonData;
+    try {
+      const response = await fetch("data.json");
+      jsonData = await response.json();
+    } catch (error) {
+      console.error(`Не удается прочитать data.json\n\n${error}`);
+    }
+
+    let data = [];
+    const clonedData = JSON.parse(
+      JSON.stringify(jsonData[settings[this.currentKey].object]),
+    );
+    data.push(clonedData);
+
+    for (let comp in data[0]) {
+      data[0][comp].id = comp;
+      if (typeof this.cardData["components"][this.currentKey][0] != "string") {
+        for (let component of this.cardData["components"][this.currentKey]) {
+          if (comp === component[0]) {
+            data[0][comp].choosed = true;
+            component = [
+              data[0][comp].id,
+              data[0][comp].name,
+              data[0][comp].price,
+            ];
+          }
+        }
+      } else {
+        if (this.cardData.components[this.currentKey][0] === comp) {
+          data[0][comp].choosed = true;
+          this.cardData.components[this.currentKey] = [
+            data[0][comp].id,
+            data[0][comp].name,
+            data[0][comp].price,
+          ];
+        }
+      }
+    }
+    this.cardCollections[this.currentKey] = [];
+    for (let element of data) {
+      for (let product in element) {
+        let cardElement = new SandwichBuilder.IngridientCard(
+          element[product],
+          this.settings[this.currentKey].multiple,
+          this,
+        );
+        this.cardCollections[this.currentKey].push(cardElement);
+      }
+    }
+
+    // console.log(data);
+    return data;
+  }
+  async initialize() {
+    await this.loadData();
+  }
+
+  openBuilder() {
+    this.cardCollections = {};
+    this.currentKey = "size";
+
+    const modal = document.getElementById("modal");
+    modal.style.display = "flex";
+
+    document.getElementById("previous-modal").onclick = () => {
+      this.renderBuilder(this.settings[this.getPrevKey()]);
+    };
+
+    document.getElementById("next-modal").onclick = () => {
+      this.renderBuilder(this.settings[this.getNextKey()]);
+    };
+
+    if (!document.getElementById("close-modal").onclick) {
+      document.getElementById("close-modal").onclick = () =>
+        this.closeBuilder();
+    }
+
+    this.renderBuilder(this.settings[this.currentKey], this.cardData);
+  }
+
+  async renderBuilder() {
+    if (this.settings[this.currentKey].object != "ready") {
+      document.getElementById("modal-menu-wrapper").innerHTML = "";
+      const menu = document.createElement("div");
+      menu.id = "modal-menu";
+      document.getElementById("modal-menu-wrapper").appendChild(menu);
+
+      await this.initialize();
+      // console.log(type);
+      // console.log(data);
+      // console.log(data.price);
+      const header = document.getElementById("header-text");
+      header.textContent = this.settings[this.currentKey].title;
+      const footer = document.getElementById("modal-footer");
+      footer.textContent = "Итого: " + this.cardData.price + " руб.";
+
+      this.renderIngridientSwicher();
+
+      for (let card of this.cardCollections[this.currentKey]) {
+        card.renderModalCard();
+      }
+    } else {
+      this.renderBuilderReady();
+    }
+  }
+
+  renderIngridientSwicher() {
+    const row = document.getElementsByClassName("ingridients");
+    for (let element of row) {
+      element.style.backgroundColor = "white";
+    }
+    document.getElementById(this.currentKey).style.backgroundColor = "#FFC000";
+  }
+
+  renderBuilderReady() {
+    document.getElementById("modal-menu-wrapper").innerHTML = "";
+    const header = document.getElementById("header-text");
+    header.textContent = this.settings.finish.title;
+
+    const modalReady = document.createElement("div");
+    modalReady.id = "modal-ready";
+    const imageWrapper = document.createElement("div");
+    imageWrapper.className = "modal-card-img modal-ready";
+    const img = document.createElement("img");
+    img.src = this.cardData.image;
+    const modalProductContent = document.createElement("div");
+    modalProductContent.id = "modal-ready-information";
+    const title = document.createElement("span");
+    title.textContent = "Ваш сендвич готов!";
+    const listIngridients = document.createElement("ul");
+    listIngridients.id = "modal-ready-information-ingridients";
+    for (let ingridient in this.cardData.components) {
+      const ingridientElement = document.createElement("li");
+      if (typeof this.cardData.components[ingridient][1] === "string") {
+        ingridientElement.textContent = `${this.settings[ingridient].name}: ${this.cardData.components[ingridient][1]}`;
+      } else {
+        let list = [];
+        for (let component of this.cardData.components[ingridient]) {
+          list.push(component[1]);
+        }
+        if (list.length === 0) list = "Нет";
+        ingridientElement.textContent = `${this.settings[ingridient].name}: ${list}`;
+      }
+
+      listIngridients.appendChild(ingridientElement);
+    }
+    const name = document.createElement("span");
+    name.id = "modal-ready-name";
+    name.textContent = this.cardData.name;
+
+    const footer = document.getElementById("modal-footer");
+    footer.innerHTML = "";
+    const counterDescription = document.createElement("span");
+    counterDescription.id = "modal-counter-description";
+    counterDescription.textContent = "КОЛИЧЕСТВО";
+    const counterElem = counter();
+
+    const priceWrapper = document.createElement("div");
+    priceWrapper.textContent = "Итого: " + this.cardData.price + " руб.";
+    const toBasket = document.createElement("button");
+    toBasket.id = "modal-add-to-basket";
+    toBasket.className = "product-add-to-basket";
+    toBasket.textContent = "В КОРЗИНУ";
+
+    this.renderIngridientSwicher();
+
+    toBasket.addEventListener("click", () => {
+      const input = counterElem.querySelector(".product-counter-input");
+      addProduct(this.cardData.name, input.value, this.cardData.price);
+      this.closeBuilder();
+    });
+
+    imageWrapper.appendChild(img);
+    modalReady.appendChild(imageWrapper);
+
+    modalProductContent.appendChild(title);
+    modalProductContent.appendChild(listIngridients);
+    modalProductContent.appendChild(name);
+    modalReady.appendChild(modalProductContent);
+
+    footer.appendChild(counterDescription);
+    footer.appendChild(counterElem);
+
+    priceWrapper.appendChild(toBasket);
+    footer.appendChild(priceWrapper);
+
+    document.getElementById("modal-menu-wrapper").appendChild(modalReady);
+  }
+
+  getNextKey() {
+    const keys = Object.keys(this.settings);
+    const currentIndex = keys.indexOf(this.currentKey);
+
+    if (currentIndex === -1) return null;
+    if (currentIndex === keys.length - 1) return null;
+    this.currentKey = keys[currentIndex + 1];
+    return this.currentKey;
+  }
+
+  getPrevKey() {
+    const keys = Object.keys(this.settings);
+    const currentIndex = keys.indexOf(this.currentKey);
+
+    if (currentIndex === -1) return null;
+    if (currentIndex === 0) return null;
+    this.currentKey = keys[currentIndex - 1];
+    return this.currentKey;
+  }
+  closeBuilder() {
+    this.currentKey = "size";
+
+    const modal = document.getElementById("modal");
+    modal.style.display = "none";
+  }
+}
 const settings = {
   size: {
     name: "Размер",
@@ -36,310 +362,3 @@ const settings = {
     title: "Проверьте и добавьте в корзину",
   },
 };
-let cardData;
-let CardCollection = [];
-let currentKey;
-let swicherHandler = (event) => {
-  ingridientSwicher(event);
-};
-
-//Функция открытия окна
-export function openModal(data) {
-  cardData = data;
-
-  //Изменение вида хранения компонентов, для хранения их названий
-  for (let component in cardData.components) {
-    if (typeof cardData.components[component] == "string") {
-      cardData.components[component] = [cardData.components[component], ""];
-    } else {
-      for (let arrayComponent of cardData.components[component])
-        arrayComponent = [arrayComponent, ""];
-    }
-  }
-  currentKey = "size";
-
-  //отображение окна
-  const modal = document.getElementById("modal");
-  modal.style.display = "flex";
-
-  if (!document.getElementById("previous-modal").onclick) {
-    document.getElementById("previous-modal").onclick = () => {
-      renderModal(settings[getPrevKey()], data);
-    };
-  }
-  if (!document.getElementById("next-modal").onclick) {
-    document.getElementById("next-modal").onclick = () => {
-      renderModal(settings[getNextKey()], data);
-    };
-  }
-  // document
-  //   .getElementById("ingridients-swicher")
-  //   .addEventListener("click", swicherHandler);
-
-  document.getElementById("close-modal").addEventListener("click", () => {
-    closeModal();
-  });
-  renderModal(settings[currentKey], data);
-}
-
-async function renderModal(type, data = cardData) {
-  if (type.object != "ready") {
-    document.getElementById("modal-menu-wrapper").innerHTML = "";
-    const menu = document.createElement("div");
-    menu.id = "modal-menu";
-    document.getElementById("modal-menu-wrapper").appendChild(menu);
-
-    await initialize();
-    // console.log(type);
-    // console.log(data);
-    // console.log(data.price);
-    const header = document.getElementById("header-text");
-    header.textContent = type.title;
-    const footer = document.getElementById("modal-footer");
-    footer.textContent = "Итого: " + data.price + " руб.";
-    const row = document.getElementsByClassName("ingridients");
-    for (let element of row) {
-      element.style.backgroundColor = "white";
-    }
-    document.getElementById(currentKey).style.backgroundColor = "#FFC000";
-
-    for (let card of CardCollection) {
-      card.renderModalCard();
-    }
-  } else {
-    renderModalready();
-  }
-}
-function renderModalready() {
-  document.getElementById("modal-menu-wrapper").innerHTML = "";
-  const header = document.getElementById("header-text");
-  header.textContent = settings.finish.title;
-
-  const modalReady = document.createElement("div");
-  modalReady.id = "modal-ready";
-  const imageWrapper = document.createElement("div");
-  imageWrapper.className = "modal-card-img modal-ready";
-  const img = document.createElement("img");
-  img.src = cardData.image;
-  const modalProductContent = document.createElement("div");
-  modalProductContent.id = "modal-ready-information";
-  const title = document.createElement("span");
-  title.textContent = "Ваш сендвич готов!";
-  const listIngridients = document.createElement("ul");
-  listIngridients.id = "modal-ready-information-ingridients";
-  for (let ingridient in cardData.components) {
-    const ingridientElement = document.createElement("li");
-    if (typeof cardData.components[ingridient][1] == "string") {
-      ingridientElement.textContent = `${settings[ingridient].name}: ${cardData.components[ingridient][1]}`;
-    } else {
-      let list = [];
-      for (let component of cardData.components[ingridient]) {
-        list.push(component[1]);
-      }
-      if (list.length == 0) list = "Нет";
-      ingridientElement.textContent = `${settings[ingridient].name}: ${list}`;
-    }
-
-    listIngridients.appendChild(ingridientElement);
-  }
-  const name = document.createElement("span");
-  name.id = "modal-ready-name";
-  name.textContent = cardData.name;
-
-  const footer = document.getElementById("modal-footer");
-  footer.innerHTML = "";
-  const counterDescription = document.createElement("span");
-  counterDescription.id = "modal-counter-description";
-  counterDescription.textContent = "КОЛИЧЕСТВО";
-  const counterElem = counter();
-
-  const priceWrapper = document.createElement("div");
-  priceWrapper.textContent = "Итого: " + cardData.price + " руб.";
-  const toBasket = document.createElement("button");
-  toBasket.id = "modal-add-to-basket";
-  toBasket.className = "product-add-to-basket";
-  toBasket.textContent = "В КОРЗИНУ";
-  const row = document.getElementsByClassName("ingridients");
-  for (let element of row) {
-    element.style.backgroundColor = "white";
-  }
-  document.getElementById("finish").style.backgroundColor = "#FFC000";
-
-  toBasket.addEventListener("click", () => {
-    const input = counterElem.querySelector(".product-counter-input");
-    addProduct(cardData.name, input.value, cardData.price);
-    closeModal();
-  });
-
-  imageWrapper.appendChild(img);
-  modalReady.appendChild(imageWrapper);
-
-  modalProductContent.appendChild(title);
-  modalProductContent.appendChild(listIngridients);
-  modalProductContent.appendChild(name);
-  modalReady.appendChild(modalProductContent);
-
-  footer.appendChild(counterDescription);
-  footer.appendChild(counterElem);
-
-  priceWrapper.appendChild(toBasket);
-  footer.appendChild(priceWrapper);
-
-  document.getElementById("modal-menu-wrapper").appendChild(modalReady);
-}
-
-function getNextKey() {
-  const keys = Object.keys(settings);
-  const currentIndex = keys.indexOf(currentKey);
-
-  if (currentIndex === -1) return null;
-  if (currentIndex === keys.length - 1) return null;
-  currentKey = keys[currentIndex + 1];
-  return keys[currentIndex + 1];
-}
-function getPrevKey() {
-  const keys = Object.keys(settings);
-  const currentIndex = keys.indexOf(currentKey);
-
-  if (currentIndex === -1) return null;
-  if (currentIndex === 0) return null;
-  currentKey = keys[currentIndex - 1];
-  return keys[currentIndex - 1];
-}
-
-function ingridientSwicher(event, data = cardData) {
-  if (event.target.nodeName != "TD") return;
-  currentKey = event.target.id;
-  renderModal(settings[event.target.id], data);
-  const row = document.getElementsByClassName(event.target.className);
-  for (let element of row) {
-    element.style.backgroundColor = "white";
-  }
-  event.target.style.backgroundColor = "#FFC000";
-}
-
-function closeModal() {
-  const row = document.getElementsByClassName("ingridients");
-  for (let element of row) {
-    element.style.backgroundColor = "white";
-  }
-  const table = document.getElementById("ingridients-swicher");
-  if (table) {
-    table.removeEventListener("click", swicherHandler);
-  }
-  const closeButton = document.getElementById("close-modal");
-  if (closeButton) {
-    closeButton.removeEventListener("click", closeModal);
-  }
-  modal.style.display = "none";
-}
-
-async function initialize() {
-  await loadData();
-}
-async function loadData() {
-  const response = await fetch("data.json");
-  const jsonData = await response.json();
-  CardCollection = [];
-
-  let data = [];
-  data.push(jsonData[settings[currentKey].object]);
-  for (let comp in data[0]) {
-    data[0][comp].id = comp;
-    if (typeof cardData["components"][currentKey][0] != "string") {
-      for (let component of cardData["components"][currentKey]) {
-        if (comp == component[0]) {
-          data[0][comp].choosed = true;
-          component = [data[0][comp].id, data[0][comp].name];
-        }
-      }
-    } else {
-      if (cardData.components[currentKey][0] == comp) {
-        data[0][comp].choosed = true;
-        cardData.components[currentKey] = [
-          data[0][comp].id,
-          data[0][comp].name,
-        ];
-      }
-    }
-  }
-  for (let element of data) {
-    for (let product in element) {
-      let cardElement = new IngridientCard(element[product]);
-      CardCollection.push(cardElement);
-    }
-  }
-
-  // console.log(data);
-  return data;
-}
-class IngridientCard {
-  constructor(data) {
-    this.data = data;
-  }
-  renderModalCard() {
-    const card = document.createElement("div");
-    card.className = "modal-card";
-
-    const cardImg = document.createElement("div");
-    cardImg.className = "modal-card-img";
-
-    const img = document.createElement("img");
-    img.src = this.data["image"];
-
-    const cardDescription = document.createElement("h1");
-    cardDescription.className = "modal-card-description";
-    cardDescription.textContent = this.data["name"];
-
-    const cardPrice = document.createElement("h1");
-    cardPrice.className = "modal-card-price";
-    cardPrice.textContent = "Цена: " + this.data["price"] + "руб.";
-
-    cardImg.appendChild(img);
-    card.appendChild(cardImg);
-    card.appendChild(cardDescription);
-    card.appendChild(cardPrice);
-    const modalMenu = document.getElementById("modal-menu");
-    modalMenu.appendChild(card);
-    if (this.data.choosed) {
-      card.style.backgroundColor = "#FDD55C";
-      card.style.boxShadow = "0px 0px 5px rgba(0, 0, 0, 0.5)";
-      // console.log(this.data);
-    }
-    if (!this.data.choosed) {
-      card.addEventListener("click", () => {
-        if (
-          settings[currentKey].multiple == false ||
-          !settings[currentKey].multiple
-        ) {
-          for (let cardElement of modalMenu.children) {
-            cardElement.style.backgroundColor = "#EBEAE8";
-            cardElement.style.boxShadow = "none";
-          }
-        }
-        card.style.backgroundColor = "#FDD55C";
-        card.style.boxShadow = "0px 0px 5px rgba(0, 0, 0, 0.5)";
-
-        if (typeof cardData.components[currentKey][0] == "string") {
-          cardData.components[currentKey] = [this.data.id, this.data.name];
-        } else {
-          cardData.components[currentKey].push([this.data.id, this.data.name]);
-        }
-        cardData.price += this.data.price;
-        renderModal(currentKey);
-      });
-    } else {
-      card.addEventListener("click", () => {
-        if (currentKey == "size" || currentKey == "bread") return;
-        card.style.backgroundColor = "#EBEAE8";
-        card.style.boxShadow = "none";
-        cardData.price -= this.data.price;
-        this.data.choosed = false;
-        cardData.components[currentKey] = cardData.components[
-          currentKey
-        ].filter((item) => item[0] != this.data.id);
-        renderModal(currentKey);
-      });
-    }
-  }
-}
