@@ -1,152 +1,168 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
-<head>
+  <head>
     <meta charset="UTF-8" name="viewport" />
-    <link rel="stylesheet" href="/styles/main.css">
-    <link rel="stylesheet" href="/styles/basket.css">
-    <link rel="stylesheet" href="/styles/card.css">
-    <link rel="stylesheet" href="/styles/modal.css">
+    <link rel="stylesheet" href="/styles/main.css" />
+    <link rel="stylesheet" href="/styles/basket.css" />
+    <link rel="stylesheet" href="/styles/card.css" />
+    <link rel="stylesheet" href="/styles/modal.css" />
     <title>Burgers</title>
-</head>
-<body>
+  </head>
+  <body>
     <script src="/script/pubSub.js" type="module"></script>
     <script src="script/subscribes.js" type="module"></script>
     <header>
-        <span id="heading">
-            СДЕЛАЙТЕ ЗАКАЗ НАПРЯМУЮ ИЗ РЕСТОРАНА
-        </span>
+      <span id="heading"> СДЕЛАЙТЕ ЗАКАЗ НАПРЯМУЮ ИЗ РЕСТОРАНА </span>
     </header>
     <div id="main-sheet">
-        <div id="active-panel">
-            <table id="menu-swicher">
-                <tr><td class="menu-button" id="menu-swicher-pizza-button">Пицца</td></tr>
-                <tr><td class="menu-button" id="menu-swicher-shaurma-button">Шаурма</td></tr>
-                <tr><td class="menu-button" id="menu-swicher-sandwiches-button">Сендвичи</td></tr>
-                <tr><td class="menu-button" id="menu-swicher-burgers-button">Бургеры</td></tr>
-                <tr><td class="menu-button" id="menu-swicher-chicken-button">Курица & Картофель</td></tr>
-                <tr><td class="menu-button" id="menu-swicher-salads-button">Тортилья & Салаты</td></tr>
-                <tr><td class="menu-button" id="menu-swicher-drinks-button">Напитки & Десерты</td></tr>
-            </table>
-            <script src="script/menuSwicher.js" type="module"></script>
-            <div id="basket">
-                <div id="basket-description">
-                    <div id="basket-image">
-                        <img id="basket-logo" src="i/shopping-basket.svg" alt="">
-                        <div id="basket-shadow"></div>
-                        <span id="basket-name">Корзина</span>
-                    </div>
-                    
-                   
-                </div>
-                <table id="basket-products">
-                    <thead>
-                        <tr id="basket-products-head">
-                            <td class="basket-products-columns" id="name">Название</td>
-                            <td class="basket-products-columns" id="count">Количество</td>
-                        </tr>
-                    </thead>
-                        <tbody id="basket-content">
-                            <template id="basket-content-template">
-                                <tr>
-                                    <td></td>
-                                    <td class="basket-products-columns-count"></td>
-                                </tr>
-                            </template>
-                            
-                        </tbody>
-                </table>
-                <div id="order-information">
-                    <span id="order-status">Итого: 0 руб.</span>
-                    <button id="place-an-order"> ОФОРМИТЬ ЗАКАЗ</button>
-                </div>
-                
+      <div id="active-panel">
+        <table id="menu-swicher">
+          <tr>
+            <td class="menu-button" id="menu-swicher-pizza-button">Пицца</td>
+          </tr>
+          <tr>
+            <td class="menu-button" id="menu-swicher-shaurma-button">Шаурма</td>
+          </tr>
+          <tr>
+            <td class="menu-button" id="menu-swicher-sandwiches-button">Сендвичи</td>
+          </tr>
+          <tr>
+            <td class="menu-button" id="menu-swicher-burgers-button">Бургеры</td>
+          </tr>
+          <tr>
+            <td class="menu-button" id="menu-swicher-chicken-button">Курица & Картофель</td>
+          </tr>
+          <tr>
+            <td class="menu-button" id="menu-swicher-salads-button">Тортилья & Салаты</td>
+          </tr>
+          <tr>
+            <td class="menu-button" id="menu-swicher-drinks-button">Напитки & Десерты</td>
+          </tr>
+        </table>
+        <script src="script/menuSwicher.js" type="module"></script>
+        <div id="basket">
+          <div id="basket-description">
+            <div id="basket-image">
+              <img id="basket-logo" src="i/shopping-basket.svg" alt="" />
+              <div id="basket-shadow"></div>
+              <span id="basket-name">Корзина</span>
             </div>
+          </div>
+          <table id="basket-products">
+            <thead>
+              <tr id="basket-products-head">
+                <td class="basket-products-columns" id="name">Название</td>
+                <td class="basket-products-columns" id="count">Количество</td>
+              </tr>
+            </thead>
+            <tbody id="basket-content">
+              <template id="basket-content-template">
+                <tr>
+                  <td></td>
+                  <td class="basket-products-columns-count"></td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+          <div id="order-information">
+            <span id="order-status">Итого: 0 руб.</span>
+            <button id="place-an-order">ОФОРМИТЬ ЗАКАЗ</button>
+          </div>
         </div>
-        <div id="menu-wrapper">
-            <div id="menu">
-                <div class="position-card">
-                <img class="logo" src="i/markets/subway_logo.png" alt="subway">
-                <div class="product-image-wrapper">
-                    <img class="product-image" src="i/sandwiches/ovoshnoy.png" alt="">
-                </div>
-                
-                <span class="product-name">Овощной</span>
-                <div class="product-ingridients">
-                    <a href="">Соус и овощи на выбор</a>
-                </div>
-                <span class="product-price">Цена: 110 руб.</span>
-                <span class="counter-description">КОЛИЧЕСТВО</span>
-                
-                <div class="product-counter">
-                    <button class=" counter-buttons"><span class="counter-buttons-text">-</span></button>
-                    <input name="counter" class="product-counter-input" type="number" inputmode="numeric" value="1">
-                    <button class="plus-button counter-buttons"><span class="counter-buttons-text">+</span></button>
-                </div>
-                
-                <button class="product-add-to-basket">В КОРЗИНУ</button>
+      </div>
+      <div id="menu-wrapper">
+        <div id="menu">
+          <div class="position-card">
+            <img class="logo" src="i/markets/subway_logo.png" alt="subway" />
+            <div class="product-image-wrapper">
+              <img class="product-image" src="i/sandwiches/ovoshnoy.png" alt="" />
             </div>
+
+            <span class="product-name">Овощной</span>
+            <div class="product-ingridients">
+              <a href="">Соус и овощи на выбор</a>
             </div>
+            <span class="product-price">Цена: 110 руб.</span>
+            <span class="counter-description">КОЛИЧЕСТВО</span>
+
+            <div class="product-counter">
+              <button class="counter-buttons"><span class="counter-buttons-text">-</span></button>
+              <input
+                name="counter"
+                class="product-counter-input"
+                type="number"
+                inputmode="numeric"
+                value="1"
+              />
+              <button class="plus-button counter-buttons"><span class="counter-buttons-text">+</span></button>
+            </div>
+
+            <button class="product-add-to-basket">В КОРЗИНУ</button>
+          </div>
         </div>
-        
+      </div>
     </div>
 
     <div id="modal">
-        <div id="modal-window">
-            <div id="modal-header"><span id="header-text">Выберите размер сендвича</span>
-            <button id="close-modal">×</button>
-            </div>
-            <div id="modal-content">
-                <table id="ingridients-swicher">
-                    <tr>
-                        <td class="ingridients" id="size">Размер</td>
-                        <td class="ingridients" id="bread">Хлеб</td>
-                        <td class="ingridients" id="vegetable">Овощи</td>
-                        <td class="ingridients" id="sauce">Соусы</td>
-                        <td class="ingridients" id="filling">Начинка</td>
-                        <td class="ingridients" id="finish">Готово!</td>
-                    </tr>
-                </table>
-                <div id="modal-buttons">
-                    <button class="modal-swicher" id="previous-modal"><span class="modal-button-arrow" id="previous-modal-arrow">&lt;</span> <span class="modal-button-text" id="previous-modal-text">Назад</span></button>
-                    <button class="modal-swicher" id="next-modal"><span class="modal-button-text" id="next-modal-text">ВПЕРЕД</span> <span class="modal-button-arrow" id="next-modal-arrow">></span></button>
-                </div>
-                <div id="modal-menu-wrapper">
-                    <div id="modal-menu">
-                        <div class="modal-card">
-                            <div class="modal-card-img"><img src="i/sizes/1x.jpg" alt=""></div>
-                            <span class="modal-card-description">15 См</span>
-                            <span class="modal-card-price">Цена: 110 руб.</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer" id="modal-footer">Итого:110 руб.</div>
-            </div>
-            
+      <div id="modal-window">
+        <div id="modal-header">
+          <span id="header-text">Выберите размер сендвича</span>
+          <button id="close-modal">×</button>
         </div>
-    </div>
-    
-    <template id="card-template">
-        <div class="position-card">
-                <img class="logo" src="i/markets/subway_logo.png" alt="subway">
-                <img class="product-image" src="i/sandwiches/ovoshnoy.png" alt="">
-                <span class="product-name">Овощной</span>
-                <div class="product-ingridients">
-                    <a href="">Соус и овощи на выбор</a>
-                </div>
-                <span class="product-price">Цена: 110 руб.</span>
-                <span class="counter-description">КОЛИЧЕСТВО</span>
-                
-                <div class="product-counter">
-                    <button class=" counter-buttons"><span class="counter-buttons-text">-</span></button>
-                    <input name="counter" class="product-counter-input" type="number" inputmode="numeric" value="1">
-                    <button class=" counter-buttons"><span class="counter-buttons-text">+</span></button>
-                </div>
-                
-                <button class="product-add-to-basket">В КОРЗИНУ</button>
+        <div id="modal-content">
+          <table id="ingridients-swicher">
+            <tr>
+              <td class="ingridients" id="size">Размер</td>
+              <td class="ingridients" id="bread">Хлеб</td>
+              <td class="ingridients" id="vegetable">Овощи</td>
+              <td class="ingridients" id="sauce">Соусы</td>
+              <td class="ingridients" id="filling">Начинка</td>
+              <td class="ingridients" id="finish">Готово!</td>
+            </tr>
+          </table>
+          <div id="modal-buttons">
+            <button class="modal-swicher" id="previous-modal">
+              <span class="modal-button-arrow" id="previous-modal-arrow">&lt;</span>
+              <span class="modal-button-text" id="previous-modal-text">Назад</span>
+            </button>
+            <button class="modal-swicher" id="next-modal">
+              <span class="modal-button-text" id="next-modal-text">ВПЕРЕД</span>
+              <span class="modal-button-arrow" id="next-modal-arrow">></span>
+            </button>
+          </div>
+          <div id="modal-menu-wrapper">
+            <div id="modal-menu">
+              <div class="modal-card">
+                <div class="modal-card-img"><img src="i/sizes/1x.jpg" alt="" /></div>
+                <span class="modal-card-description">15 См</span>
+                <span class="modal-card-price">Цена: 110 руб.</span>
+              </div>
             </div>
+          </div>
+          <div class="modal-footer" id="modal-footer">Итого:110 руб.</div>
+        </div>
+      </div>
+    </div>
+
+    <template id="card-template">
+      <div class="position-card">
+        <img class="logo" src="i/markets/subway_logo.png" alt="subway" />
+        <img class="product-image" src="i/sandwiches/ovoshnoy.png" alt="" />
+        <span class="product-name">Овощной</span>
+        <div class="product-ingridients">
+          <a href="">Соус и овощи на выбор</a>
+        </div>
+        <span class="product-price">Цена: 110 руб.</span>
+        <span class="counter-description">КОЛИЧЕСТВО</span>
+
+        <div class="product-counter">
+          <button class="counter-buttons"><span class="counter-buttons-text">-</span></button>
+          <input name="counter" class="product-counter-input" type="number" inputmode="numeric" value="1" />
+          <button class="counter-buttons"><span class="counter-buttons-text">+</span></button>
+        </div>
+
+        <button class="product-add-to-basket">В КОРЗИНУ</button>
+      </div>
     </template>
-
-    
-
-</body>
+  </body>
 </html>

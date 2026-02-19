@@ -1,6 +1,6 @@
-import { pubSub } from './pubSub.js';
-import { counter } from './counter.js';
-import { SandwichBuilder } from './modal.js';
+import { pubSub } from '@script/pubSub.js';
+import { counter } from '@script/counter.js';
+import { SandwichBuilder } from '@script/modal.js';
 
 //Карточки товаров(не ингридиентов модального окна)
 export class Card {

@@ -1,275 +1,269 @@
-
-#modal{
-   display: none;
-   justify-content: center;
-   align-items: center;
-   position: fixed;
-   z-index: 3;
-   left: 0;
-   top: 0;
-   height: 100%;
-   width: 100%;
-   overflow: auto;
-   background-color: rgba(0, 0, 0, 0.5);
+#modal {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 3;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
-#modal-window{
-   width: 80%;
-   height: 80%;
-   background-color: #EBEAE8;
-   border-radius: 5px;
-   
+#modal-window {
+  width: 80%;
+  height: 80%;
+  background-color: #ebeae8;
+  border-radius: 5px;
 }
 
-#modal-header{
-   display: flex;
-   width: 100%;
-   height: fit-content;
-   background-color:#FFC000;
-   border-top-left-radius: 5px;
-   border-top-right-radius: 5px;
+#modal-header {
+  display: flex;
+  width: 100%;
+  height: fit-content;
+  background-color: #ffc000;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
-#header-text{
-   margin: auto;
-   margin-top: 10px;
-   margin-bottom: 10px;
-   font-size: 20px;
-   color: white;
-   font-weight: 700;
+#header-text {
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 20px;
+  color: white;
+  font-weight: 700;
 }
 
-#close-modal{
-   position: relative;
-   bottom: 10px;
-   left: 6px;
-   width: fit-content;
-   height: fit-content;
-   background-color: transparent;
-   border: none;
-   font-size: 35px;
-   color: #B28600;
-   cursor: pointer;
+#close-modal {
+  position: relative;
+  bottom: 10px;
+  left: 6px;
+  width: fit-content;
+  height: fit-content;
+  background-color: transparent;
+  border: none;
+  font-size: 35px;
+  color: #b28600;
+  cursor: pointer;
 }
 
-#modal-content{
-   /* display: flex; */
-   justify-content: center;
-   
-   
+#modal-content {
+  /* display: flex; */
+  justify-content: center;
 }
 
 /* Таблица последовательности выбора ингридиентов */
-#ingridients-swicher{
-   border-collapse: separate;
-   background-color: white;
-   color: #454545;
-   width: 95%;
-   
-   font-size: 20px;
-   text-align: center;
-   padding: 0px;
-   margin: 10px;
-   margin-left: 2.5%;
-   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
-   border-spacing: 0;
-   border-radius: 5px;
-   overflow: hidden;
+#ingridients-swicher {
+  border-collapse: separate;
+  background-color: white;
+  color: #454545;
+  width: 95%;
+
+  font-size: 20px;
+  text-align: center;
+  padding: 0px;
+  margin: 10px;
+  margin-left: 2.5%;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+  border-spacing: 0;
+  border-radius: 5px;
+  overflow: hidden;
 }
-.ingridients{
-   padding: 10px;
+.ingridients {
+  padding: 10px;
 }
 
 /* Кнопки для переходов между этапами */
-.modal-swicher{
-   display: flex;
-   justify-content: center;
-   width: 15%;
-   font-size: 20px;
-   background-color: #E6614C;
-   color: white;
-   border: none;
-   margin-right: 2.5%;
-   border-radius: 3px;
-   font-weight: 700;
-   cursor: pointer;
+.modal-swicher {
+  display: flex;
+  justify-content: center;
+  width: 15%;
+  font-size: 20px;
+  background-color: #e6614c;
+  color: white;
+  border: none;
+  margin-right: 2.5%;
+  border-radius: 3px;
+  font-weight: 700;
+  cursor: pointer;
 }
 
-#modal-buttons{
-   width: 100%;
-   height: 40px;
+#modal-buttons {
+  width: 100%;
+  height: 40px;
 }
 
-#next-modal{
-   float: right;
+#next-modal {
+  float: right;
 }
 
-#previous-modal{
-   margin-left: 2.5%;
-   float: left;
-   text-align: right;
+#previous-modal {
+  margin-left: 2.5%;
+  float: left;
+  text-align: right;
 }
 
-#previous-modal-arrow{
-   margin-left: 0px;
-   margin-right: 10px;
+#previous-modal-arrow {
+  margin-left: 0px;
+  margin-right: 10px;
 }
 
-#previous-modal-text{
-   margin-right: 10px;
+#previous-modal-text {
+  margin-right: 10px;
 }
 
-.modal-button-text{
-   padding-left: 20px;
-   padding-right: 10px;
-   padding-top: 5px;
+.modal-button-text {
+  padding-left: 20px;
+  padding-right: 10px;
+  padding-top: 5px;
 }
 
-.modal-button-arrow{
-   width: fit-content;
-   display: block;
-   font-size: 30px;
-   margin-left: 10px;
-   margin-right: 5px;
+.modal-button-arrow {
+  width: fit-content;
+  display: block;
+  font-size: 30px;
+  margin-left: 10px;
+  margin-right: 5px;
 }
 
 /* Меню выбора ингридиентов */
-#modal-menu-wrapper{
-
-   display: grid;
-   margin: auto;
-   margin-top: 20px;
-   width: 90%;
-   height: 100%;
+#modal-menu-wrapper {
+  display: grid;
+  margin: auto;
+  margin-top: 20px;
+  width: 90%;
+  height: 100%;
 }
 
-#modal-menu{
-   display: flex;
-   flex-wrap: wrap;
-   justify-content: center;
-   height: 400px;
-   overflow: auto;
+#modal-menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 400px;
+  overflow: auto;
 }
 
 /* Карточка ингридиентов */
-.modal-card{
-   display: flex;
-   flex-direction: column;
-   text-align: center; /* Важно для центрирования inline-элементов */
-    margin: 20px;
-    padding-top: 20px;
-    width: calc(100%/5);
-    height: fit-content;
-    border-radius: 5px;
-    box-shadow: none;
-    align-items: center; 
-   /* background-color: #FDD55C; */
-   /* box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3); */
+.modal-card {
+  display: flex;
+  flex-direction: column;
+  text-align: center; /* Важно для центрирования inline-элементов */
+  margin: 20px;
+  padding-top: 20px;
+  width: calc(100% / 5);
+  height: fit-content;
+  border-radius: 5px;
+  box-shadow: none;
+  align-items: center;
+  /* background-color: #FDD55C; */
+  /* box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3); */
 }
 
-.modal-card-img{
-   display: flex;
-   justify-content: center;
-   width: 180px;
-   height: 180px;
-   background-color: white;
-   background-position: center;
-   background-size: 100%;
-   margin-top: 10px;
-   margin: auto;
-   border: #FFC000 solid 10px;
-   border-radius: 50%;
-   overflow: hidden;
+.modal-card-img {
+  display: flex;
+  justify-content: center;
+  width: 180px;
+  height: 180px;
+  background-color: white;
+  background-position: center;
+  background-size: 100%;
+  margin-top: 10px;
+  margin: auto;
+  border: #ffc000 solid 10px;
+  border-radius: 50%;
+  overflow: hidden;
 }
 
-.modal-card-img img{
-   margin: auto;
-   width: 90%;
-   height: 90%;
-   object-fit:contain;
-   object-position: center;
+.modal-card-img img {
+  margin: auto;
+  width: 90%;
+  height: 90%;
+  object-fit: contain;
+  object-position: center;
 }
 
-.modal-card-description{
-   /* display: inline-block;  */
-    max-width: 100%;       
-    white-space: nowrap;
-    text-align: center;    
-    padding: 5px;
-    padding-bottom: 10px;
-    color: #454545;
-    font-size: 20px;
-    font-weight: 100;
+.modal-card-description {
+  /* display: inline-block;  */
+  max-width: 100%;
+  white-space: nowrap;
+  text-align: center;
+  padding: 5px;
+  padding-bottom: 10px;
+  color: #454545;
+  font-size: 20px;
+  font-weight: 100;
 }
 
-.modal-card-price{
-   border-top: #454545 solid 2px;
-   width: 80%;
-   margin: auto;
-   text-align: center;
-   color: #E6614C;
-   font-size: 17px;
-   font-weight: 300;
-   padding-bottom: 20px;
+.modal-card-price {
+  border-top: #454545 solid 2px;
+  width: 80%;
+  margin: auto;
+  text-align: center;
+  color: #e6614c;
+  font-size: 17px;
+  font-weight: 300;
+  padding-bottom: 20px;
 }
 
 /* Итоговая цена */
-.modal-footer{
-   display: grid;
-   width: 80%;
-   background-color: white;
-   text-align: center;
-   color: #E6614C;
-   font-size: 30px;
-   padding-top: 20px;
-   padding-bottom: 20px;
-   position: absolute;
-   left: auto;
-   right: auto;
-   top: 80.5%;
-   border-bottom-left-radius: 5px;
-   border-bottom-right-radius: 5px;
+.modal-footer {
+  display: grid;
+  width: 80%;
+  background-color: white;
+  text-align: center;
+  color: #e6614c;
+  font-size: 30px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  position: absolute;
+  left: auto;
+  right: auto;
+  top: 80.5%;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
-#modal-ready{
-   display: flex;
+#modal-ready {
+  display: flex;
 }
 
-
-#modal-ready-information{
-   float: right;
-   color: #454545;
-   margin-top: 20px ;
-   width: 60%;
-   font-size: 25px;
-   font-weight: 100; 
+#modal-ready-information {
+  float: right;
+  color: #454545;
+  margin-top: 20px;
+  width: 60%;
+  font-size: 25px;
+  font-weight: 100;
 }
 
-#modal-ready-information-ingridients{
-   width: 90%;
-   border-top: #454545 solid 2px;
-   border-bottom: #454545 solid 2px;
-   font-size: 20px;
-   list-style-type: none;
-   padding-left: 0;
-   padding-top: 15px;
-   padding-bottom: 25px;
+#modal-ready-information-ingridients {
+  width: 90%;
+  border-top: #454545 solid 2px;
+  border-bottom: #454545 solid 2px;
+  font-size: 20px;
+  list-style-type: none;
+  padding-left: 0;
+  padding-top: 15px;
+  padding-bottom: 25px;
 }
 
-#modal-ready-name{
-   position: relative;
-   top: 40px;
+#modal-ready-name {
+  position: relative;
+  top: 40px;
 }
 
-#modal-counter-description{
-   font-size: 15px;
-   color: #454545;
+#modal-counter-description {
+  font-size: 15px;
+  color: #454545;
 }
 
-#modal-add-to-basket{
-width: 20%;
+#modal-add-to-basket {
+  width: 20%;
 }
 
-#modal-ready-footer{
-   top: 70.5%;
+#modal-ready-footer {
+  top: 70.5%;
 }

@@ -1,6 +1,6 @@
-import { addProduct } from './basket.js';
-import { Menu } from './menu.js';
-import { pubSub } from './pubSub.js';
+import { addProduct } from '@script/basket.js';
+import { Menu } from '@script/menu.js';
+import { pubSub } from '@script/pubSub.js';
 
 pubSub.subscribe('addToBasket', (data) => {
   console.log(data.message);

@@ -1,6 +1,6 @@
-import { counter } from './counter.js';
-import { pubSub } from './pubSub.js';
-import { IngridientCard } from './ingridientCard.js';
+import { counter } from '@script/counter.js';
+import { pubSub } from '@script/pubSub.js';
+import { IngridientCard } from '@script/ingridientCard.js';
 
 const settings = {
   size: {

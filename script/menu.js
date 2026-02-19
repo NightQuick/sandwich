@@ -1,4 +1,4 @@
-import { Card } from './card.js';
+import { Card } from '@script/card.js';
 
 //Меню продуктов
 export class Menu {

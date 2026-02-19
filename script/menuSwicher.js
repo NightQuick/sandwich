@@ -1,4 +1,4 @@
-import { pubSub } from './pubSub.js';
+import { pubSub } from '@script/pubSub.js';
 //Создание эвентов для таблицы выбора категорий
 let table = document.getElementById('menu-swicher');
 table.firstElementChild.onclick = function (event) {

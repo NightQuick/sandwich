@@ -243,7 +243,7 @@
       "type": "single",
       "weight": 1
     },
-{
+    {
       "name": "Дарт Вейдер",
       "description": "С большой говяжей котлетой, сыром, салатом",
       "image": "/i/burgers/darthvader.png",
@@ -253,7 +253,7 @@
       "type": "single",
       "weight": 1
     },
-{
+    {
       "name": "Деревенский",
       "description": "Со свиной котлетой, беконом, драником и салатом",
       "image": "/i/burgers/derevenskiy.png",
@@ -263,7 +263,7 @@
       "type": "single",
       "weight": 1
     },
-{
+    {
       "name": "Вестерн",
       "description": "Со свиной котлетой, луковыми кольцами и соусом чипотл",
       "image": "/i/burgers/western.png",
@@ -273,7 +273,7 @@
       "type": "single",
       "weight": 1
     },
-{
+    {
       "name": "Гамбургер",
       "description": "Бургер с говяжей котлетой и кетчупом, но без овощей",
       "image": "/i/burgers/gamburger.png",
@@ -293,7 +293,7 @@
       "type": "single",
       "weight": 1
     },
-	{
+    {
       "name": "Чикенбург",
       "description": "Бургер с куриной котлетой в панировке",
       "image": "/i/burgers/chikenburger.png",
@@ -313,7 +313,7 @@
       "type": "single",
       "weight": 1
     },
-	{
+    {
       "name": "Пикантный бургер",
       "description": "куриная котлета, салат, лук, сол. огурец, сыр и медовая горчица",
       "image": "/i/burgers/spisy.png",
@@ -333,7 +333,7 @@
       "type": "single",
       "weight": 1
     },
-	{
+    {
       "name": "Королевский бургер",
       "description": "Говядина, бекон, куриное филе, сыр, салат, овощи",
       "image": "/i/burgers/kingburger.png",
@@ -403,7 +403,7 @@
       "type": "single",
       "weight": 1
     },
-{
+    {
       "name": "Пири-пири Бургер",
       "description": "С острым куриным филе",
       "image": "/i/burgers/burgerskurinymfile.png",
@@ -413,7 +413,7 @@
       "type": "single",
       "weight": 1
     },
-    	{
+    {
       "name": "Кубит",
       "description": "С куриным филе и картофельным драником",
       "image": "/i/salads/kubit.png",
@@ -473,7 +473,7 @@
       "type": "single",
       "weight": 1
     },
-	{
+    {
       "name": "Чикен террияки байтс",
       "description": "6 кусочков филе в соусе террияки с салатом и кунжутом",
       "image": "/i/salads/teriaki.png",
@@ -573,7 +573,7 @@
       "type": "single",
       "weight": 1
     },
-     {
+    {
       "name": "Соус чесночный (порц)",
       "description": "",
       "image": "/i/chicken/chesnochniy1.png",
@@ -583,7 +583,7 @@
       "type": "single",
       "weight": 1
     },
-     {
+    {
       "name": "Соус карри (порц)",
       "description": "",
       "image": "/i/chicken/curry1.png",
@@ -593,7 +593,7 @@
       "type": "single",
       "weight": 1
     },
-     {
+    {
       "name": "Соус кисло-сладкий (порц)",
       "description": "",
       "image": "/i/chicken/kislosladkiy2.png",
@@ -603,7 +603,7 @@
       "type": "single",
       "weight": 1
     },
-     {
+    {
       "name": "Соус горчичный (порц)",
       "description": "",
       "image": "/i/chicken/gorchichniy1.png",
@@ -613,7 +613,7 @@
       "type": "single",
       "weight": 1
     },
-     {
+    {
       "name": "Соус сальса (порц)",
       "description": "островатый",
       "image": "/i/chicken/salsa1.png",
@@ -623,7 +623,7 @@
       "type": "single",
       "weight": 1
     },
-     {
+    {
       "name": "Соус барбекью (порц)",
       "description": "с дымком",
       "image": "/i/chicken/bbq1.png",
@@ -633,7 +633,7 @@
       "type": "single",
       "weight": 1
     },
-     {
+    {
       "name": "Соус томатный кетчуп (порц)",
       "description": "классический вкус Heinz",
       "image": "/i/chicken/tomatniy1.png",
@@ -663,7 +663,7 @@
       "type": "single",
       "weight": 1
     },
-	{
+    {
       "name": "Лукошко",
       "description": "С куриным филе, жареными грибочками, соленым огурцами и сыром",
       "image": "i/salads/lukoshko.png",
@@ -673,7 +673,7 @@
       "type": "single",
       "weight": 1
     },
-	{
+    {
       "name": "Салат с тунцом",
       "description": "Тунец с салатом, болгарским перцем, маслинами и кукурузой",
       "image": "i/salads/saladtun.png",
@@ -897,7 +897,7 @@
       "market": "doner",
       "type": "single",
       "weight": 1
-    },    
+    },
     {
       "name": "Фахитос с курицей",
       "description": "Курица, мексиканская смесь, соус гуакамоле, грибы, маслины",
