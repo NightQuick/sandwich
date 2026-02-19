@@ -1,13 +1,14 @@
+import { basket, basketPrice } from '@constant';
+
 export function addProduct(name, value, price) {
   //Создние строки с продкутом, добавляемым в корзину
-  const basket = document.getElementById('basket-content');
   const template = document.getElementById('basket-content-template');
   const newContent = template.content.cloneNode(true);
   const td = newContent.querySelectorAll('td');
   td[0].textContent = name;
   td[1].textContent = value;
   basket.appendChild(newContent);
-  const basketPrice = document.getElementById('order-status');
+
   let currentPrice = parseInt(basketPrice.dataset.price) || 0;
 
   //Изменение цены

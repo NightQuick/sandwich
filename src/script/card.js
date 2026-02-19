@@ -1,4 +1,4 @@
-import { pubSub } from '@script/pubSub.js';
+import { pubSub } from '@constant';
 import { counter } from '@script/counter.js';
 import { SandwichBuilder } from '@script/modal.js';
 

@@ -1,11 +1,11 @@
-class PubSub {
+export class PubSub {
   constructor(channelName = 'pubSub') {
     this.channel = new BroadcastChannel(channelName);
     this.subscribers = new Map();
 
     this.channel.onmessage = (event) => {
       const { type, data } = event.data;
-      console.log(' Получено из канала:', type, data);
+      // console.log(' Получено из канала:', type, data);
     };
   }
 
@@ -18,7 +18,7 @@ class PubSub {
 
   publish(type, data) {
     this.channel.postMessage({ type, data });
-    console.log('Отправлено в канал:', type);
+    // console.log('Отправлено в канал:', type);
 
     const callbacks = this.subscribers.get(type);
     if (callbacks) {
@@ -30,5 +30,3 @@ class PubSub {
     this.channel.close();
   }
 }
-
-export const pubSub = new PubSub();

@@ -1,0 +1,11 @@
+@keyframes open-modal {
+    from{
+        display: none;
+    }
+    to{
+        display: flex;
+    }
+}
+   /* animation-name: open-modal;
+   animation-duration: 2s;
+   animation-fill-mode: forwards; */
