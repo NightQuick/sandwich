@@ -1,5 +1,5 @@
 import { counter } from './counter.js';
-import { addProduct } from './basket.js';
+import { pubSub } from './pubSub.js';
 import { IngridientCard } from './ingridientCard.js';
 
 const settings = {
@@ -215,7 +215,13 @@ export class SandwichBuilder {
 
     toBasket.addEventListener('click', () => {
       const input = counterElem.querySelector('.product-counter-input');
-      addProduct(this.cardData.name, input.value, this.cardData.price);
+      pubSub.publish('addToBasket', {
+        message: 'Пользователь добавил товар в корзину',
+        name: this.cardData.name,
+        value: input.value,
+        price: this.cardData.price
+      });
+
       this.closeBuilder();
     });
 

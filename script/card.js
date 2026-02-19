@@ -1,4 +1,4 @@
-import { addProduct } from './basket.js';
+import { pubSub } from './pubSub.js';
 import { counter } from './counter.js';
 import { SandwichBuilder } from './modal.js';
 
@@ -101,7 +101,12 @@ export class Card {
       if (counterInput.value == 0) {
         counterInput.value = 1;
       }
-      addProduct(this.data['name'], counterInput.value, this.data['price']);
+      pubSub.publish('addToBasket', {
+        message: 'Пользователь добавил товар в корзину',
+        name: this.data['name'],
+        value: counterInput.value,
+        price: this.data['price']
+      });
 
       const basketButton = document.getElementById('place-an-order');
       basketButton.style.backgroundColor = '#FFC000';
