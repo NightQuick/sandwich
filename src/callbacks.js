@@ -1,0 +1,14 @@
+import { Menu } from '@script/menu.js';
+import { addProduct } from '@script/basket.js';
+
+let loadedMenus = {};
+export const menuSwicherCallback = (data) => {
+  if (!loadedMenus[data.category]) {
+    let menu = new Menu(data.category);
+    loadedMenus[data.category] = menu;
+  }
+  loadedMenus[data.category].render();
+};
+export const addTobasketCallback = (data) => {
+  addProduct(data.name, data.value, data.price);
+};

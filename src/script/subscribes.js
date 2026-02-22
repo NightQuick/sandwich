@@ -1,16 +1,7 @@
 import { addProduct } from '@script/basket.js';
-import { Menu } from '@script/menu.js';
 import { pubSub } from '@constant';
+import { menuSwicherCallback, addTobasketCallback } from '@callback';
 
-pubSub.subscribe('addToBasket', (data) => {
-  addProduct(data.name, data.value, data.price);
-});
+pubSub.subscribe('addToBasket', addTobasketCallback);
 
-let loadedMenus = {};
-pubSub.subscribe('menuType', (data) => {
-  if (!loadedMenus[data.category]) {
-    let menu = new Menu(data.category);
-    loadedMenus[data.category] = menu;
-  }
-  loadedMenus[data.category].render();
-});
+pubSub.subscribe('menuType', menuSwicherCallback);

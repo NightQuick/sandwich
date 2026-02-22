@@ -6,7 +6,6 @@ export const basketPrice = document.getElementById('order-status');
 
 //menuSwicher.js
 export const table = document.getElementById('menu-swicher');
-
 //pubSub.js
 export const pubSub = new PubSub();
 

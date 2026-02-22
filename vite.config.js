@@ -8,7 +8,8 @@ export default defineConfig({
       '@styles': fileURLToPath(new URL('./styles', import.meta.url)),
       '@images': fileURLToPath(new URL('./public/i', import.meta.url)),
       '@': fileURLToPath(new URL('./', import.meta.url)),
-      '@constant': fileURLToPath(new URL('./src/constants.js', import.meta.url))
+      '@constant': fileURLToPath(new URL('./src/constants.js', import.meta.url)),
+      '@callback': fileURLToPath(new URL('./src/callbacks.js', import.meta.url))
     }
   },
   publicDir: 'public',
