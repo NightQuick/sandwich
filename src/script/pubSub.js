@@ -1,6 +1,5 @@
 export class PubSub {
-  constructor(channelName = 'pubSub') {
-    this.channel = new BroadcastChannel(channelName);
+  constructor() {
     this.subscribers = new Map();
   }
 

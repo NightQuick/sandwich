@@ -1,4 +1,5 @@
 import { counter } from '@script/counter.js';
+import { pubSub } from '@constant';
 
 export function renderBuilderReady(settings, cardData) {
   document.getElementById('modal-menu-wrapper').innerHTML = '';
@@ -65,7 +66,8 @@ export function renderBuilderReady(settings, cardData) {
       price: cardData.price
     });
 
-    closeBuilder();
+    const modal = document.getElementById('modal');
+    modal.style.display = 'none';
   });
 
   imageWrapper.appendChild(img);

@@ -86,7 +86,7 @@ export class SandwichBuilder {
       document.getElementById('close-modal').onclick = () => this.closeBuilder();
     }
 
-    this.renderBuilder(this.settings[this.currentKey], this.cardData);
+    this.renderBuilder();
   }
 
   async renderBuilder() {
