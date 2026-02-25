@@ -45,3 +45,13 @@ export const settings = {
     title: 'Проверьте и добавьте в корзину'
   }
 };
+
+export const swicherTable = {
+  pizza: { content: 'Пицца', id: 'menu-swicher-pizza-button' },
+  shaurma: { content: 'Шаурма', id: 'menu-swicher-shaurma-button' },
+  sandwiches: { content: 'Сендвичи', id: 'menu-swicher-sandwiches-button' },
+  burgers: { content: 'Бургеры', id: 'menu-swicher-burgers-button' },
+  chicken: { content: 'Курица & Картофель', id: 'menu-swicher-chicken-button' },
+  salads: { content: 'Тортилья & Салаты', id: 'menu-swicher-salads-button' },
+  drinks: { content: 'Напитки & Десерты', id: 'menu-swicher-drinks-button' }
+};
