@@ -3,7 +3,8 @@ import { yellow } from '@constant';
 export function addProduct(name, value, price) {
   const basket = document.getElementById('basket-content');
   const basketPrice = document.getElementById('order-status');
-  //Создние строки с продкутом, добавляемым в корзину
+
+  //Создание строки с продуктом, добавляемым в корзину
   const template = document.getElementById('basket-content-template');
   const newContent = template.content.cloneNode(true);
   const td = newContent.querySelectorAll('td');

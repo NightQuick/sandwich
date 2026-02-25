@@ -47,11 +47,11 @@ export class Card {
     name.textContent = this.data['name'];
 
     //описание товара и в то же время кнопка открытия модального окна
-    const ingridientWrapper = document.createElement('div');
-    ingridientWrapper.className = 'product-ingridients';
+    const ingredientWrapper = document.createElement('div');
+    ingredientWrapper.className = 'product-ingredients';
 
-    const ingridient = document.createElement('a');
-    ingridient.textContent = this.data['description'];
+    const ingredient = document.createElement('a');
+    ingredient.textContent = this.data['description'];
 
     //цена
     const price = document.createElement('span');
@@ -77,9 +77,9 @@ export class Card {
     card.appendChild(imgWrapper);
     card.appendChild(name);
 
-    ingridientWrapper.appendChild(ingridient);
+    ingredientWrapper.appendChild(ingredient);
 
-    card.appendChild(ingridientWrapper);
+    card.appendChild(ingredientWrapper);
     card.appendChild(price);
     card.appendChild(counterDescription);
 
@@ -87,14 +87,14 @@ export class Card {
     card.appendChild(addToBasket);
 
     if (this.data['components']) {
-      ingridient.addEventListener('click', () => {
+      ingredient.addEventListener('click', () => {
         const cleanData = JSON.parse(JSON.stringify(this.data));
         const builder = new SandwichBuilder(cleanData);
         builder.openBuilder();
       });
     } else {
-      ingridientWrapper.style.color = 'black';
-      ingridientWrapper.style.textDecorationLine = 'none';
+      ingredientWrapper.style.color = 'black';
+      ingredientWrapper.style.textDecorationLine = 'none';
     }
 
     addToBasket.addEventListener('click', () => {

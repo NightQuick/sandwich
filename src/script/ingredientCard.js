@@ -1,4 +1,4 @@
-export class IngridientCard {
+export class IngredientCard {
   constructor(data, multiple, builder) {
     this.builder = builder;
     this.data = data;

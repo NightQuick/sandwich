@@ -17,22 +17,22 @@ export function renderBuilderReady(settings, cardData) {
   modalProductContent.id = 'modal-ready-information';
   const title = document.createElement('span');
   title.textContent = 'Ваш сендвич готов!';
-  const listIngridients = document.createElement('ul');
-  listIngridients.id = 'modal-ready-information-ingridients';
-  for (let ingridient in cardData.components) {
-    const ingridientElement = document.createElement('li');
-    if (typeof cardData.components[ingridient][1] === 'string') {
-      ingridientElement.textContent = `${settings[ingridient].name}: ${cardData.components[ingridient][1]}`;
+  const listIngredients = document.createElement('ul');
+  listIngredients.id = 'modal-ready-information-ingredients';
+  for (let ingredient in cardData.components) {
+    const ingredientElement = document.createElement('li');
+    if (typeof cardData.components[ingredient][1] === 'string') {
+      ingredientElement.textContent = `${settings[ingredient].name}: ${cardData.components[ingredient][1]}`;
     } else {
       let list = [];
-      for (let component of cardData.components[ingridient]) {
+      for (let component of cardData.components[ingredient]) {
         list.push(component[1]);
       }
       if (list.length === 0) list = 'Нет';
-      ingridientElement.textContent = `${settings[ingridient].name}: ${list}`;
+      ingredientElement.textContent = `${settings[ingredient].name}: ${list}`;
     }
 
-    listIngridients.appendChild(ingridientElement);
+    listIngredients.appendChild(ingredientElement);
   }
   const name = document.createElement('span');
   name.id = 'modal-ready-name';
@@ -52,7 +52,7 @@ export function renderBuilderReady(settings, cardData) {
   toBasket.className = 'product-add-to-basket';
   toBasket.textContent = 'В КОРЗИНУ';
 
-  const row = document.getElementsByClassName('ingridients');
+  const row = document.getElementsByClassName('ingredients');
   for (let element of row) {
     element.style.backgroundColor = 'white';
   }
@@ -75,7 +75,7 @@ export function renderBuilderReady(settings, cardData) {
   modalReady.appendChild(imageWrapper);
 
   modalProductContent.appendChild(title);
-  modalProductContent.appendChild(listIngridients);
+  modalProductContent.appendChild(listIngredients);
   modalProductContent.appendChild(name);
   modalReady.appendChild(modalProductContent);
 

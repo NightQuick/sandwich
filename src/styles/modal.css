@@ -50,13 +50,8 @@
   cursor: pointer;
 }
 
-#modal-content {
-  /* display: flex; */
-  justify-content: center;
-}
-
 /* Таблица последовательности выбора ингридиентов */
-#ingridients-swicher {
+#ingredients-switcher {
   border-collapse: separate;
   background-color: white;
   color: #454545;
@@ -72,12 +67,12 @@
   border-radius: 5px;
   overflow: hidden;
 }
-.ingridients {
+.ingredients {
   padding: 10px;
 }
 
 /* Кнопки для переходов между этапами */
-.modal-swicher {
+.modal-switcher {
   display: flex;
   justify-content: center;
   width: 15%;
@@ -239,7 +234,7 @@
   font-weight: 100;
 }
 
-#modal-ready-information-ingridients {
+#modal-ready-information-ingredients {
   width: 90%;
   border-top: #454545 solid 2px;
   border-bottom: #454545 solid 2px;

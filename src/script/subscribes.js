@@ -1,7 +1,7 @@
 import { pubSub } from '@script/pubSub.js';
-import { menuSwicherCallback, addTobasketCallback } from '@callback';
+import { menuSwitcherCallback, addToBasketCallback } from '@callback';
 export function subscribe() {
-  pubSub.subscribe('addToBasket', addTobasketCallback);
+  pubSub.subscribe('addToBasket', addToBasketCallback);
 
-  pubSub.subscribe('menuType', menuSwicherCallback);
+  pubSub.subscribe('menuType', menuSwitcherCallback);
 }

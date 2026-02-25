@@ -1,14 +1,14 @@
-import { swicherTable, yellow } from '@constant';
+import { switcherTable, yellow } from '@constant';
 import { pubSub } from '@script/pubSub.js';
 
-export function renderSwicherTable() {
-  const table = document.getElementById('menu-swicher');
-  for (const type in swicherTable) {
+export function renderSwitcherTable() {
+  const table = document.getElementById('menu-switcher');
+  for (const type in switcherTable) {
     const tr = document.createElement('tr');
     const td = document.createElement('td');
     td.className = 'menu-button';
-    td.id = swicherTable[type].id;
-    td.textContent = swicherTable[type].content;
+    td.id = switcherTable[type].id;
+    td.textContent = switcherTable[type].content;
     tr.appendChild(td);
     table.appendChild(tr);
   }

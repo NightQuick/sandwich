@@ -1,4 +1,4 @@
-import { IngridientCard } from '@script/ingridientCard.js';
+import { IngredientCard } from '@script/ingredientCard.js';
 import { settings, yellow } from '@constant';
 import { renderBuilderReady } from '@script/renderBuilderReady.js';
 export class SandwichBuilder {
@@ -57,7 +57,7 @@ export class SandwichBuilder {
     this.cardCollections[this.currentKey] = [];
     for (let element of data) {
       for (let product in element) {
-        let cardElement = new IngridientCard(element[product], this.settings[this.currentKey].multiple, this);
+        let cardElement = new IngredientCard(element[product], this.settings[this.currentKey].multiple, this);
         this.cardCollections[this.currentKey].push(cardElement);
       }
     }
@@ -109,7 +109,7 @@ export class SandwichBuilder {
       const footer = document.getElementById('modal-footer');
       footer.textContent = 'Итого: ' + this.cardData.price + ' руб.';
 
-      this.renderIngridientSwicher();
+      this.renderIngredientSwitcher();
 
       for (let card of this.cardCollections[this.currentKey]) {
         card.renderModalCard();
@@ -119,8 +119,8 @@ export class SandwichBuilder {
     }
   }
 
-  renderIngridientSwicher() {
-    const row = document.getElementsByClassName('ingridients');
+  renderIngredientSwitcher() {
+    const row = document.getElementsByClassName('ingredients');
     for (let element of row) {
       element.style.backgroundColor = 'white';
     }

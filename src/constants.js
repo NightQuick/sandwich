@@ -1,5 +1,3 @@
-import { PubSub } from '@script/pubSub.js';
-
 export const yellow = '#FFC000';
 
 export const settings = {
@@ -38,12 +36,12 @@ export const settings = {
   }
 };
 
-export const swicherTable = {
-  pizza: { content: 'Пицца', id: 'menu-swicher-pizza-button' },
-  shaurma: { content: 'Шаурма', id: 'menu-swicher-shaurma-button' },
-  sandwiches: { content: 'Сендвичи', id: 'menu-swicher-sandwiches-button' },
-  burgers: { content: 'Бургеры', id: 'menu-swicher-burgers-button' },
-  chicken: { content: 'Курица & Картофель', id: 'menu-swicher-chicken-button' },
-  salads: { content: 'Тортилья & Салаты', id: 'menu-swicher-salads-button' },
-  drinks: { content: 'Напитки & Десерты', id: 'menu-swicher-drinks-button' }
+export const switcherTable = {
+  pizza: { content: 'Пицца', id: 'menu-switcher-pizza-button' },
+  shaurma: { content: 'Шаурма', id: 'menu-switcher-shaurma-button' },
+  sandwiches: { content: 'Сендвичи', id: 'menu-switcher-sandwiches-button' },
+  burgers: { content: 'Бургеры', id: 'menu-switcher-burgers-button' },
+  chicken: { content: 'Курица & Картофель', id: 'menu-switcher-chicken-button' },
+  salads: { content: 'Тортилья & Салаты', id: 'menu-switcher-salads-button' },
+  drinks: { content: 'Напитки & Десерты', id: 'menu-switcher-drinks-button' }
 };

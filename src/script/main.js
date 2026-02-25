@@ -1,7 +1,7 @@
-import { renderSwicherTable } from '@script/table.js';
+import { renderSwitcherTable } from '@script/table.js';
 import { subscribe } from '@script/subscribes.js';
 
-renderSwicherTable();
+renderSwitcherTable();
 subscribe();
 
-document.getElementById('menu-swicher-pizza-button').click();
+document.getElementById('menu-switcher-pizza-button').click();
