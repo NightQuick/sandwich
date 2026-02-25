@@ -68,6 +68,7 @@ export class SandwichBuilder {
   }
 
   openBuilder() {
+    document.body.style.overflow = 'hidden';
     this.cardCollections = {};
     this.currentKey = 'size';
 
@@ -81,8 +82,13 @@ export class SandwichBuilder {
     document.getElementById('next-modal').onclick = () => {
       this.renderBuilder(this.settings[this.getNextKey()]);
     };
+    document.addEventListener('keydown', this.escKeyHandler);
 
     if (!document.getElementById('close-modal').onclick) {
+      document.getElementById('modal').addEventListener('click', (event) => {
+        if (event.target.id != 'modal') return;
+        this.closeBuilder();
+      });
       document.getElementById('close-modal').onclick = () => this.closeBuilder();
     }
 
@@ -141,9 +147,16 @@ export class SandwichBuilder {
     return this.currentKey;
   }
   closeBuilder() {
+    document.removeEventListener('keydown', this.escKeyHandler);
+    document.body.style.overflow = '';
     this.currentKey = 'size';
 
     const modal = document.getElementById('modal');
     modal.style.display = 'none';
   }
+  escKeyHandler = (event) => {
+    if (event.key === 'Escape') {
+      this.closeBuilder();
+    }
+  };
 }
