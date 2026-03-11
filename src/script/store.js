@@ -45,7 +45,6 @@ export class Store {
       if (key === 'finish') continue;
       const data = JSON.parse(JSON.stringify(jsonData[settings[key].object]));
 
-      // Устанавливаем id для каждого ингредиента
       for (const comp in data) {
         data[comp].id = comp;
       }
