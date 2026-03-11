@@ -1,5 +1,8 @@
 :root {
   --color-brand: #ffc000;
+  --selected-card-bg: #fdd55c;
+  --card-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+  --unselected-card-bg: #ebeae8;
 }
 
 body {
@@ -63,4 +66,12 @@ header {
   flex-wrap: wrap;
   justify-content: center;
   width: 100%;
+}
+
+.menu-switcher-active {
+  background-color: var(--color-brand);
+}
+
+.menu-switcher-inactive {
+  background-color: white;
 }

@@ -19,6 +19,9 @@ export function addProduct(name, value, price) {
   basketPrice.dataset.price = currentPrice;
   basketPrice.textContent = `Итого: ${currentPrice} руб.`;
 
-  const orderButton = document.getElementById('place-an-order');
-  orderButton.style.backgroundColor = secondaryColour;
+  const orderButton = document.getElementsByClassName('place-an-order');
+
+  if (!orderButton[0].classList.contains('place-an-order-active')) {
+    orderButton[0].classList.add('place-an-order-active');
+  }
 }

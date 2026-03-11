@@ -1,5 +1,7 @@
 #modal {
-  display: none;
+  opacity: 0;
+  visibility: hidden;
+  display: flex;
   justify-content: center;
   align-items: center;
   position: fixed;
@@ -10,6 +12,20 @@
   width: 100%;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  transition:
+    opacity 0.3s,
+    visibility 0.3s;
+}
+
+#modal.modal-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.no-scroll {
+  overflow: hidden;
 }
 
 #modal-window {
@@ -145,7 +161,7 @@
 .modal-card {
   display: flex;
   flex-direction: column;
-  text-align: center; /* Важно для центрирования inline-элементов */
+  text-align: center;
   margin: 20px;
   padding-top: 20px;
   width: calc(100% / 5);
@@ -153,8 +169,7 @@
   border-radius: 5px;
   box-shadow: none;
   align-items: center;
-  /* background-color: #FDD55C; */
-  /* box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3); */
+  cursor: pointer;
 }
 
 .modal-card-img {
@@ -261,4 +276,17 @@
 
 #modal-ready-footer {
   top: 70.5%;
+}
+.modal-switcher-inactive {
+  background-color: white;
+}
+.modal-switcher-active {
+  background-color: var(--color-brand);
+}
+.modal-card-active {
+  background-color: var(--selected-card-bg);
+  box-shadow: var(--card-shadow);
+}
+.modal-card-inactive {
+  background-color: var(--unselected-card-bg);
 }

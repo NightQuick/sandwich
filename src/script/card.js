@@ -89,12 +89,10 @@ export class Card {
     if (this.data['components']) {
       ingredient.addEventListener('click', () => {
         const cleanData = JSON.parse(JSON.stringify(this.data));
-        const builder = new SandwichBuilder(cleanData);
-        builder.openBuilder();
+        pubSub.publish('openBuilder', { message: 'User open modal', data: cleanData });
       });
     } else {
-      ingredientWrapper.style.color = 'black';
-      ingredientWrapper.style.textDecorationLine = 'none';
+      ingredientWrapper.classList.add('ingredient-list-inactive');
     }
 
     addToBasket.addEventListener('click', () => {
@@ -103,15 +101,11 @@ export class Card {
         counterInput.value = 1;
       }
       pubSub.publish('addToBasket', {
-        message: 'Пользователь добавил товар в корзину',
+        message: 'User add product to basket',
         name: this.data['name'],
         value: counterInput.value,
         price: this.data['price']
       });
-
-      const basketButton = document.getElementById('place-an-order');
-      basketButton.style.backgroundColor = secondaryColour;
-      basketButton.style.cursor = 'pointer';
     });
     return card;
   }

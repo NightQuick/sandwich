@@ -16,11 +16,22 @@ export function renderSwitcherTable() {
     if (event.target.nodeName != 'TD') return;
 
     for (let tr of table.children) {
-      tr.style.backgroundColor = 'white';
+      if (tr.classList.contains('menu-switcher-active')) {
+        tr.classList.remove('menu-switcher-active');
+      }
+      if (tr.classList.contains('menu-switcher-inactive')) {
+        tr.classList.remove('menu-switcher-inactive');
+      }
     }
-    event.target.parentElement.style.backgroundColor = secondaryColour;
+
+    event.target.parentElement.classList.add('menu-switcher-active');
+    for (let tr of table.children) {
+      if (!tr.classList.contains('menu-switcher-active')) {
+        tr.classList.remove('menu-switcher-inactive');
+      }
+    }
 
     let category = event.target.id.split('-')[2].split('&');
-    pubSub.publish('menuType', { message: 'Пользователь нажал на один из элементов меню', category });
+    pubSub.publish('menuType', { message: 'User changed menu category', category });
   };
 }

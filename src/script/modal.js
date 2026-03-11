@@ -19,55 +19,68 @@ export class SandwichBuilder {
     }
     this.cardCollections = {};
     this.currentKey = 'size';
+    this.ingridients = {};
   }
-
   async loadData() {
-    let jsonData = await loadJson();
+    if (!(this.currentKey in this.ingridients)) {
+      let jsonData = await loadJson();
+      for (const key in settings) {
+        if (key == 'finish') return;
+        const clonedData = JSON.parse(JSON.stringify(jsonData[settings[key].object]));
+        const data = [];
+        data.push(clonedData);
 
-    let data = [];
-    const clonedData = JSON.parse(JSON.stringify(jsonData[settings[this.currentKey].object]));
-    data.push(clonedData);
+        this.ingridients[key] = data;
+      }
+    }
 
-    for (let comp in data[0]) {
-      data[0][comp].id = comp;
-      if (typeof this.cardData['components'][this.currentKey][0] != 'string') {
-        for (let component of this.cardData['components'][this.currentKey]) {
-          if (comp === component[0]) {
-            data[0][comp].choosed = true;
-            component = [data[0][comp].id, data[0][comp].name, data[0][comp].price];
-          }
-        }
-      } else {
-        if (this.cardData.components[this.currentKey][0] === comp) {
-          data[0][comp].choosed = true;
-          this.cardData.components[this.currentKey] = [
-            data[0][comp].id,
-            data[0][comp].name,
-            data[0][comp].price
-          ];
+    for (let comp in this.ingridients[this.currentKey][0]) {
+      this.ingridients[this.currentKey][0][comp].id = comp;
+      this.ingridients[this.currentKey][0][comp].choosed = false;
+    }
+
+    if (typeof this.cardData['components'][this.currentKey][0] === 'string') {
+      const compId = this.cardData.components[this.currentKey][0];
+      if (this.ingridients[this.currentKey][0][compId]) {
+        this.ingridients[this.currentKey][0][compId].choosed = true;
+        this.cardData.components[this.currentKey] = [
+          this.ingridients[this.currentKey][0][compId].id,
+          this.ingridients[this.currentKey][0][compId].name,
+          this.ingridients[this.currentKey][0][compId].price
+        ];
+      }
+    } else {
+      for (let component of this.cardData['components'][this.currentKey]) {
+        const compId = component[0];
+        if (this.ingridients[this.currentKey][0][compId]) {
+          this.ingridients[this.currentKey][0][compId].choosed = true;
+          component[0] = this.ingridients[this.currentKey][0][compId].id;
+          component[1] = this.ingridients[this.currentKey][0][compId].name;
+          component[2] = this.ingridients[this.currentKey][0][compId].price;
         }
       }
     }
+
     this.cardCollections[this.currentKey] = [];
-    for (let element of data) {
+    for (let element of this.ingridients[this.currentKey]) {
       for (let product in element) {
         let cardElement = new IngredientCard(element[product], this.settings[this.currentKey].multiple, this);
         this.cardCollections[this.currentKey].push(cardElement);
       }
     }
-    return data;
+    return this.ingridients[this.currentKey];
   }
   async initialize() {
     await this.loadData();
   }
 
   openBuilder() {
-    document.body.style.overflow = 'hidden';
+    document.body.classList.add('no-scroll');
     this.cardCollections = {};
     this.currentKey = 'size';
 
     const modal = document.getElementById('modal');
-    modal.style.display = 'flex';
+    modal.classList.add('modal-visible');
 
     document.getElementById('previous-modal').onclick = () => {
       this.renderBuilder(this.settings[this.getPrevKey()]);
@@ -116,9 +129,21 @@ export class SandwichBuilder {
   renderIngredientSwitcher() {
     const row = document.getElementsByClassName('ingredients');
     for (let element of row) {
-      element.style.backgroundColor = 'white';
+      if (element.classList.contains('modal-switcher-active')) {
+        element.classList.remove('modal-switcher-active');
+      }
+      if (element.classList.contains('modal-switcher-inactive')) {
+        element.classList.remove('modal-switcher-inactive');
+      }
     }
-    document.getElementById(this.currentKey).style.backgroundColor = secondaryColour;
+
+    const currentElement = document.getElementById(this.currentKey);
+    currentElement.classList.add('modal-switcher-active');
+    for (let element of row) {
+      if (!element.classList.contains('modal-switcher-active')) {
+        element.classList.add('modal-switcher-inactive');
+      }
+    }
   }
 
   getNextKey() {
@@ -142,11 +167,11 @@ export class SandwichBuilder {
   }
   closeBuilder() {
     document.removeEventListener('keydown', this.escKeyHandler);
-    document.body.style.overflow = '';
+    document.body.classList.remove('no-scroll');
     this.currentKey = 'size';
 
     const modal = document.getElementById('modal');
-    modal.style.display = 'none';
+    modal.classList.remove('modal-visible');
   }
   escKeyHandler = (event) => {
     if (event.key === 'Escape') {

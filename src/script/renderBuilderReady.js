@@ -54,21 +54,33 @@ export function renderBuilderReady(settings, cardData) {
 
   const row = document.getElementsByClassName('ingredients');
   for (let element of row) {
-    element.style.backgroundColor = 'white';
+    if (element.classList.contains('modal-switcher-active')) {
+      element.classList.remove('modal-switcher-active');
+    }
+    if (element.classList.contains('modal-switcher-inactive')) {
+      element.classList.remove('modal-switcher-inactive');
+    }
   }
-  document.getElementById('finish').style.backgroundColor = secondaryColour;
+  const finishElement = document.getElementById('finish');
+  finishElement.classList.add('modal-switcher-active');
+
+  for (let element of row) {
+    if (!element.classList.contains('modal-switcher-active')) {
+      element.classList.add('modal-switcher-inactive');
+    }
+  }
 
   toBasket.addEventListener('click', () => {
     const input = counterElem.querySelector('.product-counter-input');
     pubSub.publish('addToBasket', {
-      message: 'Пользователь добавил товар в корзину',
+      message: 'User add product to basket',
       name: cardData.name,
       value: input.value,
       price: cardData.price
     });
 
     const modal = document.getElementById('modal');
-    modal.style.display = 'none';
+    modal.classList.remove('modal-visible');
   });
 
   imageWrapper.appendChild(img);
