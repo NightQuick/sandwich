@@ -37,25 +37,25 @@ export class IngredientCard {
     const currentStep = store.getCurrentStep();
     const components = sandwichConfig?.components?.[currentStep];
 
-    let isChoosed = false;
+    let isChosen = false;
 
     if (components === undefined || components === null) {
-      isChoosed = false;
+      isChosen = false;
     } else if (Array.isArray(components)) {
       if (components.length === 0) {
-        isChoosed = false;
+        isChosen = false;
       } else if (typeof components[0] === 'string') {
-        isChoosed = components[0] === this.data.id;
+        isChosen = components[0] === this.data.id;
       } else if (Array.isArray(components[0])) {
-        isChoosed = components.some((item) => item && item[0] === this.data.id);
+        isChosen = components.some((item) => item && item[0] === this.data.id);
       }
     }
 
-    if (isChoosed) {
+    if (isChosen) {
       card.classList.add('modal-card-active');
     }
 
-    if (!isChoosed) {
+    if (!isChosen) {
       card.addEventListener('click', () => {
         this.builder.selectIngredient(this.data);
       });

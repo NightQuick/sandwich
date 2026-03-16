@@ -16,7 +16,7 @@ export const addToBasketCallback = (data) => {
 };
 
 export const openBuilderCallback = async (data) => {
-  store.initSandwichConfig(data.data);
+  await store.initSandwichConfig(data.data);
   await store.loadIngredients();
   const builder = new SandwichBuilder(store.getSandwichConfig());
   builder.openBuilder();

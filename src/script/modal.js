@@ -43,16 +43,15 @@ export class SandwichBuilder {
   }
 
   async renderBuilder() {
+    await this.initialize();
     const currentStep = store.getCurrentStep();
-    const sandwichConfig = store.getSandwichConfig();
+    const sandwichConfig = await store.getSandwichConfig();
 
     if (this.settings[currentStep].object != 'ready') {
       document.getElementById('modal-menu-wrapper').innerHTML = '';
       const menu = document.createElement('div');
       menu.id = 'modal-menu';
       document.getElementById('modal-menu-wrapper').appendChild(menu);
-
-      await this.initialize();
 
       const header = document.getElementById('header-text');
       header.textContent = this.settings[currentStep].title;

@@ -8,8 +8,10 @@ export function renderBuilderReady(settings, cardData) {
 
   const modalReady = document.createElement('div');
   modalReady.id = 'modal-ready';
+
   const imageWrapper = document.createElement('div');
   imageWrapper.className = 'modal-card-img modal-ready';
+
   const img = document.createElement('img');
   img.src = cardData.image;
   const modalProductContent = document.createElement('div');
@@ -20,7 +22,8 @@ export function renderBuilderReady(settings, cardData) {
   listIngredients.id = 'modal-ready-information-ingredients';
   for (let ingredient in cardData.components) {
     const ingredientElement = document.createElement('li');
-    if (typeof cardData.components[ingredient][1] === 'string') {
+    if (typeof cardData.components[ingredient][0] === 'string') {
+      console.log(cardData.components[ingredient]);
       ingredientElement.textContent = `${settings[ingredient].name}: ${cardData.components[ingredient][1]}`;
     } else {
       let list = [];

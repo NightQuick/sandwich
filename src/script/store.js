@@ -86,7 +86,9 @@ export class Store {
     this.notify('INGREDIENT_SELECTED', { category, ingredient });
   }
 
-  initSandwichConfig(data) {
+  async initSandwichConfig(data) {
+    await this.loadIngredients();
+    this.loadIngredients();
     this.state.sandwichConfig = JSON.parse(JSON.stringify(data));
     this.state.sandwichConfig.basePrice = data.price;
     this.state.currentStep = 'size';
@@ -95,7 +97,7 @@ export class Store {
       if (typeof this.state.sandwichConfig.components[component] === 'string') {
         this.state.sandwichConfig.components[component] = [
           this.state.sandwichConfig.components[component],
-          '',
+          this.state.ingredients[component][0][this.state.sandwichConfig.components[component]].name,
           0
         ];
       } else {
