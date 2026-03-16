@@ -34,4 +34,12 @@ export function renderSwitcherTable() {
     let category = event.target.id.split('-')[2].split('&');
     pubSub.publish('menuType', { message: 'User changed menu category', category });
   };
+  table.addEventListener('mouseover', (event) => {
+    if (event.target.nodeName != 'TD') return;
+    event.target.classList.add('menu-switcher-hover');
+  });
+  table.addEventListener('mouseout', (event) => {
+    if (event.target.nodeName != 'TD') return;
+    event.target.classList.remove('menu-switcher-hover');
+  });
 }
