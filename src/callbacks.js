@@ -1,7 +1,7 @@
 import { Menu } from '@script/menu.js';
-import { addProduct } from '@script/basket.js';
 import { SandwichBuilder } from '@script/modal.js';
 import { store } from '@script/store.js';
+import { basket } from '@script/basket.js';
 
 let loadedMenus = {};
 export const menuSwitcherCallback = (data) => {
@@ -12,7 +12,7 @@ export const menuSwitcherCallback = (data) => {
   loadedMenus[data.category].render();
 };
 export const addToBasketCallback = (data) => {
-  addProduct(data.name, data.value, data.price);
+  basket.addProduct(data.name, data.value, data.price);
 };
 
 export const openBuilderCallback = async (data) => {
@@ -20,4 +20,8 @@ export const openBuilderCallback = async (data) => {
   await store.loadIngredients();
   const builder = new SandwichBuilder(store.getSandwichConfig());
   builder.openBuilder();
+};
+
+export const confirmOrderCallback = () => {
+  basket.confirmOrder();
 };

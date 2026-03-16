@@ -23,7 +23,6 @@ export function renderBuilderReady(settings, cardData) {
   for (let ingredient in cardData.components) {
     const ingredientElement = document.createElement('li');
     if (typeof cardData.components[ingredient][0] === 'string') {
-      console.log(cardData.components[ingredient]);
       ingredientElement.textContent = `${settings[ingredient].name}: ${cardData.components[ingredient][1]}`;
     } else {
       let list = [];

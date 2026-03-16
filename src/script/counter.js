@@ -29,7 +29,11 @@ export function counter() {
   input.addEventListener('input', () => {
     input.value = Math.abs(input.value);
   });
-
+  input.addEventListener('blur', () => {
+    if (input.value <= 0) {
+      input.value = 1;
+    }
+  });
   buttonMinus.appendChild(buttonMinusContent);
   buttonPlus.appendChild(buttonPlusContent);
 

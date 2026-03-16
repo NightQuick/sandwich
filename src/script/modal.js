@@ -29,6 +29,11 @@ export class SandwichBuilder {
       this.getNextKey();
       this.renderBuilder();
     };
+    document.getElementById('ingredients-switcher').onclick = (event) => {
+      if (event.target.nodeName != 'TD') return;
+      store.setStep(event.target.id);
+      this.renderBuilder();
+    };
     document.addEventListener('keydown', this.escKeyHandler);
 
     if (!document.getElementById('close-modal').onclick) {

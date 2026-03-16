@@ -83,6 +83,9 @@
   border-radius: 5px;
   overflow: hidden;
 }
+#ingredients-switcher td {
+  cursor: pointer;
+}
 .ingredients {
   padding: 10px;
 }
