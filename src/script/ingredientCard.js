@@ -55,23 +55,27 @@ export class IngredientCard {
       card.classList.add('modal-card-active');
     }
 
-    if (!isChosen) {
-      card.addEventListener('click', () => {
-        this.builder.selectIngredient(this.data);
-      });
-    } else {
-      card.addEventListener('click', () => {
-        if (currentStep === 'size' || currentStep === 'bread') return;
+    card.addEventListener('click', () => {
+      store.selectIngredient(currentStep, this.data);
+      this.builder.renderBuilder();
+    });
+    // if (!isChosen) {
+    //   card.addEventListener('click', () => {
+    //     this.builder.selectIngredient(this.data);
+    //   });
+    // } else {
+    //   card.addEventListener('click', () => {
+    //     if (currentStep === 'size' || currentStep === 'bread') return;
 
-        card.classList.remove('modal-card-active');
-        card.classList.add('modal-card-inactive');
+    //     card.classList.remove('modal-card-active');
+    //     card.classList.add('modal-card-inactive');
 
-        const newComponents = (components || []).filter((item) => item && item[0] !== this.data.id);
-        sandwichConfig.components[currentStep] = newComponents;
+    //     const newComponents = (components || []).filter((item) => item && item[0] !== this.data.id);
+    //     sandwichConfig.components[currentStep] = newComponents;
 
-        store.recalculatePrice();
-        this.builder.renderBuilder();
-      });
-    }
+    //     store.recalculatePrice();
+    //     this.builder.renderBuilder();
+    //   });
+    // }
   }
 }
