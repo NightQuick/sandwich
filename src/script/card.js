@@ -1,5 +1,6 @@
 import { pubSub } from '@script/pubSub.js';
 import { counter } from '@script/counter.js';
+import { logoPaths } from '../constants';
 
 //Карточки товаров(не ингридиентов модального окна)
 export class Card {
@@ -16,18 +17,9 @@ export class Card {
     //логотип компании(если есть)
     const logo = document.createElement('img');
     logo.className = 'logo';
-    switch (this.data['market']) {
-      case 'doner': {
-        logo.src = 'i/markets/doner.png';
-        break;
-      }
-      case 'sfc': {
-        logo.src = 'i/markets/south_fried_chicken.png';
-        break;
-      }
-      case 'subway': {
-        logo.src = 'i/markets/subway_logo.png';
-        break;
+    for (const market in logoPaths) {
+      if (this.data.market === market) {
+        logo.src = logoPaths[market];
       }
     }
 

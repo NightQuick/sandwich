@@ -51,3 +51,8 @@ export const ingredientSwitcher = {
   filling: { content: 'Начинка', id: 'filling' },
   finish: { content: 'Готово!', id: 'finish' }
 };
+export const logoPaths = {
+  doner: 'i/markets/doner.png',
+  sfc: 'i/markets/south_fried_chicken.png',
+  subway: 'i/markets/subway_logo.png'
+};
