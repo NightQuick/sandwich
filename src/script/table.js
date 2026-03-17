@@ -35,11 +35,17 @@ export function renderSwitcherTable() {
     pubSub.publish('menuType', { message: 'User changed menu category', category });
   };
   table.addEventListener('mouseover', (event) => {
-    if (event.target.nodeName != 'TD') return;
-    event.target.classList.add('menu-switcher-hover');
+    if (event.target.nodeName === 'TD') {
+      event.target.parentElement.classList.add('menu-switcher-hover');
+    } else if (event.target.nodeName === 'TR') {
+      event.target.classList.add('menu-switcher-hover');
+    }
   });
   table.addEventListener('mouseout', (event) => {
-    if (event.target.nodeName != 'TD') return;
-    event.target.classList.remove('menu-switcher-hover');
+    if (event.target.nodeName === 'TD') {
+      event.target.parentElement.classList.remove('menu-switcher-hover');
+    } else if (event.target.nodeName === 'TR') {
+      event.target.classList.remove('menu-switcher-hover');
+    }
   });
 }
