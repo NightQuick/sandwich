@@ -64,7 +64,7 @@ header {
   position: absolute;
   left: 0;
   width: 100%;
-  background-color: rgba(255, 191, 0, 0.49); /* твой #ffbf007e */
+  background-color: rgba(255, 191, 0, 0.49);
   border-radius: 0.2em;
   pointer-events: none;
   opacity: 0;
