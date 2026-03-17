@@ -1,4 +1,5 @@
 import { store } from '@script/store.js';
+import { settings } from '@constant';
 
 export class IngredientCard {
   constructor(data, multiple, builder) {
@@ -57,7 +58,18 @@ export class IngredientCard {
 
     card.addEventListener('click', () => {
       store.selectIngredient(currentStep, this.data);
-      this.builder.renderBuilder();
+      this.builder.updatePrice();
+      if (settings[store.getCurrentStep()]?.multiple) {
+        if (card.classList.contains('modal-card-active')) {
+          card.classList.remove('modal-card-active');
+          card.classList.add('modal-card-inactive');
+        } else {
+          card.classList.remove('modal-card-inactive');
+          card.classList.add('modal-card-active');
+        }
+      } else {
+        this.builder.renderBuilder();
+      }
     });
   }
 }

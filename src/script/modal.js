@@ -13,6 +13,12 @@ export class SandwichBuilder {
     await store.loadIngredients();
   }
 
+  updatePrice() {
+    store.recalculatePrice();
+    const footer = document.getElementById('modal-footer');
+    footer.textContent = 'Итого: ' + store.state.sandwichConfig.price + ' руб.';
+  }
+
   openBuilder() {
     document.body.classList.add('no-scroll');
     this.cardCollections = {};
