@@ -9,6 +9,7 @@
 
 /* Верхняя часть корзицы с изображением */
 #basket-description {
+  position: relative;
   overflow: hidden;
   display: flex;
   width: 100%;
@@ -48,9 +49,10 @@
 }
 
 #basket-name {
-  float: right;
-  margin-right: 40px;
-  margin-top: 15px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   font-family: serif;
   color: white;
   text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
@@ -129,11 +131,13 @@
 }
 
 .place-an-order {
+  font-size: 17px;
   border: 0px;
   background-color: #808080;
   color: white;
   border-radius: 2px;
   width: 70%;
+  height: 22px;
   box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.7);
 }
 
