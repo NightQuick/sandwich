@@ -32,25 +32,28 @@
               <span id="basket-name">Корзина</span>
             </div>
           </div>
-          <table id="basket-products">
-            <thead>
-              <tr id="basket-products-head">
-                <td class="basket-products-columns" id="name">Название</td>
-                <td class="basket-products-columns" id="price">Цена</td>
-                <td class="basket-products-columns" id="count">Кол-во</td>
-              </tr>
-            </thead>
-            <tbody id="basket-content">
-              <template id="basket-content-template">
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
+          <div id="basket-products-wrapper">
+            <table id="basket-products">
+              <thead>
+                <tr id="basket-products-head">
+                  <td class="basket-products-columns" id="name">Название</td>
+                  <td class="basket-products-columns" id="price">Цена</td>
+                  <td class="basket-products-columns" id="count">Кол-во</td>
                 </tr>
-              </template>
-            </tbody>
-          </table>
+              </thead>
+              <tbody id="basket-content">
+                <template id="basket-content-template">
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+
           <div id="order-information">
             <span id="order-status">Итого: 0 руб.</span>
             <button class="place-an-order">ОФОРМИТЬ ЗАКАЗ</button>
