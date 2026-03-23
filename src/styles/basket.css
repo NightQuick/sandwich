@@ -76,12 +76,14 @@
 }
 
 .basket-products-columns#name {
-  width: 10px;
+  width: 100px;
   margin-left: 0px;
+  padding-right: 8px;
 }
 .basket-products-columns#price {
   margin-right: 0px;
   width: 70px;
+  padding-right: 8px;
 }
 
 .basket-products-columns#count {
