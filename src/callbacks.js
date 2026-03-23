@@ -2,6 +2,7 @@ import { Menu } from '@script/menu.js';
 import { SandwichBuilder } from '@script/modal.js';
 import { store } from '@script/store.js';
 import { basket } from '@script/basket.js';
+import { renderOrder } from './script/order';
 
 let loadedMenus = {};
 export const menuSwitcherCallback = (data) => {
@@ -22,6 +23,6 @@ export const openBuilderCallback = async (data) => {
   builder.openBuilder();
 };
 
-export const confirmOrderCallback = () => {
-  basket.confirmOrder();
+export const confirmOrderCallback = (data) => {
+  renderOrder(data.data);
 };

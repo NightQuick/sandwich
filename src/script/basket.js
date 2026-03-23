@@ -1,6 +1,7 @@
-import { confirmOrderCallback } from '@callback';
+import { pubSub } from '@script/pubSub.js';
 export class Basket {
   constructor() {
+    this.confirmOrderEvent = false;
     this.orders = [];
     this.totalPrice = 0;
     this.basket = document.getElementById('basket-content');
@@ -55,18 +56,25 @@ export class Basket {
       if (!orderButton[0].classList.contains('place-an-order-active')) {
         orderButton[0].classList.add('place-an-order-active');
       }
-      orderButton[0].onclick = confirmOrderCallback;
+      if (!this.confirmOrderEvent) {
+        orderButton[0].addEventListener('click', () => {
+          pubSub.publish('confirmOrder', { message: 'User confirm order', data: this.orders });
+          this.orders = [];
+          this.totalPrice = 0;
+          const orderButton = document.getElementsByClassName('place-an-order');
+          this.basket.innerHTML = '';
+          this.renderBasket();
+        });
+        this.confirmOrderEvent = true;
+      }
+      // = confirmOrderCallback;
     }
   }
   confirmOrder() {
     console.log(`order sended \n order info:\n ${JSON.stringify(this.orders)}`);
-    this.orders = [];
-    this.totalPrice = 0;
-    const orderButton = document.getElementsByClassName('place-an-order');
+
     orderButton[0].onclick = '';
     // orderButton[0].classList.remove('place-an-order-active');
-    this.basket.innerHTML = '';
-    this.renderBasket();
   }
 }
 export const basket = new Basket();
