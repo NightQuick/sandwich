@@ -77,12 +77,14 @@ export class Store {
 
       if (exists) {
         this.state.sandwichConfig.components[category] = current.filter((item) => item[0] !== ingredient.id);
+        return false;
       } else {
         if (category !== 'sauce') {
           current.push([ingredient.id, ingredient.name, ingredient.price || 0]);
         } else {
           if (this.state.sandwichConfig.components[category].length < 3) {
             current.push([ingredient.id, ingredient.name, ingredient.price || 0]);
+            return true;
           }
         }
       }

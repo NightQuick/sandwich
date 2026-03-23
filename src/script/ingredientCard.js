@@ -57,10 +57,10 @@ export class IngredientCard {
     }
 
     card.addEventListener('click', () => {
-      store.selectIngredient(currentStep, this.data);
+      const result = store.selectIngredient(currentStep, this.data);
       this.builder.updatePrice();
       if (settings[store.getCurrentStep()]?.multiple) {
-        if (card.classList.contains('modal-card-active')) {
+        if (!result) {
           card.classList.remove('modal-card-active');
           card.classList.add('modal-card-inactive');
         } else {
