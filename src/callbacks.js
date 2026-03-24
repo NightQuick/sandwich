@@ -2,7 +2,7 @@ import { Menu } from '@script/menu.js';
 import { SandwichBuilder } from '@script/modal.js';
 import { store } from '@script/store.js';
 import { basket } from '@script/basket.js';
-import { renderOrder } from './script/order';
+import { renderOrder } from '@script/order.js';
 
 let loadedMenus = {};
 export const menuSwitcherCallback = (data) => {
@@ -22,7 +22,10 @@ export const openBuilderCallback = async (data) => {
   const builder = new SandwichBuilder(store.getSandwichConfig());
   builder.openBuilder();
 };
-
 export const confirmOrderCallback = (data) => {
   renderOrder(data.data);
+};
+export const updateLocalStorageCallback = (data) => {
+  localStorage.setItem('basket', JSON.stringify(data.data));
+  console.log(JSON.parse(localStorage.getItem('basket')));
 };

@@ -3,7 +3,8 @@ import {
   menuSwitcherCallback,
   addToBasketCallback,
   openBuilderCallback,
-  confirmOrderCallback
+  confirmOrderCallback,
+  updateLocalStorageCallback
 } from '@callback';
 export function subscribe() {
   pubSub.subscribe('addToBasket', addToBasketCallback);
@@ -13,4 +14,5 @@ export function subscribe() {
   pubSub.subscribe('openBuilder', openBuilderCallback);
 
   pubSub.subscribe('confirmOrder', confirmOrderCallback);
+  pubSub.subscribe('updateBasket', updateLocalStorageCallback);
 }
