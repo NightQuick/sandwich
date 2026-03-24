@@ -81,6 +81,7 @@ export class Store {
       } else {
         if (category !== 'sauce') {
           current.push([ingredient.id, ingredient.name, ingredient.price || 0]);
+          return true;
         } else {
           if (this.state.sandwichConfig.components[category].length < 3) {
             current.push([ingredient.id, ingredient.name, ingredient.price || 0]);
@@ -138,11 +139,11 @@ export class Store {
         if (!isMultiple && comp.length === 3 && typeof comp[0] === 'string') {
           finalPrice += comp[2] || 0;
         } else if (isMultiple) {
-          for (const item of comp) {
+          comp.forEach((item) => {
             if (Array.isArray(item) && item[2]) {
               finalPrice += item[2];
             }
-          }
+          });
         }
       }
     }

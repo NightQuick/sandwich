@@ -74,15 +74,17 @@ export class SandwichBuilder {
       const ingredients = store.getIngredientsForStep(currentStep);
       this.cardCollections[currentStep] = [];
 
-      for (let element of ingredients) {
+      ingredients.forEach((element) => {
         for (let product in element) {
           let cardElement = new IngredientCard(element[product], this.settings[currentStep].multiple, this);
           this.cardCollections[currentStep].push(cardElement);
         }
-      }
+      });
 
-      for (let card of this.cardCollections[currentStep]) {
+      this.cardCollections[currentStep].forEach((card) => {
         card.renderModalCard();
+      });
+      for (let card of this.cardCollections[currentStep]) {
       }
     } else {
       renderBuilderReady(this.settings, sandwichConfig);

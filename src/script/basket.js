@@ -23,7 +23,7 @@ export class Basket {
     this.totalPrice += +value * price;
 
     const removeButtons = document.querySelectorAll('.remove-from-basket-button');
-    for (const button of removeButtons) {
+    removeButtons.forEach((button) => {
       if (!button.onclick) {
         button.onclick = () => {
           button.parentElement.remove();
@@ -43,7 +43,7 @@ export class Basket {
           this.renderBasket();
         };
       }
-    }
+    });
     this.renderBasket();
   }
   renderBasket() {

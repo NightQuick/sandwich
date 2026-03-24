@@ -26,9 +26,9 @@ export function renderBuilderReady(settings, cardData) {
       ingredientElement.textContent = `${settings[ingredient].name}: ${cardData.components[ingredient][1]}`;
     } else {
       let list = [];
-      for (let component of cardData.components[ingredient]) {
+      cardData.components[ingredient].forEach((component) => {
         list.push(component[1]);
-      }
+      });
       if (list.length === 0) list = 'Нет';
       ingredientElement.textContent = `${settings[ingredient].name}: ${list}`;
     }
@@ -54,22 +54,19 @@ export function renderBuilderReady(settings, cardData) {
   toBasket.textContent = 'В КОРЗИНУ';
 
   const row = document.getElementsByClassName('ingredients');
-  for (let element of row) {
+  row.forEach((element) => {
     if (element.classList.contains('modal-switcher-active')) {
       element.classList.remove('modal-switcher-active');
     }
     if (element.classList.contains('modal-switcher-inactive')) {
       element.classList.remove('modal-switcher-inactive');
     }
-  }
-  const finishElement = document.getElementById('finish');
-  finishElement.classList.add('modal-switcher-active');
-
-  for (let element of row) {
     if (!element.classList.contains('modal-switcher-active')) {
       element.classList.add('modal-switcher-inactive');
     }
-  }
+  });
+  const finishElement = document.getElementById('finish');
+  finishElement.classList.add('modal-switcher-active');
 
   toBasket.addEventListener('click', () => {
     const input = counterElem.querySelector('.product-counter-input');

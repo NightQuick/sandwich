@@ -18,21 +18,20 @@ export class Menu {
     let data = [];
 
     //Отбор продуктов из нужной категории
-    for (let product of jsonData['menu']) {
+    jsonData.menu.forEach((product) => {
       if (
-        (product['category'] === this.category[0] || product['category'] === this.category[1]) &&
-        product['image'].includes(this.category)
+        (product.category === this.category[0] || product.category === this.category[1]) &&
+        product.image.includes(this.category)
       ) {
         data.push(product);
       }
-    }
+    });
 
     //Создание карточек товаров и сохранение их информации
-    for (let product of data) {
+    data.forEach((product) => {
       let cardElement = new Card(product);
       this.data.push(cardElement);
-    }
-    return data;
+    });
   }
 
   //Отрисовка меню
@@ -42,9 +41,9 @@ export class Menu {
     let menu = document.getElementById('menu');
     menu.innerHTML = '';
 
-    for (let card of this.data) {
+    this.data.forEach((card) => {
       let cardElement = card.render();
       menu.appendChild(cardElement);
-    }
+    });
   }
 }
