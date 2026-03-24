@@ -84,8 +84,6 @@ export class SandwichBuilder {
       this.cardCollections[currentStep].forEach((card) => {
         card.renderModalCard();
       });
-      for (let card of this.cardCollections[currentStep]) {
-      }
     } else {
       renderBuilderReady(this.settings, sandwichConfig);
     }
@@ -94,22 +92,21 @@ export class SandwichBuilder {
   renderIngredientSwitcher() {
     const currentStep = store.getCurrentStep();
     const row = document.getElementsByClassName('ingredients');
-    for (let element of row) {
+    row.forEach((element) => {
       if (element.classList.contains('modal-switcher-active')) {
         element.classList.remove('modal-switcher-active');
       }
       if (element.classList.contains('modal-switcher-inactive')) {
         element.classList.remove('modal-switcher-inactive');
       }
-    }
-
+    });
     const currentElement = document.getElementById(currentStep);
     currentElement.classList.add('modal-switcher-active');
-    for (let element of row) {
+    row.forEach((element) => {
       if (!element.classList.contains('modal-switcher-active')) {
         element.classList.add('modal-switcher-inactive');
       }
-    }
+    });
   }
 
   getNextKey() {
