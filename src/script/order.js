@@ -10,7 +10,7 @@ export function renderOrder(orderData) {
   let totalPrice = 0;
   orderData.forEach((element) => {
     text += `${element.name}, `;
-    totalPrice += element.price;
+    totalPrice += element.price * element.value;
   });
   orderText.textContent = `Вы заказали: ${text} Цена:${totalPrice}`;
 
@@ -30,13 +30,13 @@ export function renderOrder(orderData) {
     orderBox.classList.remove('order-message-active');
     setTimeout(() => {
       orderList.removeChild(orderBox);
-    }, 600);
+    }, 550);
   }, 5000);
   closeButton.addEventListener('click', () => {
     clearTimeout(removeTimer);
     orderBox.classList.remove('order-message-active');
     setTimeout(() => {
       orderList.removeChild(orderBox);
-    }, 600);
+    }, 550);
   });
 }
