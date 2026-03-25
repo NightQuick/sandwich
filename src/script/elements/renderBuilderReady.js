@@ -1,5 +1,5 @@
-import { counter } from '@script/counter.js';
-import { pubSub } from '@script/pubSub.js';
+import { counter } from '@elements/counter.js';
+import { pubSub } from '@dp/pubSub.js';
 
 export function renderBuilderReady(settings, cardData) {
   document.getElementById('modal-menu-wrapper').innerHTML = '';

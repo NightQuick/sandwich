@@ -1,7 +1,7 @@
-import { IngredientCard } from '@script/ingredientCard.js';
-import { settings } from '@constant';
-import { renderBuilderReady } from '@script/renderBuilderReady.js';
-import { store } from '@script/store.js';
+import { IngredientCard } from '@elements/ingredientCard.js';
+import { settings } from '@constants';
+import { renderBuilderReady } from '@elements/renderBuilderReady.js';
+import { store } from '@dp/store.js';
 
 export class SandwichBuilder {
   constructor() {

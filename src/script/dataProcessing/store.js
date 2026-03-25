@@ -1,6 +1,6 @@
-import { pubSub } from '@script/pubSub.js';
+import { pubSub } from '@dp/pubSub.js';
 import { loadJson } from '@api';
-import { settings } from '@constant';
+import { settings } from '@constants';
 
 export class Store {
   constructor() {

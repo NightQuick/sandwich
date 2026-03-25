@@ -1,4 +1,4 @@
-import { ingredientSwitcher } from '@constant';
+import { ingredientSwitcher } from '@constants';
 
 export function renderIngredientSwitcher() {
   const table = document.getElementById('ingredients-switcher');

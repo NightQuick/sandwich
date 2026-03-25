@@ -1,8 +1,8 @@
-import { Menu } from '@script/menu.js';
-import { SandwichBuilder } from '@script/modal.js';
-import { store } from '@script/store.js';
-import { basket } from '@script/basket.js';
-import { renderOrder } from '@script/order.js';
+import { Menu } from '@elements/menu.js';
+import { SandwichBuilder } from '@elements/modal.js';
+import { store } from '@dp/store.js';
+import { basket } from '@elements/basket.js';
+import { renderOrder } from '@ui/order.js';
 
 let loadedMenus = {};
 export const menuSwitcherCallback = (data) => {

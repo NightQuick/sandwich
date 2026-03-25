@@ -1,6 +1,6 @@
-import { pubSub } from '@script/pubSub.js';
-import { counter } from '@script/counter.js';
-import { logoPaths } from '../constants';
+import { pubSub } from '@dp/pubSub.js';
+import { counter } from '@elements/counter.js';
+import { logoPaths } from '@constants';
 
 //Карточки товаров(не ингридиентов модального окна)
 export class Card {

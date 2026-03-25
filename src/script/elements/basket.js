@@ -1,4 +1,4 @@
-import { pubSub } from '@script/pubSub.js';
+import { pubSub } from '@dp/pubSub.js';
 export class Basket {
   constructor() {
     this.orderEvent = false;

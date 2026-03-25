@@ -1,5 +1,5 @@
-import { store } from '@script/store.js';
-import { settings } from '@constant';
+import { store } from '@dp/store.js';
+import { settings } from '@constants';
 
 export class IngredientCard {
   constructor(data, multiple, builder) {

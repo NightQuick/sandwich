@@ -1,4 +1,4 @@
-import { Card } from '@script/card.js';
+import { Card } from '@elements/card.js';
 import { loadJson } from '@api';
 
 //Меню продуктов

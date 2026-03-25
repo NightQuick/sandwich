@@ -1,11 +1,11 @@
-import { pubSub } from '@script/pubSub.js';
+import { pubSub } from '@dp/pubSub.js';
 import {
   menuSwitcherCallback,
   addToBasketCallback,
   openBuilderCallback,
   confirmOrderCallback,
   updateLocalStorageCallback
-} from '@callback';
+} from '@callbacks';
 export function subscribe() {
   pubSub.subscribe('addToBasket', addToBasketCallback);
 
