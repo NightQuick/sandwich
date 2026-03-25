@@ -54,7 +54,7 @@ export function renderBuilderReady(settings, cardData) {
   toBasket.textContent = 'В КОРЗИНУ';
 
   const row = document.getElementsByClassName('ingredients');
-  row.forEach((element) => {
+  for (const element of row) {
     if (element.classList.contains('modal-switcher-active')) {
       element.classList.remove('modal-switcher-active');
     }
@@ -64,7 +64,7 @@ export function renderBuilderReady(settings, cardData) {
     if (!element.classList.contains('modal-switcher-active')) {
       element.classList.add('modal-switcher-inactive');
     }
-  });
+  }
   const finishElement = document.getElementById('finish');
   finishElement.classList.add('modal-switcher-active');
 

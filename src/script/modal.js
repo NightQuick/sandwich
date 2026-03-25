@@ -92,21 +92,23 @@ export class SandwichBuilder {
   renderIngredientSwitcher() {
     const currentStep = store.getCurrentStep();
     const row = document.getElementsByClassName('ingredients');
-    row.forEach((element) => {
+    console.log(row);
+    for (const element of row) {
       if (element.classList.contains('modal-switcher-active')) {
         element.classList.remove('modal-switcher-active');
       }
       if (element.classList.contains('modal-switcher-inactive')) {
         element.classList.remove('modal-switcher-inactive');
       }
-    });
+    }
+
     const currentElement = document.getElementById(currentStep);
     currentElement.classList.add('modal-switcher-active');
-    row.forEach((element) => {
+    for (const element of row) {
       if (!element.classList.contains('modal-switcher-active')) {
         element.classList.add('modal-switcher-inactive');
       }
-    });
+    }
   }
 
   getNextKey() {
