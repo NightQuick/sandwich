@@ -11,9 +11,3 @@ renderIngredientSwitcher();
 subscribe();
 
 document.getElementById('menu-switcher-pizza-button').click();
-
-const ingredients = await dataApi.getAllIng();
-console.log(ingredients);
-
-const sandwiches = await dataApi.getAllPositions('sandwiches');
-console.log(sandwiches);

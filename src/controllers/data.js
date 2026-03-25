@@ -65,16 +65,15 @@ export const getAllPositions = (req, res) => {
 
 export const getAllIngredients = (req, res) => {
   if (!jsonData) loadJSON();
-  const result = [];
-  for (const key in settings) {
-    if (key === 'finish') continue;
-    const data = JSON.parse(JSON.stringify(jsonData[settings[key].object]));
+  const { category } = req.params;
 
-    for (const comp in data) {
-      data[comp].id = comp;
-    }
-
-    result.push(data);
+  if (!settings[category]) {
+    return res.status(400).json({ error: 'Неверная категория' });
   }
-  res.json(result);
+
+  const data = JSON.parse(JSON.stringify(jsonData[settings[category].object]));
+  for (const comp in data) {
+    data[comp].id = comp;
+  }
+  res.json(data);
 };

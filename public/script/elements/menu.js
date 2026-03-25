@@ -1,5 +1,5 @@
 import { Card } from '@elements/card.js';
-import { loadJson } from '@api';
+import { dataApi } from '@api';
 
 //Меню продуктов
 export class Menu {
@@ -14,18 +14,7 @@ export class Menu {
   }
   //функция загрузки данных
   async loadData() {
-    let jsonData = await loadJson();
-    let data = [];
-
-    //Отбор продуктов из нужной категории
-    jsonData.menu.forEach((product) => {
-      if (
-        (product.category === this.category[0] || product.category === this.category[1]) &&
-        product.image.includes(this.category)
-      ) {
-        data.push(product);
-      }
-    });
+    let data = await dataApi.getAllPositions(this.category);
 
     //Создание карточек товаров и сохранение их информации
     data.forEach((product) => {

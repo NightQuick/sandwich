@@ -1,5 +1,4 @@
 export function renderOrder(orderData) {
-  console.log(orderData);
   const orderList = document.getElementById('order-list');
 
   const orderBox = document.createElement('div');

@@ -75,8 +75,6 @@ export class Basket {
     pubSub.publish('updateBasket', { message: 'Basket was updated', data: this.getData() });
   }
   confirmOrder() {
-    console.log(`order sended \n order info:\n ${JSON.stringify(this.orders)}`);
-
     orderButton[0].onclick = '';
     // orderButton[0].classList.remove('place-an-order-active');
   }
@@ -98,7 +96,6 @@ export class Basket {
     this.renderBasket();
   };
 }
-console.log(localStorage);
 export let basket = new Basket();
 if (localStorage.basket) {
   basket = new Basket();

@@ -25,10 +25,8 @@ export const openBuilderCallback = async (data) => {
 };
 export const confirmOrderCallback = (data) => {
   ordersApi.create(data.data);
-  console.log(data.data);
   renderOrder(data.data);
 };
 export const updateLocalStorageCallback = (data) => {
   localStorage.setItem('basket', JSON.stringify(data.data));
-  console.log(JSON.parse(localStorage.getItem('basket')));
 };

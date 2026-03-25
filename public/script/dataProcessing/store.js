@@ -1,5 +1,5 @@
 import { pubSub } from '@dp/pubSub.js';
-import { loadJson } from '@api';
+import { dataApi } from '@api';
 import { settings } from '@constants';
 
 export class Store {
@@ -39,11 +39,10 @@ export class Store {
     }
 
     this.isLoading = true;
-    const jsonData = await loadJson();
 
     for (const key in settings) {
       if (key === 'finish') continue;
-      const data = JSON.parse(JSON.stringify(jsonData[settings[key].object]));
+      const data = await dataApi.getAllIng(key);
 
       for (const comp in data) {
         data[comp].id = comp;

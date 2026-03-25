@@ -92,7 +92,6 @@ export class SandwichBuilder {
   renderIngredientSwitcher() {
     const currentStep = store.getCurrentStep();
     const row = document.getElementsByClassName('ingredients');
-    console.log(row);
     for (const element of row) {
       if (element.classList.contains('modal-switcher-active')) {
         element.classList.remove('modal-switcher-active');

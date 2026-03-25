@@ -32,7 +32,7 @@ app.use((req, res, next) => {
 app.use('/api/data', dataRoutes);
 app.use('/api/orders', ordersRoutes);
 app.use('/api/test', (req, res) => {
-  res.json({ message: 'API работает!', timestamp: new Date() });
+  res.json({ message: 'API works', timestamp: new Date() });
 });
 
 // 4. Статические файлы
@@ -45,10 +45,10 @@ app.get('/', (req, res) => {
 
 // 6. Обработка ошибок
 app.use((err, req, res, next) => {
-  console.error('Ошибка:', err);
-  res.status(500).json({ error: 'Внутренняя ошибка сервера' });
+  console.error('ERROR:', err);
+  res.status(500).json({ error: 'error on server' });
 });
 
 app.listen(PORT, () => {
-  console.log(`Сервер запущен на http://localhost:${PORT}`);
+  console.log(`Server works on http://localhost:${PORT}`);
 });

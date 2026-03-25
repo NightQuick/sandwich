@@ -1,14 +1,3 @@
-export async function loadJson() {
-  let jsonData;
-  try {
-    const response = await fetch('/data.json');
-    jsonData = await response.json();
-  } catch (error) {
-    console.error(`Error:can't connect to data\n\n${error}`);
-  }
-  return jsonData;
-}
-
 const API_BASE = '/api';
 
 async function request(endpoint, options = {}) {
@@ -40,11 +29,8 @@ async function request(endpoint, options = {}) {
   }
 }
 export const dataApi = {
-  getAllIng: (params = {}) => {
-    const query = new URLSearchParams(params).toString();
-    return request(`/data${query ? `?${query}` : ''}`);
-  },
-  getAllPositions: (category) => request(`/data/${category}`)
+  getAllIng: (category) => request(`/data/ingredients/${category}`),
+  getAllPositions: (category) => request(`/data/sandwiches/${category}`)
 };
 export const ordersApi = {
   // Создать заказ
