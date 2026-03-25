@@ -1,10 +1,13 @@
-#basket {
+.basket {
   margin-top: 50px;
   width: 250px;
   height: fit-content;
   border-radius: 10px;
   background-color: #fdd55b;
   padding-bottom: 10px;
+}
+#basket-button {
+  display: none;
 }
 
 /* Верхняя часть корзицы с изображением */

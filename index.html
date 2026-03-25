@@ -2,6 +2,7 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" name="viewport" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -13,6 +14,7 @@
     <link rel="stylesheet" href="src/styles/card.css" />
     <link rel="stylesheet" href="src/styles/modal.css" />
     <link rel="stylesheet" href="src/styles/order.css" />
+    <link rel="stylesheet" href="src/styles/phone.css" />
     <title>Burgers</title>
   </head>
   <body>
@@ -23,8 +25,7 @@
     <div id="main-sheet">
       <div id="active-panel">
         <table id="menu-switcher"></table>
-
-        <div id="basket">
+        <div id="basket" class="basket">
           <div id="basket-description">
             <div id="basket-image">
               <img id="basket-logo" src="i/shopping-basket.svg" alt="" />
@@ -72,11 +73,12 @@
           <button id="close-modal">×</button>
         </div>
         <div id="modal-content">
-          <table id="ingredients-switcher"></table>
+          <div id="modal-switcher-wrapper"><table id="ingredients-switcher"></table></div>
+
           <div id="modal-buttons">
             <button class="modal-switcher" id="previous-modal">
               <span class="modal-button-arrow" id="previous-modal-arrow">&lt;</span>
-              <span class="modal-button-text" id="previous-modal-text">Назад</span>
+              <span class="modal-button-text" id="previous-modal-text">НАЗАД</span>
             </button>
             <button class="modal-switcher" id="next-modal">
               <span class="modal-button-text" id="next-modal-text">ВПЕРЕД</span>

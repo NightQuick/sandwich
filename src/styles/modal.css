@@ -157,7 +157,8 @@
   flex-wrap: wrap;
   justify-content: center;
   height: 400px;
-  overflow: auto;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 /* Карточка ингридиентов */
@@ -198,7 +199,7 @@
 
 .modal-card-description {
   max-width: 100%;
-  white-space: nowrap;
+  /* white-space: nowrap; */
   text-align: center;
   padding: 5px;
   padding-bottom: 10px;

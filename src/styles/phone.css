@@ -1,0 +1,100 @@
+@media (max-width: 768px) {
+  #main-sheet {
+    display: block;
+    margin: 0;
+  }
+  #active-panel {
+    position: sticky;
+    width: 100%;
+    height: 30px;
+    top: 0;
+    z-index: 1;
+  }
+  #menu-wrapper {
+    margin-top: 10px;
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  #menu-switcher {
+    margin: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+  }
+  #menu-switcher tr {
+    width: fit-content;
+  }
+  #menu-switcher td {
+    white-space: nowrap;
+    width: fit-content;
+    height: 30px;
+  }
+
+  .basket {
+    display: none;
+  }
+
+  .product-image-wrapper {
+    border: 10px solid var(--color-brand);
+  }
+  .position-card {
+    width: 500%;
+  }
+  #basket-button {
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 20px;
+    border: none;
+    background-color: var(--color-brand);
+    z-index: 2;
+  }
+  #basket-button-img {
+    margin-top: 3px;
+    width: 100%;
+    height: 100%;
+    background-color: var(--unselected-card-bg);
+    mask-image: url(../../public/i/shopping-basket.svg);
+    mask-size: contain;
+    mask-repeat: no-repeat;
+  }
+  /* #ingredients-switcher {
+    width:;
+    overflow-x: scroll;
+  } */
+  #modal-switcher-wrapper {
+    overflow-x: scroll;
+  }
+  .modal-switcher {
+    width: 40%;
+    font-size: 19px;
+  }
+  .modal-card {
+    width: 35%;
+    overflow: hidden;
+  }
+  .modal-card-img {
+    width: 100px;
+    height: 100px;
+  }
+  .modal-card-img img {
+    height: 100%;
+  }
+  #modal-menu-wrapper {
+    width: 100%;
+  }
+  .basket-active {
+    max-height: 50%;
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    display: block;
+  }
+}
