@@ -15,22 +15,21 @@ export function renderSwitcherTable() {
   }
   table.onclick = function (event) {
     if (event.target.nodeName != 'TD') return;
-
-    table.children.forEach((tr) => {
+    for (const tr of table.children) {
       if (tr.classList.contains('menu-switcher-active')) {
         tr.classList.remove('menu-switcher-active');
       }
       if (tr.classList.contains('menu-switcher-inactive')) {
         tr.classList.remove('menu-switcher-inactive');
       }
-    });
+    }
 
     event.target.parentElement.classList.add('menu-switcher-active');
-    table.children.forEach((tr) => {
+    for (const tr of table.children) {
       if (!tr.classList.contains('menu-switcher-active')) {
         tr.classList.remove('menu-switcher-inactive');
       }
-    });
+    }
 
     let category = event.target.id.split('-')[2].split('&');
     pubSub.publish('menuType', { message: 'User changed menu category', category });

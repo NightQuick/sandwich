@@ -42,16 +42,7 @@
                   <td class="basket-products-columns" id="count">Кол-во</td>
                 </tr>
               </thead>
-              <tbody id="basket-content">
-                <template id="basket-content-template">
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                </template>
-              </tbody>
+              <tbody id="basket-content"></tbody>
             </table>
           </div>
 
@@ -93,6 +84,15 @@
       </div>
     </div>
 
-    <script src="src/script/main.js" type="module"></script>
+    <template id="basket-content-template">
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </template>
+
+    <script src="./src/script/main.js" type="module"></script>
   </body>
 </html>

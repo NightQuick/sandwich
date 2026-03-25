@@ -13,10 +13,10 @@ export class Basket {
     this.orders.push({ name, price, value });
 
     this.totalPrice += +value * price;
-
     this.renderBasket();
   }
   renderBasket() {
+    this.basket.innerHTML = '';
     this.orders.forEach((element) => {
       const newContent = this.template.content.cloneNode(true);
       const td = newContent.querySelectorAll('td');
@@ -43,6 +43,7 @@ export class Basket {
               }
               if (check) {
                 this.orders.splice(i, 1);
+                i = this.orders.length;
               }
             }
             this.totalPrice -= +element.value * element.price;

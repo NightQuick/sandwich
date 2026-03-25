@@ -7,7 +7,7 @@ export default defineConfig({
       '@script': fileURLToPath(new URL('./src/script', import.meta.url)),
       '@styles': fileURLToPath(new URL('./src/styles', import.meta.url)),
       '@images': fileURLToPath(new URL('./public/i', import.meta.url)),
-      '@': fileURLToPath(new URL('./', import.meta.url)),
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
       '@constants': fileURLToPath(new URL('./src/constants.js', import.meta.url)),
       '@callbacks': fileURLToPath(new URL('./src/callbacks.js', import.meta.url)),
       '@api': fileURLToPath(new URL('./src/api.js', import.meta.url)),
@@ -22,6 +22,11 @@ export default defineConfig({
     open: true
   },
   build: {
+    rollupOptions: {
+      input: {
+        main: './index.html'
+      }
+    },
     outDir: 'dist',
     assetsDir: 'assets'
   }
