@@ -3,6 +3,7 @@ import { SandwichBuilder } from '@elements/modal.js';
 import { store } from '@dp/store.js';
 import { basket } from '@elements/basket.js';
 import { renderOrder } from '@ui/order.js';
+import { ordersApi } from './api';
 
 let loadedMenus = {};
 export const menuSwitcherCallback = (data) => {
@@ -23,6 +24,8 @@ export const openBuilderCallback = async (data) => {
   builder.openBuilder();
 };
 export const confirmOrderCallback = (data) => {
+  ordersApi.create(data.data);
+  console.log(data.data);
   renderOrder(data.data);
 };
 export const updateLocalStorageCallback = (data) => {
