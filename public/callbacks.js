@@ -30,7 +30,6 @@ export const openOrderCallback = (data) => {
 };
 
 export const confirmOrderCallback = (data) => {
-  console.log(data.data);
   data.data.forEach((element) => {
     delete element.image;
     delete element.description;

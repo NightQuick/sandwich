@@ -126,7 +126,6 @@ export class Order {
         this.updatePrice;
       }
     }
-    console.log(this.positionList);
   }
 
   updatePrice() {
