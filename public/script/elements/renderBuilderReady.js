@@ -74,7 +74,9 @@ export function renderBuilderReady(settings, cardData) {
       message: 'User add product to basket',
       name: cardData.name,
       value: input.value,
-      price: cardData.price
+      price: cardData.price,
+      image: cardData.image,
+      description: cardData.description
     });
 
     const modal = document.getElementById('modal');

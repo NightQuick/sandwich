@@ -7,39 +7,12 @@ const __dirname = dirname(__filename);
 
 let jsonData;
 const settings = {
-  size: {
-    name: 'Размер',
-    object: 'sizes',
-    title: 'Выберите размер сендвича'
-  },
-  bread: {
-    name: 'Хлеб',
-    object: 'breads',
-    title: 'Хлеб для сендвича на выбор'
-  },
-  vegetable: {
-    name: 'Овощи',
-    object: 'vegetables',
-    title: 'Дополнительные овощи бесплатно',
-    multiple: true
-  },
-  sauce: {
-    name: 'Соус',
-    object: 'sauces',
-    title: 'Выберите 3 бесплатных соуса по вкусу',
-    multiple: true
-  },
-  filling: {
-    name: 'Начинка',
-    object: 'fillings',
-    title: 'Добавьте начинку по вкусу',
-    multiple: true
-  },
-  finish: {
-    name: 'Готово!',
-    object: 'ready',
-    title: 'Проверьте и добавьте в корзину'
-  }
+  size: 'sizes',
+  bread: 'breads',
+  vegetable: 'vegetables',
+  sauce: 'sauces',
+  filling: 'fillings',
+  finish: 'ready'
 };
 function loadJSON() {
   try {
@@ -71,7 +44,7 @@ export const getAllIngredients = (req, res) => {
     return res.status(400).json({ error: 'Неверная категория' });
   }
 
-  const data = JSON.parse(JSON.stringify(jsonData[settings[category].object]));
+  const data = JSON.parse(JSON.stringify(jsonData[settings[category]]));
   for (const comp in data) {
     data[comp].id = comp;
   }
