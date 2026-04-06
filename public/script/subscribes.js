@@ -4,7 +4,10 @@ import {
   addToBasketCallback,
   openBuilderCallback,
   confirmOrderCallback,
-  updateLocalStorageCallback
+  updateLocalStorageCallback,
+  openOrderCallback,
+  updateBasketValueCallback,
+  removeBasketPositionCallback
 } from '@callbacks';
 export function subscribe() {
   pubSub.subscribe('addToBasket', addToBasketCallback);
@@ -14,5 +17,12 @@ export function subscribe() {
   pubSub.subscribe('openBuilder', openBuilderCallback);
 
   pubSub.subscribe('confirmOrder', confirmOrderCallback);
+
   pubSub.subscribe('updateBasket', updateLocalStorageCallback);
+
+  pubSub.subscribe('openOrder', openOrderCallback);
+
+  pubSub.subscribe('updateBasketValue', updateBasketValueCallback);
+
+  pubSub.subscribe('removeBasketPosition', removeBasketPositionCallback);
 }

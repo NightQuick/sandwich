@@ -1,4 +1,4 @@
-export function counter() {
+export function counter(startsFrom = 1) {
   const counterWrapper = document.createElement('div');
   const buttonMinusContent = document.createElement('span');
   const input = document.createElement('input');
@@ -12,7 +12,7 @@ export function counter() {
   input.className = 'product-counter-input';
   input.type = 'number';
   input.inputmode = 'numeric';
-  input.value = '1';
+  input.value = `${startsFrom}`;
   buttonPlus.className = 'counter-buttons';
   buttonPlusContent.className = 'counter-buttons-text';
   buttonPlusContent.textContent = '+';

@@ -9,10 +9,34 @@ export class Basket {
     this.listOrders = document.getElementById('basket-products').childNodes[1];
   }
 
-  addProduct(name, value, price) {
-    this.orders.push({ name, price, value });
+  addProduct(name, value, price, image = '', description = '') {
+    const lineToChange = { name, price };
+    for (let i = 0; i <= this.orders.length; i++) {
+      let check = true;
+      if (this.orders.length === 0) {
+        check = false;
+      }
+      if (this.orders[i]) {
+        for (const elem in this.orders[i]) {
+          if (!(elem == 'image' || elem == 'description' || elem == 'value'))
+            if (!(this.orders[i][elem] == lineToChange[elem])) {
+              check = false;
+            }
+        }
+      } else check = false;
+      if (check) {
+        this.totalPrice += +value * price;
+        this.orders[i].value = +this.orders[i].value + +value;
+        i = this.orders.length;
+      }
+      if (!check && i == this.orders.length) {
+        this.orders.push({ name, price, value, image, description });
 
-    this.totalPrice += +value * price;
+        this.totalPrice += +value * price;
+        i = this.orders.length;
+      }
+    }
+
     this.renderBasket();
   }
   renderBasket() {
@@ -33,21 +57,7 @@ export class Basket {
         if (!button.onclick) {
           button.onclick = () => {
             button.parentElement.remove();
-            const lineToRemove = { name: element.name, price: element.price, value: element.value };
-            for (let i = 0; i <= this.orders.length; i++) {
-              let check = true;
-              for (const elem in this.orders[i]) {
-                if (!(this.orders[i][elem] == lineToRemove[elem])) {
-                  check = false;
-                }
-              }
-              if (check) {
-                this.orders.splice(i, 1);
-                i = this.orders.length;
-              }
-            }
-            this.totalPrice -= +element.value * element.price;
-            this.renderBasket();
+            this.removeElement(element.name, element.price, element.value);
           };
         }
       });
@@ -69,11 +79,47 @@ export class Basket {
           this.orderEvent = true;
         }
       }
-
-      // = confirmOrderCallback;
     }
     pubSub.publish('updateBasket', { message: 'Basket was updated', data: this.getData() });
   }
+  removeElement(name, price, value) {
+    const lineToRemove = { name, price, value };
+    for (let i = 0; i <= this.orders.length; i++) {
+      let check = true;
+      for (const elem in this.orders[i]) {
+        if (!(elem == 'image' || elem == 'description'))
+          if (!(this.orders[i][elem] == lineToRemove[elem])) {
+            check = false;
+          }
+      }
+      if (check) {
+        this.orders.splice(i, 1);
+        i = this.orders.length;
+        this.totalPrice -= +value * price;
+        this.renderBasket();
+      }
+    }
+  }
+  changeValue(name, price, value, newValue) {
+    const lineToChange = { name, price, value };
+    for (let i = 0; i <= this.orders.length; i++) {
+      let check = true;
+      for (const elem in this.orders[i]) {
+        if (!(elem == 'image' || elem == 'description'))
+          if (!(this.orders[i][elem] == lineToChange[elem])) {
+            check = false;
+          }
+      }
+      if (check) {
+        this.totalPrice -= +value * price;
+        this.totalPrice += +newValue * price;
+        this.orders[i].value = newValue;
+        i = this.orders.length;
+        this.renderBasket();
+      }
+    }
+  }
+
   confirmOrder() {
     orderButton[0].onclick = '';
     // orderButton[0].classList.remove('place-an-order-active');
@@ -89,12 +135,14 @@ export class Basket {
     };
   }
   createOrderCallback = () => {
-    pubSub.publish('confirmOrder', { message: 'User confirm order', data: this.orders });
+    pubSub.publish('openOrder', { message: 'User confirm order', data: this.orders });
+  };
+  clearBasket() {
     this.orders = [];
     this.totalPrice = 0;
     this.basket.innerHTML = '';
     this.renderBasket();
-  };
+  }
 }
 export let basket = new Basket();
 if (localStorage.basket) {

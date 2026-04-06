@@ -92,9 +92,11 @@ export class Card {
       }
       pubSub.publish('addToBasket', {
         message: 'User add product to basket',
-        name: this.data['name'],
+        name: this.data.name,
         value: counterInput.value,
-        price: this.data['price']
+        price: this.data.price,
+        image: this.data.image,
+        description: this.data.description
       });
     });
     return card;

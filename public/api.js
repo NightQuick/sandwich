@@ -34,9 +34,10 @@ export const dataApi = {
 };
 export const ordersApi = {
   // Создать заказ
-  create: (data) =>
+  create: (data) => {
     request('/orders', {
       method: 'POST',
       body: JSON.stringify(data)
-    })
+    });
+  }
 };

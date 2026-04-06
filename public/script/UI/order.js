@@ -1,41 +1,147 @@
-export function renderOrder(orderData) {
-  const orderList = document.getElementById('order-list');
+import { pubSub } from '@dp/pubSub.js';
+import { counter } from '@elements/counter';
 
-  const orderBox = document.createElement('div');
-  orderBox.classList.add('order-message');
+export class Order {
+  constructor(orders) {
+    this.positionList = orders;
+    this.orderPrice = 0;
+    this.events = false;
+  }
 
-  const orderText = document.createElement('span');
-  let text = '';
-  let totalPrice = 0;
-  orderData.forEach((element) => {
-    text += `${element.name}, `;
-    totalPrice += element.price * element.value;
-  });
-  orderText.textContent = `Вы заказали: ${text} Цена:${totalPrice}`;
+  renderOrderbox() {
+    document.body.classList.add('no-scroll');
+    if (!this.events) {
+      document.getElementById('close-orderbox').addEventListener('click', () => {
+        this.closeOrderbox();
+      });
 
-  const closeButton = document.createElement('div');
-  closeButton.className = 'close-message';
-  closeButton.textContent = 'x';
+      const confirmOrderButton = document.getElementById('order-confirm-button');
+      confirmOrderButton.addEventListener('click', () => {
+        pubSub.publish('confirmOrder', { message: 'user send order', data: this.positionList });
+        this.closeOrderbox();
+        this.events = true;
+      });
+    }
+    const modal = document.getElementById('order');
+    modal.classList.remove('order-hidden');
 
-  orderBox.appendChild(orderText);
-  orderBox.appendChild(closeButton);
-  orderList.appendChild(orderBox);
+    const list = document.getElementById('order-box-content');
+    this.positionList.forEach((position) => {
+      const positionBox = document.createElement('div');
+      positionBox.classList.add('order-position');
 
-  setTimeout(() => {
-    orderBox.classList.add('order-message-active');
-  }, 0);
+      const imageBox = document.createElement('div');
 
-  const removeTimer = setTimeout(() => {
-    orderBox.classList.remove('order-message-active');
-    setTimeout(() => {
-      orderList.removeChild(orderBox);
-    }, 550);
-  }, 5000);
-  closeButton.addEventListener('click', () => {
-    clearTimeout(removeTimer);
-    orderBox.classList.remove('order-message-active');
-    setTimeout(() => {
-      orderList.removeChild(orderBox);
-    }, 550);
-  });
+      const imageBorder = document.createElement('div');
+      imageBorder.classList.add('order-position-image-wrapper');
+
+      const img = document.createElement('img');
+      img.src = position.image;
+
+      const description = document.createElement('div');
+      description.classList.add('order-position-description');
+
+      const name = document.createElement('span');
+      name.classList.add('order-position-name');
+      name.textContent = position.name;
+
+      const info = document.createElement('span');
+      info.classList.add('order-position-info');
+      info.textContent = position.description;
+
+      const price = document.createElement('span');
+      price.classList.add('order-position-price');
+      price.textContent = `${position.price} руб. за шт.`;
+
+      const positionCounter = counter(position.value);
+      positionCounter.classList.add('order-position-counter');
+      const counterButtons = [positionCounter.children[0], positionCounter.children[2]];
+      counterButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          pubSub.publish('updateBasketValue', {
+            message: `value of ${position.name} was updated`,
+            data: [position.name, position.price, position.value, positionCounter.children[1].value]
+          });
+          position.value = positionCounter.children[1].value;
+          this.updatePrice();
+        });
+      });
+      positionCounter.children[1].addEventListener('blur', () => {
+        pubSub.publish('updateBasketValue', {
+          message: `value of ${position.name} was updated`,
+          data: [position.name, position.price, position.value, positionCounter.children[1].value]
+        });
+        position.value = positionCounter.children[1].value;
+        this.updatePrice();
+      });
+
+      const removeButton = document.createElement('button');
+      removeButton.className = 'order-remove-button';
+      removeButton.textContent = 'x';
+      removeButton.classList.add('order-remove-button');
+
+      removeButton.addEventListener('click', () => {
+        pubSub.publish('removeBasketPosition', {
+          message: `${position.name} was deleted`,
+          data: [position.name, position.price, position.value]
+        });
+        this.removeElement(position.name, position.price, position.value);
+        list.removeChild(positionBox);
+        if (list.children.length <= 0) {
+          this.closeOrderbox();
+        }
+      });
+
+      imageBorder.appendChild(img);
+      imageBox.appendChild(imageBorder);
+
+      description.appendChild(name);
+      description.appendChild(info);
+      description.appendChild(price);
+      description.appendChild(positionCounter);
+
+      positionBox.appendChild(imageBox);
+      positionBox.appendChild(description);
+      positionBox.appendChild(removeButton);
+
+      list.appendChild(positionBox);
+    });
+
+    this.updatePrice();
+  }
+
+  removeElement(name, price, value) {
+    const lineToRemove = { name, price, value };
+    for (let i = 0; i <= this.positionList.length; i++) {
+      let check = true;
+      for (const elem in this.positionList[i]) {
+        if (!(elem == 'image' || elem == 'description'))
+          if (!(this.positionList[i][elem] == lineToRemove[elem])) {
+            check = false;
+          }
+      }
+      if (check) {
+        this.positionList.splice(i, 1);
+        i = this.positionList.length;
+        this.updatePrice;
+      }
+    }
+    console.log(this.positionList);
+  }
+
+  updatePrice() {
+    this.orderPrice = 0;
+    this.positionList.forEach((position) => {
+      this.orderPrice += position.value * position.price;
+    });
+    const totalPrice = document.getElementById('order-total-price');
+    totalPrice.textContent = `Итого: ${this.orderPrice} руб.`;
+  }
+  closeOrderbox() {
+    document.body.classList.remove('no-scroll');
+    const modal = document.getElementById('order');
+    modal.classList.add('order-hidden');
+    document.getElementById('order-box-content').innerHTML = '';
+  }
 }
+export const order = new Order([]);

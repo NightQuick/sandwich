@@ -13,7 +13,6 @@ export const createOrder = (req, res) => {
     id: nextOrderId++,
     items,
     total,
-    status: 'pending',
     createdAt: new Date()
   };
 
