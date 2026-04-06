@@ -55,11 +55,11 @@ export const getAllPositions = (req, res) => {
   if (!jsonData) loadJSON();
   const { category } = req.params;
   const positions = [];
-  for (const product of jsonData.menu) {
+  jsonData.menu.forEach((product) => {
     if (product.category === category) {
       positions.push(product);
     }
-  }
+  });
   res.json(positions);
 };
 
