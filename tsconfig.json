@@ -7,9 +7,21 @@
     "allowJs": true,
     "checkJs": false,
     "outDir": "./dist",
-    "rootDir": "./src",
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@script/*": ["public/script/*"],
+      "@styles/*": ["public/styles/*"],
+      "@images/*": ["public/i/*"],
+      "@/*": ["public/*"],
+      "@constants": ["public/constants.ts"],
+      "@callbacks": ["public/callbacks.ts"],
+      "@api": ["public/api.ts"],
+      "@dp/*": ["public/script/dataProcessing/*"],
+      "@elements/*": ["public/script/elements/*"],
+      "@ui/*": ["public/script/UI/*"]
+    }
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "public/**/*"]
 }
