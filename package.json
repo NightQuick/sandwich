@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev:frontend": "vite",
-    "dev:backend": "nodemon src/app.js",
+    "dev:backend": "tsx watch src/app.ts",
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
     "build": "vite build",
     "preview": "vite preview",
@@ -13,10 +13,15 @@
     "start": "node ./src/app.js"
   },
   "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.5.2",
     "concurrently": "^9.2.1",
     "cors": "^2.8.6",
     "nodemon": "^3.1.14",
     "prettier": "^3.8.1",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2",
     "vite": "^7.3.1"
   },
   "dependencies": {
