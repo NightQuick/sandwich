@@ -44,10 +44,6 @@ export class Store {
       if (key === 'finish') continue;
       const data = await dataApi.getAllIng(key);
 
-      for (const comp in data) {
-        data[comp].id = comp;
-      }
-
       this.state.ingredients[key] = [data];
     }
 
