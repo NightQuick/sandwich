@@ -1,7 +1,7 @@
-import { Menu } from '@elements/menu.js';
-import { SandwichBuilder } from '@elements/modal.js';
-import { store } from '@dp/store.js';
-import { basket } from '@elements/basket.js';
+import { Menu } from '@elements/menu';
+import { SandwichBuilder } from '@elements/modal';
+import { store } from '@dp/store';
+import { basket } from '@elements/basket';
 import { ordersApi } from './api';
 import { order } from '@ui/order';
 
@@ -20,7 +20,7 @@ export const addToBasketCallback = (data) => {
 export const openBuilderCallback = async (data) => {
   await store.initSandwichConfig(data.data);
   await store.loadIngredients();
-  const builder = new SandwichBuilder(store.getSandwichConfig());
+  const builder = new SandwichBuilder();
   builder.openBuilder();
 };
 

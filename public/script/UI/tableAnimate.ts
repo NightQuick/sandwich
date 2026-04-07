@@ -1,4 +1,11 @@
 export class Slider {
+  el: HTMLDivElement | null;
+  tableId: string;
+  targetTop: number;
+  targetHeight: number;
+  currentTop: number;
+  currentHeight: number;
+  isVisible: boolean;
   constructor(tableId) {
     this.el = null;
     this.tableId = tableId;
@@ -29,7 +36,7 @@ export class Slider {
     table.prepend(this.el);
 
     table.addEventListener('mouseover', (e) => {
-      const tr = e.target.closest('tr');
+      const tr = (e.target as Element).closest('tr');
       if (!tr) return;
 
       const tableRect = table.getBoundingClientRect();
@@ -47,7 +54,7 @@ export class Slider {
     });
 
     table.addEventListener('mouseout', (e) => {
-      if (!e.relatedTarget || !table.contains(e.relatedTarget)) {
+      if (!e.relatedTarget || !table.contains(e.relatedTarget as Node)) {
         this.el.classList.remove('menu-slider--visible');
         this.isVisible = false;
       }

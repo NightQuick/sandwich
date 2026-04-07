@@ -1,6 +1,6 @@
 const API_BASE = '/api';
 
-async function request(endpoint, options = {}) {
+async function request(endpoint: string, options: RequestInit = {}) {
   const url = `${API_BASE}${endpoint}`;
 
   const config = {

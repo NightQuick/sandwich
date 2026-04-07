@@ -3,12 +3,35 @@ import { dataApi } from '@api';
 import { settings } from '@constants';
 
 export class Store {
+  state: {
+    sandwichConfig: null | {
+      basePrice: number;
+      category: string;
+      components: {
+        [key: string]: [string, string, number] | [string, string, number][] | [];
+      };
+      description: string;
+      image: string;
+      market: string;
+      name: string;
+      price: number;
+      type: string;
+      weight: number;
+    };
+    ingredients: {
+      [key: string]: {
+        [id: string]: { description?: string; id: string; image: string; name: string; price: number };
+      }[];
+    };
+    currentStep: string;
+  };
+  isLoading: boolean;
+
   constructor() {
     this.state = {
       sandwichConfig: null,
       ingredients: {},
-      currentStep: 'size',
-      basket: []
+      currentStep: 'size'
     };
     this.isLoading = false;
   }
@@ -44,7 +67,7 @@ export class Store {
       if (key === 'finish') continue;
       const data = await dataApi.getAllIng(key);
 
-      this.state.ingredients[key] = [data];
+      this.state.ingredients[key] = data;
     }
 
     this.isLoading = false;
@@ -57,7 +80,7 @@ export class Store {
     this.notify('STEP_CHANGED', step);
   }
 
-  selectIngredient(category, ingredient) {
+  selectIngredient(category, ingredient: { id: string; name: string; price: number }) {
     const multiple = settings[category]?.multiple;
 
     if (!multiple) {
@@ -67,15 +90,17 @@ export class Store {
         ingredient.price || 0
       ];
     } else {
-      const current = this.state.sandwichConfig.components[category];
+      const current = this.state.sandwichConfig.components[category] as [string, string, number][];
       const exists = current.find((item) => item[0] === ingredient.id);
 
       if (exists) {
-        this.state.sandwichConfig.components[category] = current.filter((item) => item[0] !== ingredient.id);
+        this.state.sandwichConfig.components[category] = current.filter(
+          (item) => item[0] !== ingredient.id
+        ) as [string, string, number][];
         return false;
       } else {
         if (category !== 'sauce') {
-          current.push([ingredient.id, ingredient.name, ingredient.price || 0]);
+          current.push([ingredient.id, ingredient.name, ingredient.price || 0] as [string, string, number]);
           return true;
         } else {
           if (this.state.sandwichConfig.components[category].length < 3) {
@@ -101,26 +126,26 @@ export class Store {
       if (typeof this.state.sandwichConfig.components[component] === 'string') {
         this.state.sandwichConfig.components[component] = [
           this.state.sandwichConfig.components[component],
-          this.state.ingredients[component][0][this.state.sandwichConfig.components[component]].name,
+          this.state.ingredients[component][this.state.sandwichConfig.components[component] as string].name,
           0
         ];
       } else {
         this.state.sandwichConfig.components[component] = this.state.sandwichConfig.components[component].map(
           (item) => [item, '', 0]
-        );
+        ) as [string, string, number][];
       }
     }
 
     this.notify('SANDWICH_INIT', this.state.sandwichConfig);
   }
 
-  addToBasket() {
-    this.state.basket.push({
-      ...this.state.sandwichConfig,
-      timestamp: Date.now()
-    });
-    this.notify('ADDED_TO_BASKET', this.state.basket);
-  }
+  // addToBasket() {
+  //   this.state.basket.push({
+  //     ...this.state.sandwichConfig,
+  //     timestamp: Date.now()
+  //   });
+  //   this.notify('ADDED_TO_BASKET', this.state.basket);
+  // }
 
   recalculatePrice() {
     const basePrice = this.state.sandwichConfig.basePrice || this.state.sandwichConfig.price;
@@ -132,7 +157,7 @@ export class Store {
 
       if (Array.isArray(comp)) {
         if (!isMultiple && comp.length === 3 && typeof comp[0] === 'string') {
-          finalPrice += comp[2] || 0;
+          finalPrice += (comp[2] as number) || 0;
         } else if (isMultiple) {
           comp.forEach((item) => {
             if (Array.isArray(item) && item[2]) {

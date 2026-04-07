@@ -1,4 +1,5 @@
 export class PubSub {
+  subscribers: Map<string, Set<Function>>;
   constructor() {
     this.subscribers = new Map();
   }

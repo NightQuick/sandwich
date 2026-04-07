@@ -1,9 +1,11 @@
-import { IngredientCard } from '@elements/ingredientCard.js';
+import { IngredientCard } from '@elements/ingredientCard';
 import { settings } from '@constants';
-import { renderBuilderReady } from '@elements/renderBuilderReady.js';
-import { store } from '@dp/store.js';
+import { renderBuilderReady } from '@elements/renderBuilderReady';
+import { store } from '@dp/store';
 
 export class SandwichBuilder {
+  settings: { [key: string]: { name: string; object: string; title: string; multiple?: boolean } };
+  cardCollections: { [key: string]: IngredientCard[] };
   constructor() {
     this.settings = settings;
     this.cardCollections = {};
@@ -36,15 +38,15 @@ export class SandwichBuilder {
       this.renderBuilder();
     };
     document.getElementById('ingredients-switcher').onclick = (event) => {
-      if (event.target.nodeName != 'TD') return;
-      store.setStep(event.target.id);
+      if ((event.target as Element).nodeName != 'TD') return;
+      store.setStep((event.target as Element).id);
       this.renderBuilder();
     };
     document.addEventListener('keydown', this.escKeyHandler);
 
     if (!document.getElementById('close-modal').onclick) {
       document.getElementById('modal').addEventListener('click', (event) => {
-        if (event.target.id != 'modal') return;
+        if ((event.target as Element).id != 'modal') return;
         this.closeBuilder();
       });
       document.getElementById('close-modal').onclick = () => this.closeBuilder();
@@ -74,12 +76,10 @@ export class SandwichBuilder {
       const ingredients = store.getIngredientsForStep(currentStep);
       this.cardCollections[currentStep] = [];
 
-      ingredients.forEach((element) => {
-        for (let product in element) {
-          let cardElement = new IngredientCard(element[product], this.settings[currentStep].multiple, this);
-          this.cardCollections[currentStep].push(cardElement);
-        }
-      });
+      for (const id in ingredients) {
+        let cardElement = new IngredientCard(ingredients[id], this.settings[currentStep].multiple, this);
+        this.cardCollections[currentStep].push(cardElement);
+      }
 
       this.cardCollections[currentStep].forEach((card) => {
         card.renderModalCard();

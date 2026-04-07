@@ -1,12 +1,28 @@
-import { pubSub } from '@dp/pubSub.js';
+import { pubSub } from '@dp/pubSub';
+
+interface Order {
+  description: string;
+  image: string;
+  name: string;
+  price: number;
+  value: number;
+}
 export class Basket {
+  orderEvent: boolean;
+  orders: Order[];
+  totalPrice: number;
+  basket: Element;
+  template: HTMLTemplateElement;
+  basketProducts: Element;
+  listOrders: Node;
   constructor() {
     this.orderEvent = false;
     this.orders = [];
     this.totalPrice = 0;
     this.basket = document.getElementById('basket-content');
-    this.template = document.getElementById('basket-content-template');
-    this.listOrders = document.getElementById('basket-products').childNodes[1];
+    this.template = document.getElementById('basket-content-template') as HTMLTemplateElement;
+    this.basketProducts = document.getElementById('basket-products');
+    this.listOrders = this.basketProducts.childNodes[1];
   }
 
   addProduct(name, value, price, image = '', description = '') {
@@ -42,21 +58,21 @@ export class Basket {
   renderBasket() {
     this.basket.innerHTML = '';
     this.orders.forEach((element) => {
-      const newContent = this.template.content.cloneNode(true);
+      const newContent = this.template.content.cloneNode(true) as DocumentFragment;
       const td = newContent.querySelectorAll('td');
       td[0].textContent = element.name;
       td[1].textContent = element.price + ' р.';
-      td[2].textContent = element.value;
+      td[2].textContent = element.value.toString();
       td[3].textContent = 'x';
       td[3].classList.add('remove-from-basket-button');
 
       this.basket.appendChild(newContent);
 
-      const removeButtons = document.querySelectorAll('.remove-from-basket-button');
+      const removeButtons = document.querySelectorAll<HTMLElement>('.remove-from-basket-button');
       removeButtons.forEach((button) => {
         if (!button.onclick) {
           button.onclick = () => {
-            button.parentElement.remove();
+            button.parentElement?.remove();
             this.removeElement(element.name, element.price, element.value);
           };
         }
@@ -121,7 +137,7 @@ export class Basket {
   }
 
   confirmOrder() {
-    orderButton[0].onclick = '';
+    // orderButton[0].onclick = '';
     // orderButton[0].classList.remove('place-an-order-active');
   }
   setData(data) {

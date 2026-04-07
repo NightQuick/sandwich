@@ -1,4 +1,4 @@
-import { pubSub } from '@dp/pubSub.js';
+import { pubSub } from '@dp/pubSub';
 import {
   menuSwitcherCallback,
   addToBasketCallback,

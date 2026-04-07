@@ -1,9 +1,29 @@
-import { pubSub } from '@dp/pubSub.js';
-import { counter } from '@elements/counter.js';
+import { pubSub } from '@dp/pubSub';
+import { counter } from '@elements/counter';
 import { logoPaths } from '@constants';
 
+interface Component {
+  size: string;
+  bread: string;
+  vegetable: string[];
+  sauce: string[];
+  filling: string[];
+}
+
+interface Data {
+  category: string;
+  components: Component[];
+  description: string;
+  image: string;
+  market: string;
+  name: string;
+  price: number;
+  type: string;
+  weight: number;
+}
 //Карточки товаров(не ингридиентов модального окна)
 export class Card {
+  data: Data;
   constructor(data) {
     this.data = data;
   }
@@ -86,9 +106,9 @@ export class Card {
     }
 
     addToBasket.addEventListener('click', () => {
-      const counterInput = counterElem.querySelector('.product-counter-input');
-      if (counterInput.value == 0) {
-        counterInput.value = 1;
+      const counterInput = counterElem.querySelector('.product-counter-input') as HTMLInputElement;
+      if (+counterInput.value == 0) {
+        counterInput.value = (+counterInput.value + 1).toString();
       }
       pubSub.publish('addToBasket', {
         message: 'User add product to basket',

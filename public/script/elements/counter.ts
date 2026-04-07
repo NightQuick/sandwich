@@ -11,27 +11,27 @@ export function counter(startsFrom = 1) {
   input.name = 'counter';
   input.className = 'product-counter-input';
   input.type = 'number';
-  input.inputmode = 'numeric';
+  input.inputMode = 'numeric';
   input.value = `${startsFrom}`;
   buttonPlus.className = 'counter-buttons';
   buttonPlusContent.className = 'counter-buttons-text';
   buttonPlusContent.textContent = '+';
 
   buttonMinus.addEventListener('click', () => {
-    if (input.value > 1) {
-      input.value = +input.value - 1;
+    if (+input.value > 1) {
+      input.value = (+input.value - 1).toString();
     }
   });
   buttonPlus.addEventListener('click', () => {
-    input.value = +input.value + 1;
+    input.value = (+input.value + 1).toString();
   });
 
   input.addEventListener('input', () => {
-    input.value = Math.abs(input.value);
+    input.value = Math.abs(+input.value).toString();
   });
   input.addEventListener('blur', () => {
-    if (input.value <= 0) {
-      input.value = 1;
+    if (+input.value <= 0) {
+      input.value = '1';
     }
   });
   buttonMinus.appendChild(buttonMinusContent);

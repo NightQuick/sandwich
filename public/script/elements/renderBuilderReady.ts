@@ -1,5 +1,5 @@
-import { counter } from '@elements/counter.js';
-import { pubSub } from '@dp/pubSub.js';
+import { counter } from '@elements/counter';
+import { pubSub } from '@dp/pubSub';
 
 export function renderBuilderReady(settings, cardData) {
   document.getElementById('modal-menu-wrapper').innerHTML = '';
@@ -29,7 +29,7 @@ export function renderBuilderReady(settings, cardData) {
       cardData.components[ingredient].forEach((component) => {
         list.push(component[1]);
       });
-      if (list.length === 0) list = 'Нет';
+      if (list.length === 0) list[0] = 'Нет';
       ingredientElement.textContent = `${settings[ingredient].name}: ${list}`;
     }
 
@@ -69,7 +69,7 @@ export function renderBuilderReady(settings, cardData) {
   finishElement.classList.add('modal-switcher-active');
 
   toBasket.addEventListener('click', () => {
-    const input = counterElem.querySelector('.product-counter-input');
+    const input = counterElem.querySelector<HTMLInputElement>('.product-counter-input');
     pubSub.publish('addToBasket', {
       message: 'User add product to basket',
       name: cardData.name,

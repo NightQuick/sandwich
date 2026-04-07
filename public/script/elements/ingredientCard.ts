@@ -1,7 +1,17 @@
-import { store } from '@dp/store.js';
+import { store } from '@dp/store';
 import { settings } from '@constants';
+import { SandwichBuilder } from './modal';
 
+interface Data {
+  id: string;
+  image: string;
+  name: string;
+  price: number;
+}
 export class IngredientCard {
+  builder: SandwichBuilder;
+  data: Data;
+  multiple: boolean | undefined;
   constructor(data, multiple, builder) {
     this.builder = builder;
     this.data = data;

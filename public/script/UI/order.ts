@@ -1,7 +1,18 @@
-import { pubSub } from '@dp/pubSub.js';
+import { pubSub } from '@dp/pubSub';
 import { counter } from '@elements/counter';
 
+interface Position {
+  description: string;
+  image: string;
+  name: string;
+  price: number;
+  value: string;
+}
+
 export class Order {
+  positionList: Position[];
+  orderPrice: number;
+  events: boolean;
   constructor(orders) {
     this.positionList = orders;
     this.orderPrice = 0;
@@ -53,25 +64,35 @@ export class Order {
       price.classList.add('order-position-price');
       price.textContent = `${position.price} руб. за шт.`;
 
-      const positionCounter = counter(position.value);
+      const positionCounter = counter(+position.value);
       positionCounter.classList.add('order-position-counter');
       const counterButtons = [positionCounter.children[0], positionCounter.children[2]];
       counterButtons.forEach((button) => {
         button.addEventListener('click', () => {
           pubSub.publish('updateBasketValue', {
             message: `value of ${position.name} was updated`,
-            data: [position.name, position.price, position.value, positionCounter.children[1].value]
+            data: [
+              position.name,
+              position.price,
+              position.value,
+              (positionCounter.children[1] as HTMLInputElement).value
+            ]
           });
-          position.value = positionCounter.children[1].value;
+          position.value = (positionCounter.children[1] as HTMLInputElement).value;
           this.updatePrice();
         });
       });
       positionCounter.children[1].addEventListener('blur', () => {
         pubSub.publish('updateBasketValue', {
           message: `value of ${position.name} was updated`,
-          data: [position.name, position.price, position.value, positionCounter.children[1].value]
+          data: [
+            position.name,
+            position.price,
+            position.value,
+            (positionCounter.children[1] as HTMLInputElement).value
+          ]
         });
-        position.value = positionCounter.children[1].value;
+        position.value = (positionCounter.children[1] as HTMLInputElement).value;
         this.updatePrice();
       });
 
@@ -131,7 +152,7 @@ export class Order {
   updatePrice() {
     this.orderPrice = 0;
     this.positionList.forEach((position) => {
-      this.orderPrice += position.value * position.price;
+      this.orderPrice += +position.value * position.price;
     });
     const totalPrice = document.getElementById('order-total-price');
     totalPrice.textContent = `Итого: ${this.orderPrice} руб.`;

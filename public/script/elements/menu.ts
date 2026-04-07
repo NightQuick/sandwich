@@ -1,8 +1,11 @@
-import { Card } from '@elements/card.js';
+import { Card } from '@elements/card';
 import { dataApi } from '@api';
 
 //Меню продуктов
 export class Menu {
+  data: Card[];
+  category: string;
+  initialized: Promise<void>;
   constructor(category) {
     this.data = [];
     this.category = category;
