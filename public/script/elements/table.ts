@@ -3,13 +3,13 @@ import { pubSub } from '@dp/pubSub';
 import { slider } from '@ui/tableAnimate';
 
 export function renderSwitcherTable() {
-  const table = document.getElementById('menu-switcher');
+  const table = document.getElementById('menu-switcher')!;
   for (const type in switcherTable) {
     const tr = document.createElement('tr');
     const td = document.createElement('td');
     td.className = 'menu-button';
-    td.id = switcherTable[type].id;
-    td.textContent = switcherTable[type].content;
+    td.id = switcherTable[type as keyof typeof switcherTable].id;
+    td.textContent = switcherTable[type as keyof typeof switcherTable].content;
     tr.appendChild(td);
     table.appendChild(tr);
   }
@@ -24,7 +24,7 @@ export function renderSwitcherTable() {
       }
     }
 
-    (event.target as Element).parentElement.classList.add('menu-switcher-active');
+    (event.target as Element).parentElement!.classList.add('menu-switcher-active');
     for (const tr of table.children) {
       if (!tr.classList.contains('menu-switcher-active')) {
         tr.classList.remove('menu-switcher-inactive');
@@ -32,7 +32,7 @@ export function renderSwitcherTable() {
     }
 
     let category = (event.target as Element).id.split('-')[2].split('&');
-    pubSub.publish('menuType', { message: 'User changed menu category', category });
+    pubSub.publish('menuType', { message: 'User changed menu category', data: { category } });
   };
   slider.create();
 }

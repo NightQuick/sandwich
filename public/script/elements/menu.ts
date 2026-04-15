@@ -1,12 +1,12 @@
-import { Card } from '@elements/card';
+import { Card, CardData } from '@elements/card';
 import { dataApi } from '@api';
-
+type Product = { description?: string; id: string; image: string; name: string; price: number };
 //Меню продуктов
 export class Menu {
   data: Card[];
   category: string;
   initialized: Promise<void>;
-  constructor(category) {
+  constructor(category: string) {
     this.data = [];
     this.category = category;
     this.initialized = this.initialize();
@@ -20,7 +20,7 @@ export class Menu {
     let data = await dataApi.getAllPositions(this.category);
 
     //Создание карточек товаров и сохранение их информации
-    data.forEach((product) => {
+    data.forEach((product: CardData) => {
       let cardElement = new Card(product);
       this.data.push(cardElement);
     });
@@ -30,7 +30,7 @@ export class Menu {
   async render() {
     await this.initialized;
 
-    let menu = document.getElementById('menu');
+    let menu = document.getElementById('menu') as HTMLElement;
     menu.innerHTML = '';
 
     this.data.forEach((card) => {

@@ -6,7 +6,7 @@ export class Slider {
   currentTop: number;
   currentHeight: number;
   isVisible: boolean;
-  constructor(tableId) {
+  constructor(tableId: string) {
     this.el = null;
     this.tableId = tableId;
     this.targetTop = 0;
@@ -16,20 +16,20 @@ export class Slider {
     this.isVisible = false;
   }
 
-  lerp(a, b, t) {
+  lerp(a: number, b: number, t: number): number {
     return a + (b - a) * t;
   }
 
   animate() {
     this.currentTop = this.lerp(this.currentTop, this.targetTop, 0.16);
     this.currentHeight = this.lerp(this.currentHeight, this.targetHeight, 0.16);
-    this.el.style.top = this.currentTop + 'px';
-    this.el.style.height = this.currentHeight + 'px';
+    this.el!.style.top = this.currentTop + 'px';
+    this.el!.style.height = this.currentHeight + 'px';
     requestAnimationFrame(() => this.animate());
   }
 
   create() {
-    const table = document.getElementById(this.tableId);
+    const table = document.getElementById(this.tableId)!;
 
     this.el = document.createElement('div');
     this.el.className = 'menu-slider';
@@ -50,12 +50,12 @@ export class Slider {
 
       this.targetTop = rowRect.top - tableRect.top;
       this.targetHeight = rowRect.height;
-      this.el.classList.add('menu-slider--visible');
+      this.el!.classList.add('menu-slider--visible');
     });
 
     table.addEventListener('mouseout', (e) => {
       if (!e.relatedTarget || !table.contains(e.relatedTarget as Node)) {
-        this.el.classList.remove('menu-slider--visible');
+        this.el!.classList.remove('menu-slider--visible');
         this.isVisible = false;
       }
     });

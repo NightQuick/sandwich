@@ -19,14 +19,14 @@ export class Basket {
     this.orderEvent = false;
     this.orders = [];
     this.totalPrice = 0;
-    this.basket = document.getElementById('basket-content');
+    this.basket = <HTMLElement>document.getElementById('basket-content');
     this.template = document.getElementById('basket-content-template') as HTMLTemplateElement;
-    this.basketProducts = document.getElementById('basket-products');
+    this.basketProducts = <HTMLElement>document.getElementById('basket-products');
     this.listOrders = this.basketProducts.childNodes[1];
   }
 
-  addProduct(name, value, price, image = '', description = '') {
-    const lineToChange = { name, price };
+  addProduct(name: string, value: number, price: number, image: string = '', description: string = '') {
+    const lineToChange: { name: string; price: number } = { name, price };
     for (let i = 0; i <= this.orders.length; i++) {
       let check = true;
       if (this.orders.length === 0) {
@@ -35,7 +35,7 @@ export class Basket {
       if (this.orders[i]) {
         for (const elem in this.orders[i]) {
           if (!(elem == 'image' || elem == 'description' || elem == 'value'))
-            if (!(this.orders[i][elem] == lineToChange[elem])) {
+            if (!(this.orders[i][elem as keyof Order] == lineToChange[elem as keyof typeof lineToChange])) {
               check = false;
             }
         }
@@ -73,14 +73,14 @@ export class Basket {
         if (!button.onclick) {
           button.onclick = () => {
             button.parentElement?.remove();
-            this.removeElement(element.name, element.price, element.value);
+            this.removeElement(element.name, element.price, element.value.toString());
           };
         }
       });
     });
     const basketPrice = document.getElementById('order-status');
     const orderButton = document.getElementsByClassName('place-an-order');
-    basketPrice.textContent = `Итого: ${this.totalPrice} руб.`;
+    basketPrice!.textContent = `Итого: ${this.totalPrice} руб.`;
     if (this.orders.length === 0) {
       orderButton[0].classList.remove('place-an-order-active');
       if (this.orderEvent) {
@@ -98,13 +98,13 @@ export class Basket {
     }
     pubSub.publish('updateBasket', { message: 'Basket was updated', data: this.getData() });
   }
-  removeElement(name, price, value) {
+  removeElement(name: string, price: number, value: string) {
     const lineToRemove = { name, price, value };
     for (let i = 0; i <= this.orders.length; i++) {
       let check = true;
       for (const elem in this.orders[i]) {
         if (!(elem == 'image' || elem == 'description'))
-          if (!(this.orders[i][elem] == lineToRemove[elem])) {
+          if (!(this.orders[i][elem as keyof Order] == lineToRemove[elem as keyof typeof lineToRemove])) {
             check = false;
           }
       }
@@ -116,13 +116,13 @@ export class Basket {
       }
     }
   }
-  changeValue(name, price, value, newValue) {
+  changeValue(name: string, price: number, value: string, newValue: number) {
     const lineToChange = { name, price, value };
     for (let i = 0; i <= this.orders.length; i++) {
       let check = true;
       for (const elem in this.orders[i]) {
         if (!(elem == 'image' || elem == 'description'))
-          if (!(this.orders[i][elem] == lineToChange[elem])) {
+          if (!(this.orders[i][elem as keyof Order] == lineToChange[elem as keyof typeof lineToChange])) {
             check = false;
           }
       }
@@ -140,7 +140,7 @@ export class Basket {
     // orderButton[0].onclick = '';
     // orderButton[0].classList.remove('place-an-order-active');
   }
-  setData(data) {
+  setData(data: { orders: Order[]; totalPrice: number }) {
     this.orders = data.orders;
     this.totalPrice = data.totalPrice;
   }
@@ -163,7 +163,7 @@ export class Basket {
 export let basket = new Basket();
 if (localStorage.basket) {
   basket = new Basket();
-  const data = JSON.parse(localStorage.getItem('basket'));
+  const data = JSON.parse(localStorage.getItem('basket')!);
   basket.setData(data);
   basket.renderBasket();
 } else {

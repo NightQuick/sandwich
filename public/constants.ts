@@ -2,12 +2,14 @@ export const settings = {
   size: {
     name: 'Размер',
     object: 'sizes',
-    title: 'Выберите размер сендвича'
+    title: 'Выберите размер сендвича',
+    multiple: false
   },
   bread: {
     name: 'Хлеб',
     object: 'breads',
-    title: 'Хлеб для сендвича на выбор'
+    title: 'Хлеб для сендвича на выбор',
+    multiple: false
   },
   vegetable: {
     name: 'Овощи',
@@ -30,7 +32,8 @@ export const settings = {
   finish: {
     name: 'Готово!',
     object: 'ready',
-    title: 'Проверьте и добавьте в корзину'
+    title: 'Проверьте и добавьте в корзину',
+    multiple: false
   }
 };
 

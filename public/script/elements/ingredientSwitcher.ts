@@ -5,10 +5,10 @@ export function renderIngredientSwitcher() {
   const tr = document.createElement('tr');
   for (let element in ingredientSwitcher) {
     const td = document.createElement('td');
-    td.id = ingredientSwitcher[element].id;
-    td.textContent = ingredientSwitcher[element].content;
+    td.id = ingredientSwitcher[element as keyof typeof ingredientSwitcher].id;
+    td.textContent = ingredientSwitcher[element as keyof typeof ingredientSwitcher].content;
     td.className = 'ingredients';
     tr.appendChild(td);
   }
-  table.appendChild(tr);
+  table!.appendChild(tr);
 }

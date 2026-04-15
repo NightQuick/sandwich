@@ -1,27 +1,31 @@
 import { pubSub } from '@dp/pubSub.js';
 import { dataApi } from '@api';
 import { settings } from '@constants';
+import { CardData } from '@script/elements/card';
 
+export type SandwichConfig = null | {
+  basePrice: number;
+  category: string;
+  components: {
+    [key: string]: [string, string, number] | [string, string, number][] | [];
+  };
+  description: string;
+  image: string;
+  market: string;
+  name: string;
+  price: number;
+  type: string;
+  weight: number;
+};
+
+export type Category = 'size' | 'bread' | 'vegetable' | 'sauce' | 'filling' | 'finish';
 export class Store {
   state: {
-    sandwichConfig: null | {
-      basePrice: number;
-      category: string;
-      components: {
-        [key: string]: [string, string, number] | [string, string, number][] | [];
-      };
-      description: string;
-      image: string;
-      market: string;
-      name: string;
-      price: number;
-      type: string;
-      weight: number;
-    };
+    sandwichConfig: SandwichConfig;
     ingredients: {
       [key: string]: {
         [id: string]: { description?: string; id: string; image: string; name: string; price: number };
-      }[];
+      };
     };
     currentStep: string;
   };
@@ -36,15 +40,15 @@ export class Store {
     this.isLoading = false;
   }
 
-  subscribe(callback) {
+  subscribe(callback: (data: unknown) => void) {
     pubSub.subscribe('store:change', callback);
   }
 
-  unsubscribe(callback) {
+  unsubscribe(callback: (data: unknown) => void) {
     pubSub.unsubscribe('store:change', callback);
   }
 
-  notify(action, payload) {
+  notify(action: string, payload: unknown) {
     pubSub.publish('store:change', {
       action,
       payload,
@@ -75,26 +79,26 @@ export class Store {
     return this.state.ingredients;
   }
 
-  setStep(step) {
+  setStep(step: string) {
     this.state.currentStep = step;
     this.notify('STEP_CHANGED', step);
   }
 
-  selectIngredient(category, ingredient: { id: string; name: string; price: number }) {
+  selectIngredient(category: Category, ingredient: { id: string; name: string; price: number }) {
     const multiple = settings[category]?.multiple;
 
     if (!multiple) {
-      this.state.sandwichConfig.components[category] = [
+      this.state.sandwichConfig!.components[category] = [
         ingredient.id,
         ingredient.name,
         ingredient.price || 0
       ];
     } else {
-      const current = this.state.sandwichConfig.components[category] as [string, string, number][];
+      const current = this.state.sandwichConfig!.components[category] as [string, string, number][];
       const exists = current.find((item) => item[0] === ingredient.id);
 
       if (exists) {
-        this.state.sandwichConfig.components[category] = current.filter(
+        this.state.sandwichConfig!.components[category] = current.filter(
           (item) => item[0] !== ingredient.id
         ) as [string, string, number][];
         return false;
@@ -103,7 +107,7 @@ export class Store {
           current.push([ingredient.id, ingredient.name, ingredient.price || 0] as [string, string, number]);
           return true;
         } else {
-          if (this.state.sandwichConfig.components[category].length < 3) {
+          if (this.state.sandwichConfig!.components[category].length < 3) {
             current.push([ingredient.id, ingredient.name, ingredient.price || 0]);
             return true;
           }
@@ -115,24 +119,23 @@ export class Store {
     this.notify('INGREDIENT_SELECTED', { category, ingredient });
   }
 
-  async initSandwichConfig(data) {
+  async initSandwichConfig(data: CardData) {
     await this.loadIngredients();
-    this.loadIngredients();
     this.state.sandwichConfig = JSON.parse(JSON.stringify(data));
-    this.state.sandwichConfig.basePrice = data.price;
+    this.state.sandwichConfig!.basePrice = data.price;
     this.state.currentStep = 'size';
 
-    for (const component in this.state.sandwichConfig.components) {
-      if (typeof this.state.sandwichConfig.components[component] === 'string') {
-        this.state.sandwichConfig.components[component] = [
-          this.state.sandwichConfig.components[component],
-          this.state.ingredients[component][this.state.sandwichConfig.components[component] as string].name,
+    for (const component in this.state.sandwichConfig!.components) {
+      if (typeof this.state.sandwichConfig!.components[component] === 'string') {
+        this.state.sandwichConfig!.components[component] = [
+          this.state.sandwichConfig!.components[component],
+          this.state.ingredients[component][this.state.sandwichConfig!.components[component] as string].name,
           0
         ];
       } else {
-        this.state.sandwichConfig.components[component] = this.state.sandwichConfig.components[component].map(
-          (item) => [item, '', 0]
-        ) as [string, string, number][];
+        this.state.sandwichConfig!.components[component] = this.state.sandwichConfig!.components[
+          component
+        ].map((item) => [item, '', 0]) as [string, string, number][];
       }
     }
 
@@ -148,12 +151,12 @@ export class Store {
   // }
 
   recalculatePrice() {
-    const basePrice = this.state.sandwichConfig.basePrice || this.state.sandwichConfig.price;
+    const basePrice = this.state.sandwichConfig!.basePrice || this.state.sandwichConfig!.price;
     let finalPrice = basePrice;
 
-    for (const category in this.state.sandwichConfig.components) {
-      const comp = this.state.sandwichConfig.components[category];
-      const isMultiple = settings[category]?.multiple;
+    for (const category in this.state.sandwichConfig!.components) {
+      const isMultiple = settings[category as keyof typeof settings]?.multiple;
+      const comp = this.state.sandwichConfig!.components[category];
 
       if (Array.isArray(comp)) {
         if (!isMultiple && comp.length === 3 && typeof comp[0] === 'string') {
@@ -168,14 +171,14 @@ export class Store {
       }
     }
 
-    this.state.sandwichConfig.price = finalPrice;
+    this.state.sandwichConfig!.price = finalPrice;
   }
 
   getCurrentStep() {
     return this.state.currentStep;
   }
 
-  getIngredientsForStep(step) {
+  getIngredientsForStep(step: string) {
     return this.state.ingredients[step];
   }
 

@@ -10,7 +10,7 @@ interface Component {
   filling: string[];
 }
 
-interface Data {
+export interface CardData {
   category: string;
   components: Component[];
   description: string;
@@ -23,8 +23,8 @@ interface Data {
 }
 //Карточки товаров(не ингридиентов модального окна)
 export class Card {
-  data: Data;
-  constructor(data) {
+  data: CardData;
+  constructor(data: CardData) {
     this.data = data;
   }
 
@@ -39,7 +39,7 @@ export class Card {
     logo.className = 'logo';
     for (const market in logoPaths) {
       if (this.data.market === market) {
-        logo.src = logoPaths[market];
+        logo.src = logoPaths[market as keyof typeof logoPaths];
       }
     }
 
@@ -112,11 +112,13 @@ export class Card {
       }
       pubSub.publish('addToBasket', {
         message: 'User add product to basket',
-        name: this.data.name,
-        value: counterInput.value,
-        price: this.data.price,
-        image: this.data.image,
-        description: this.data.description
+        data: {
+          name: this.data.name,
+          value: counterInput.value,
+          price: this.data.price,
+          image: this.data.image,
+          description: this.data.description
+        }
       });
     });
     return card;

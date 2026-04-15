@@ -4,7 +4,7 @@ import { renderBuilderReady } from '@elements/renderBuilderReady';
 import { store } from '@dp/store';
 
 export class SandwichBuilder {
-  settings: { [key: string]: { name: string; object: string; title: string; multiple?: boolean } };
+  settings: { [key: string]: { name: string; object: string; title: string; multiple: boolean } };
   cardCollections: { [key: string]: IngredientCard[] };
   constructor() {
     this.settings = settings;
@@ -18,7 +18,7 @@ export class SandwichBuilder {
   updatePrice() {
     store.recalculatePrice();
     const footer = document.getElementById('modal-footer');
-    footer.textContent = 'Итого: ' + store.state.sandwichConfig.price + ' руб.';
+    footer!.textContent = 'Итого: ' + store.state.sandwichConfig!.price + ' руб.';
   }
 
   openBuilder() {
@@ -26,30 +26,30 @@ export class SandwichBuilder {
     this.cardCollections = {};
 
     const modal = document.getElementById('modal');
-    modal.classList.add('modal-visible');
+    modal!.classList.add('modal-visible');
 
-    document.getElementById('previous-modal').onclick = () => {
+    document.getElementById('previous-modal')!.onclick = () => {
       this.getPrevKey();
       this.renderBuilder();
     };
 
-    document.getElementById('next-modal').onclick = () => {
+    document.getElementById('next-modal')!.onclick = () => {
       this.getNextKey();
       this.renderBuilder();
     };
-    document.getElementById('ingredients-switcher').onclick = (event) => {
+    document.getElementById('ingredients-switcher')!.onclick = (event) => {
       if ((event.target as Element).nodeName != 'TD') return;
       store.setStep((event.target as Element).id);
       this.renderBuilder();
     };
     document.addEventListener('keydown', this.escKeyHandler);
 
-    if (!document.getElementById('close-modal').onclick) {
-      document.getElementById('modal').addEventListener('click', (event) => {
+    if (!document.getElementById('close-modal')!.onclick) {
+      document.getElementById('modal')!.addEventListener('click', (event) => {
         if ((event.target as Element).id != 'modal') return;
         this.closeBuilder();
       });
-      document.getElementById('close-modal').onclick = () => this.closeBuilder();
+      document.getElementById('close-modal')!.onclick = () => this.closeBuilder();
     }
 
     this.renderBuilder();
@@ -60,16 +60,18 @@ export class SandwichBuilder {
     const currentStep = store.getCurrentStep();
     const sandwichConfig = await store.getSandwichConfig();
 
+    if (!sandwichConfig) return;
+
     if (this.settings[currentStep].object != 'ready') {
-      document.getElementById('modal-menu-wrapper').innerHTML = '';
+      document.getElementById('modal-menu-wrapper')!.innerHTML = '';
       const menu = document.createElement('div');
       menu.id = 'modal-menu';
-      document.getElementById('modal-menu-wrapper').appendChild(menu);
+      document.getElementById('modal-menu-wrapper')!.appendChild(menu);
 
       const header = document.getElementById('header-text');
-      header.textContent = this.settings[currentStep].title;
+      header!.textContent = this.settings[currentStep].title;
       const footer = document.getElementById('modal-footer');
-      footer.textContent = 'Итого: ' + sandwichConfig.price + ' руб.';
+      footer!.textContent = 'Итого: ' + sandwichConfig.price + ' руб.';
 
       this.renderIngredientSwitcher();
 
@@ -102,7 +104,7 @@ export class SandwichBuilder {
     }
 
     const currentElement = document.getElementById(currentStep);
-    currentElement.classList.add('modal-switcher-active');
+    currentElement?.classList.add('modal-switcher-active');
     for (const element of row) {
       if (!element.classList.contains('modal-switcher-active')) {
         element.classList.add('modal-switcher-inactive');
@@ -138,18 +140,18 @@ export class SandwichBuilder {
     store.setStep('size');
 
     const modal = document.getElementById('modal');
-    modal.classList.remove('modal-visible');
+    modal!.classList.remove('modal-visible');
   }
 
-  escKeyHandler = (event) => {
+  escKeyHandler = (event: KeyboardEvent) => {
     if (event.key === 'Escape') {
       this.closeBuilder();
     }
   };
 
-  selectIngredient(ingredient) {
-    const currentStep = store.getCurrentStep();
-    store.selectIngredient(currentStep, ingredient);
-    this.renderBuilder();
-  }
+  // selectIngredient(ingredient) {
+  //   const currentStep = store.getCurrentStep();
+  //   store.selectIngredient(currentStep, ingredient);
+  //   this.renderBuilder();
+  // }
 }

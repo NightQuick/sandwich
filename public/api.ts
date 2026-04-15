@@ -1,3 +1,5 @@
+import { Position } from '@script/UI/order';
+
 const API_BASE = '/api';
 
 async function request(endpoint: string, options: RequestInit = {}) {
@@ -29,12 +31,12 @@ async function request(endpoint: string, options: RequestInit = {}) {
   }
 }
 export const dataApi = {
-  getAllIng: (category) => request(`/data/ingredients/${category}`),
-  getAllPositions: (category) => request(`/data/sandwiches/${category}`)
+  getAllIng: (category: string) => request(`/data/ingredients/${category}`),
+  getAllPositions: (category: string) => request(`/data/sandwiches/${category}`)
 };
 export const ordersApi = {
   // Создать заказ
-  create: (data) => {
+  create: (data: Omit<Position, 'image' | 'description'>[]) => {
     request('/orders', {
       method: 'POST',
       body: JSON.stringify(data)

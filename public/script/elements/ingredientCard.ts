@@ -1,4 +1,4 @@
-import { store } from '@dp/store';
+import { Category, store } from '@dp/store';
 import { settings } from '@constants';
 import { SandwichBuilder } from './modal';
 
@@ -11,8 +11,8 @@ interface Data {
 export class IngredientCard {
   builder: SandwichBuilder;
   data: Data;
-  multiple: boolean | undefined;
-  constructor(data, multiple, builder) {
+  multiple: boolean;
+  constructor(data: Data, multiple: boolean, builder: SandwichBuilder) {
     this.builder = builder;
     this.data = data;
     this.multiple = multiple;
@@ -42,7 +42,7 @@ export class IngredientCard {
     card.appendChild(cardPrice);
 
     const modalMenu = document.getElementById('modal-menu');
-    modalMenu.appendChild(card);
+    modalMenu!.appendChild(card);
 
     const sandwichConfig = store.getSandwichConfig();
     const currentStep = store.getCurrentStep();
@@ -58,7 +58,7 @@ export class IngredientCard {
       } else if (typeof components[0] === 'string') {
         isChosen = components[0] === this.data.id;
       } else if (Array.isArray(components[0])) {
-        isChosen = components.some((item) => item && item[0] === this.data.id);
+        isChosen = components.some((item) => Array.isArray(item) && item[0] === this.data.id);
       }
     }
 
@@ -67,9 +67,9 @@ export class IngredientCard {
     }
 
     card.addEventListener('click', () => {
-      const result = store.selectIngredient(currentStep, this.data);
+      const result = store.selectIngredient(currentStep as Category, this.data);
       this.builder.updatePrice();
-      if (settings[store.getCurrentStep()]?.multiple) {
+      if (settings[store.getCurrentStep() as keyof typeof settings]?.multiple) {
         if (!result) {
           card.classList.remove('modal-card-active');
           card.classList.add('modal-card-inactive');

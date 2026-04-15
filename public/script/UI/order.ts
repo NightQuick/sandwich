@@ -1,7 +1,7 @@
 import { pubSub } from '@dp/pubSub';
 import { counter } from '@elements/counter';
 
-interface Position {
+export interface Position {
   description: string;
   image: string;
   name: string;
@@ -13,7 +13,7 @@ export class Order {
   positionList: Position[];
   orderPrice: number;
   events: boolean;
-  constructor(orders) {
+  constructor(orders: Position[]) {
     this.positionList = orders;
     this.orderPrice = 0;
     this.events = false;
@@ -22,21 +22,21 @@ export class Order {
   renderOrderbox() {
     document.body.classList.add('no-scroll');
     if (!this.events) {
-      document.getElementById('close-orderbox').addEventListener('click', () => {
+      document.getElementById('close-orderbox')?.addEventListener('click', () => {
         this.closeOrderbox();
       });
 
       const confirmOrderButton = document.getElementById('order-confirm-button');
-      confirmOrderButton.addEventListener('click', () => {
+      confirmOrderButton?.addEventListener('click', () => {
         pubSub.publish('confirmOrder', { message: 'user send order', data: this.positionList });
         this.closeOrderbox();
         this.events = true;
       });
     }
     const modal = document.getElementById('order');
-    modal.classList.remove('order-hidden');
+    modal!.classList.remove('order-hidden');
 
-    const list = document.getElementById('order-box-content');
+    const list = document.getElementById('order-box-content')!;
     this.positionList.forEach((position) => {
       const positionBox = document.createElement('div');
       positionBox.classList.add('order-position');
@@ -131,20 +131,22 @@ export class Order {
     this.updatePrice();
   }
 
-  removeElement(name, price, value) {
+  removeElement(name: string, price: number, value: string) {
     const lineToRemove = { name, price, value };
     for (let i = 0; i <= this.positionList.length; i++) {
       let check = true;
       for (const elem in this.positionList[i]) {
         if (!(elem == 'image' || elem == 'description'))
-          if (!(this.positionList[i][elem] == lineToRemove[elem])) {
+          if (
+            !(this.positionList[i][elem as keyof Position] == lineToRemove[elem as keyof typeof lineToRemove])
+          ) {
             check = false;
           }
       }
       if (check) {
         this.positionList.splice(i, 1);
         i = this.positionList.length;
-        this.updatePrice;
+        this.updatePrice();
       }
     }
   }
@@ -155,13 +157,13 @@ export class Order {
       this.orderPrice += +position.value * position.price;
     });
     const totalPrice = document.getElementById('order-total-price');
-    totalPrice.textContent = `Итого: ${this.orderPrice} руб.`;
+    totalPrice!.textContent = `Итого: ${this.orderPrice} руб.`;
   }
   closeOrderbox() {
     document.body.classList.remove('no-scroll');
     const modal = document.getElementById('order');
-    modal.classList.add('order-hidden');
-    document.getElementById('order-box-content').innerHTML = '';
+    modal!.classList.add('order-hidden');
+    document.getElementById('order-box-content')!.innerHTML = '';
   }
 }
 export const order = new Order([]);

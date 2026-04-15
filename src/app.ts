@@ -1,4 +1,5 @@
 import express from 'express';
+import { ErrorRequestHandler } from 'express';
 import cors from 'cors';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
@@ -44,10 +45,12 @@ app.get('/', (req, res) => {
 });
 
 // 6. Обработка ошибок
-app.use((err, req, res, next) => {
+const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   console.error('ERROR:', err);
   res.status(500).json({ error: 'error on server' });
-});
+};
+
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server works on http://localhost:${PORT}`);

@@ -18,17 +18,17 @@ function basketButton() {
   basketButton.addEventListener('click', () => {
     const basket = document.getElementById('basket');
     if (basketOpened) {
-      basket.classList.remove('basket-active');
+      basket?.classList.remove('basket-active');
       basketOpened = false;
     } else {
-      basket.classList.add('basket-active');
+      basket?.classList.add('basket-active');
       basketOpened = true;
     }
   });
-  document.getElementById('active-panel').appendChild(basketButton);
+  document.getElementById('active-panel')?.appendChild(basketButton);
 }
 function removeBasketButton() {
   if (document.getElementById('basket-button')) {
-    document.getElementById('basket-button').remove();
+    document.getElementById('basket-button')!.remove();
   }
 }
