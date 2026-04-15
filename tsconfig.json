@@ -7,18 +7,17 @@
     "outDir": "./dist",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "baseUrl": ".",
     "paths": {
-      "@script/*": ["public/script/*"],
-      "@styles/*": ["public/styles/*"],
-      "@images/*": ["public/i/*"],
-      "@/*": ["public/*"],
-      "@constants": ["public/constants.ts"],
-      "@callbacks": ["public/callbacks.ts"],
-      "@api": ["public/api.ts"],
-      "@dp/*": ["public/script/dataProcessing/*"],
-      "@elements/*": ["public/script/elements/*"],
-      "@ui/*": ["public/script/UI/*"]
+      "@script/*": ["./public/script/*"],
+      "@styles/*": ["./public/styles/*"],
+      "@images/*": ["./public/i/*"],
+      "@/*": ["./public/*"],
+      "@constants": ["./public/constants.ts"],
+      "@callbacks": ["./public/callbacks.ts"],
+      "@api": ["./public/api.ts"],
+      "@dp/*": ["./public/script/dataProcessing/*"],
+      "@elements/*": ["./public/script/elements/*"],
+      "@ui/*": ["./public/script/UI/*"]
     }
   },
   "include": ["src/**/*", "public/**/*"]
