@@ -148,10 +148,4 @@ export class SandwichBuilder {
       this.closeBuilder();
     }
   };
-
-  // selectIngredient(ingredient) {
-  //   const currentStep = store.getCurrentStep();
-  //   store.selectIngredient(currentStep, ingredient);
-  //   this.renderBuilder();
-  // }
 }

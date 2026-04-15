@@ -136,10 +136,6 @@ export class Basket {
     }
   }
 
-  confirmOrder() {
-    // orderButton[0].onclick = '';
-    // orderButton[0].classList.remove('place-an-order-active');
-  }
   setData(data: { orders: Order[]; totalPrice: number }) {
     this.orders = data.orders;
     this.totalPrice = data.totalPrice;
