@@ -21,14 +21,15 @@
     <header>
       <span id="heading"> СДЕЛАЙТЕ ЗАКАЗ НАПРЯМУЮ ИЗ РЕСТОРАНА </span>
     </header>
+    <div id="app"><button>{{ value }}</button></div>
     <div id="order-list"></div>
     <div id="main-sheet">
       <div id="active-panel">
         <table id="menu-switcher"></table>
-        <div id="basket" class="basket">
+        <div id="basket">
           <div id="basket-description">
             <div id="basket-image">
-              <img id="basket-logo" src="i/shopping-basket.svg" alt="" />
+              <img id="basket-logo" src="./i/shopping-basket.svg" alt="" />
               <div id="basket-shadow"></div>
             </div>
             <span id="basket-name">Корзина</span>
@@ -42,12 +43,11 @@
                   <td class="basket-products-columns" id="count">Кол-во</td>
                 </tr>
               </thead>
-              <tbody id="basket-content"></tbody>
+              <tbody id="basket-app"></tbody>
             </table>
           </div>
-
           <div id="order-information">
-            <span id="order-status">Итого: 0 руб.</span>
+            <span id="order-status">Итого: <span id="total-price">0</span> руб.</span>
             <button class="place-an-order">ОФОРМИТЬ ЗАКАЗ</button>
           </div>
         </div>
@@ -109,5 +109,6 @@
       </div>
     </div>
     <script src="./public/script/main.ts" type="module"></script>
+    <script src="public/script/migrating.ts" type="module"></script>
   </body>
 </html>

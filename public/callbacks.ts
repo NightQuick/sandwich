@@ -59,7 +59,7 @@ export const updateBasketValueCallback = (data: PubSubEvent<[string, number, str
 };
 
 export const removeBasketPositionCallback = (data: PubSubEvent<[string, number, string]>) => {
-  basket.removeElement(data.data[0], data.data[1], data.data[2]);
+  // basket.removeElement(data.data[0], data.data[1], data.data[2]);
 };
 
 export const updateLocalStorageCallback = (data: PubSubEvent<unknown>) => {
