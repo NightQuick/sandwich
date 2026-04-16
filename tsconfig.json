@@ -21,5 +21,6 @@
       "@ui/*": ["./public/script/UI/*"]
     }
   },
-  "include": ["src/**/*", "public/**/*", "env.d.ts"]
+  "include": ["src/**/*", "public/**/*", "env.d.ts"],
+  "exclude": ["node_modules", "dist"]
 }
