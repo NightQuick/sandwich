@@ -50,49 +50,6 @@ export class Basket {
       }
     }
   }
-  // renderBasket() {
-  //   this.basket.innerHTML = '';
-  //   this.orders.value.forEach((element) => {
-  //     const newContent = this.template.content.cloneNode(true) as DocumentFragment;
-  //     const td = newContent.querySelectorAll('td');
-  //     td[0].textContent = element.name;
-  //     td[1].textContent = element.price + ' р.';
-  //     td[2].textContent = element.value.toString();
-  //     td[3].textContent = 'x';
-  //     td[3].classList.add('remove-from-basket-button');
-
-  //     this.basket.appendChild(newContent);
-
-  //     const removeButtons = document.querySelectorAll<HTMLElement>('.remove-from-basket-button');
-  //     removeButtons.forEach((button) => {
-  //       if (!button.onclick) {
-  //         button.onclick = () => {
-  //           button.parentElement?.remove();
-  //           this.removeElement(element.name, element.price, element.value.toString());
-  //         };
-  //       }
-  //     });
-  //   });
-  //   const basketPrice = document.getElementById('order-status');
-  //   const orderButton = document.getElementsByClassName('place-an-order');
-  //   basketPrice!.textContent = `Итого: ${this.totalPrice.value} руб.`;
-  //   if (this.orders.value.length === 0) {
-  //     orderButton[0].classList.remove('place-an-order-active');
-  //     if (this.orderEvent) {
-  //       orderButton[0].removeEventListener('click', this.createOrderCallback);
-  //       this.orderEvent = false;
-  //     }
-  //   } else {
-  //     if (!orderButton[0].classList.contains('place-an-order-active')) {
-  //       orderButton[0].classList.add('place-an-order-active');
-  //       if (!this.orderEvent) {
-  //         orderButton[0].addEventListener('click', this.createOrderCallback);
-  //         this.orderEvent = true;
-  //       }
-  //     }
-  //   }
-  //   pubSub.publish('updateBasket', { message: 'Basket was updated', data: this.getData() });
-  // }
   removeElement(price: number, value: number) {
     this.totalPrice.value -= price * value;
   }
