@@ -99,7 +99,8 @@ createApp(basketComp).mount('#basket-app');
 const btn = document.querySelector('.place-an-order')!;
 btn.addEventListener('click', () => {
   if (basket.orders.value.length === 0) return;
-  basket.clearBasket();
+  pubSub.publish('openOrder', { message: 'User confirm order', data: basket.orders.value });
+  // basket.clearBasket();
 });
 
 watch(
