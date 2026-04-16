@@ -1,7 +1,6 @@
 import { pubSub } from '@dp/pubSub';
 import { createApp, ref, Ref, watch } from 'vue';
 import basketComp from '@components/basket.vue';
-export const positionList = ref([{ name: 'adw', price: 100, value: 10 }]);
 
 interface Order {
   description: string;
@@ -11,11 +10,9 @@ interface Order {
   value: number;
 }
 export class Basket {
-  orderEvent: boolean;
   orders: Ref<Order[]>;
   totalPrice: Ref<number>;
   constructor() {
-    this.orderEvent = false;
     this.orders = ref([]);
     this.totalPrice = ref(0);
   }
@@ -50,9 +47,7 @@ export class Basket {
       }
     }
   }
-  removeElement(price: number, value: number) {
-    this.totalPrice.value -= price * value;
-  }
+
   changeValue(name: string, price: number, value: string, newValue: number) {
     const lineToChange = { name, price, value };
     for (let i = 0; i <= this.orders.value.length; i++) {
@@ -84,9 +79,7 @@ export class Basket {
       totalPrice: this.totalPrice.value
     };
   }
-  createOrderCallback = () => {
-    pubSub.publish('openOrder', { message: 'User confirm order', data: this.orders.value });
-  };
+
   clearBasket() {
     this.orders.value = [];
     this.totalPrice.value = 0;
