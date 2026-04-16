@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { basket } from '@script/elements/basket';
-
-// import { defineProps } from 'vue';
 interface Position {
   name: string;
   price: number;
@@ -20,7 +17,6 @@ const emit = defineEmits<{
 const removeCurrentPosition = () => {
   emit('remove:position', props.index);
 };
-// props.positionList.splice(props.index, 1);
 </script>
 
 <template id="basket-content-template">
