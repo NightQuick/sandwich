@@ -57,4 +57,20 @@ slider.create();
 .menu-switcher-inactive {
   background-color: white;
 }
+
+.menu-slider {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  background-color: rgba(255, 191, 0, 0.49);
+  border-radius: 0.2em;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 0;
+}
+
+.menu-slider--visible {
+  opacity: 1;
+}
 </style>

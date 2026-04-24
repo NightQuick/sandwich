@@ -123,66 +123,6 @@ function openModal() {
   font-size: 15px;
 }
 
-.product-counter {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  height: 50px;
-}
-
-.counter-buttons {
-  text-align: center;
-  cursor: pointer;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  border: 0px;
-  margin: 10px;
-  background: none;
-  outline: none;
-  color: black;
-
-  font-weight: bold;
-  box-shadow: 0px 0px 3px black;
-}
-
-.counter-buttons-text {
-  margin: 0;
-  font-size: 25px;
-  position: relative;
-  background-color: #565656;
-  color: transparent;
-  text-shadow: 0px 2px 3px rgba(255, 255, 255, 1);
-  background-clip: text;
-}
-
-.product-counter-input {
-  text-align: center;
-  width: 45px;
-  height: 30px;
-  margin: 10px;
-  margin-left: 15px;
-  margin-right: 15px;
-  border: none;
-  border-radius: 5px;
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
-}
-
-input[type='number'] {
-  -moz-appearance: textfield;
-  -webkit-appearance: textfield;
-  appearance: textfield;
-}
-
-input:focus {
-  outline: none;
-}
-
-input[type='number']::-webkit-outer-spin-button,
-input[type='number']::-webkit-inner-spin-button {
-  display: none;
-}
-
 .product-add-to-basket {
   border: none;
   border-radius: 3px;
