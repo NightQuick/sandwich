@@ -1,5 +1,5 @@
 import { dataApi } from '@/api';
-import { CardData } from '@script/elements/card';
+import { CardData } from '@constants';
 import { Ref, ref, watch } from 'vue';
 
 interface MenuState {

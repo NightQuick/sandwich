@@ -3,9 +3,6 @@ import { computed, inject, watch } from 'vue';
 import Card from './card.vue';
 import { menuState } from '@script/dataProcessing/menuState';
 const cardList = computed(() => menuState.menuList.value);
-watch(menuState.menuList, () => {
-  console.log(cardList);
-});
 </script>
 
 <template>

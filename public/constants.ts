@@ -37,6 +37,25 @@ export const settings = {
   }
 };
 
+interface Component {
+  size: string;
+  bread: string;
+  vegetable: string[];
+  sauce: string[];
+  filling: string[];
+}
+export interface CardData {
+  category: string;
+  components: Component[];
+  description: string;
+  image: string;
+  market: string;
+  name: string;
+  price: number;
+  type: string;
+  weight: number;
+}
+
 export const switcherTable = {
   pizza: { content: 'Пицца', id: 'menu-switcher-pizza-button' },
   shaurma: { content: 'Шаурма', id: 'menu-switcher-shaurma-button' },

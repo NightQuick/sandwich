@@ -9,7 +9,6 @@ subscribe();
 const app = createApp(Menu);
 app.mount('#menu-wrapper');
 createApp(table).mount('#menu-switcher');
-// renderSwitcherTable();
 renderIngredientSwitcher();
 
 const firstMenu = document.getElementById('menu-switcher-pizza-button')!;

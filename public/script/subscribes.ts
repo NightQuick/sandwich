@@ -1,18 +1,14 @@
 import { pubSub } from '@dp/pubSub';
 import {
-  menuSwitcherCallback,
   addToBasketCallback,
   openBuilderCallback,
   confirmOrderCallback,
   updateLocalStorageCallback,
   openOrderCallback,
-  updateBasketValueCallback,
-  removeBasketPositionCallback
+  updateBasketValueCallback
 } from '@callbacks';
 export function subscribe() {
   pubSub.subscribe('addToBasket', addToBasketCallback);
-
-  pubSub.subscribe('menuType', menuSwitcherCallback);
 
   pubSub.subscribe('openBuilder', openBuilderCallback);
 
@@ -23,6 +19,4 @@ export function subscribe() {
   pubSub.subscribe('openOrder', openOrderCallback);
 
   pubSub.subscribe('updateBasketValue', updateBasketValueCallback);
-
-  pubSub.subscribe('removeBasketPosition', removeBasketPositionCallback);
 }

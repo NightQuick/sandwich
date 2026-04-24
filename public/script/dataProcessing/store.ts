@@ -1,7 +1,7 @@
 import { pubSub } from '@dp/pubSub.js';
 import { dataApi } from '@api';
 import { settings } from '@constants';
-import { CardData } from '@script/elements/card';
+import { CardData } from '@constants';
 
 export type SandwichConfig = null | {
   basePrice: number;
@@ -141,14 +141,6 @@ export class Store {
 
     this.notify('SANDWICH_INIT', this.state.sandwichConfig);
   }
-
-  // addToBasket() {
-  //   this.state.basket.push({
-  //     ...this.state.sandwichConfig,
-  //     timestamp: Date.now()
-  //   });
-  //   this.notify('ADDED_TO_BASKET', this.state.basket);
-  // }
 
   recalculatePrice() {
     const basePrice = this.state.sandwichConfig!.basePrice || this.state.sandwichConfig!.price;

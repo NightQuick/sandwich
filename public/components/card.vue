@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import { basket } from '@script/elements/basket';
 import Counter from './counter.vue';
+import { pubSub } from '@script/dataProcessing/pubSub';
 const props = defineProps({
   data: {
     type: Object,
@@ -14,19 +16,20 @@ const data = {
   image: props.data.image,
   description: props.data.description
 };
+
 data.value = 1;
+
 const valueUpdateHandler = (newValue: number) => {
   data.value = newValue;
 };
 
 function addToBasket() {
-  console.log('Отправлено в корзину:', data);
+  pubSub.publish('addToBasket', { message: 'User add product to basket', data });
 }
+
 function openModal() {
   console.log('Открыть модалку');
 }
-
-console.log(props.data);
 </script>
 
 <template id="card-template">

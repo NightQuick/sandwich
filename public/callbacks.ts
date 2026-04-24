@@ -1,18 +1,14 @@
-import { Menu } from '@elements/menu';
 import { SandwichBuilder } from '@elements/modal';
 import { store } from '@dp/store';
 import { basket } from '@elements/basket';
 import { ordersApi } from './api';
 import { order, Position } from '@ui/order';
-import { CardData } from '@elements/card';
-import { menuState } from '@script/dataProcessing/menuState';
+import { CardData } from '@constants';
 
 interface PubSubEvent<T> {
   message: string;
   data: T;
 }
-
-export const menuSwitcherCallback = (data: PubSubEvent<{ category: string }>) => {};
 
 export const addToBasketCallback = (
   data: PubSubEvent<{
@@ -23,6 +19,7 @@ export const addToBasketCallback = (
     description: string;
   }>
 ) => {
+  console.log(data);
   basket.addProduct(data.data.name, data.data.value, data.data.price, data.data.image, data.data.description);
 };
 
@@ -49,10 +46,6 @@ export const confirmOrderCallback = (data: PubSubEvent<Position[]>) => {
 
 export const updateBasketValueCallback = (data: PubSubEvent<[string, number, string, number]>) => {
   basket.changeValue(data.data[0], data.data[1], data.data[2], data.data[3]);
-};
-
-export const removeBasketPositionCallback = (data: PubSubEvent<[string, number, string]>) => {
-  // basket.removeElement(data.data[0], data.data[1], data.data[2]);
 };
 
 export const updateLocalStorageCallback = (data: PubSubEvent<unknown>) => {

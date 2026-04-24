@@ -5,7 +5,6 @@ function valueExtend(){
   counterValue.value+=1
 }
 function valueDecend(){
-  console.log(counterValue.value)
   if(counterValue.value>1){
     counterValue.value-=1
   }

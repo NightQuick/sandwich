@@ -87,11 +87,9 @@ export class Basket {
 }
 export let basket = new Basket();
 if (localStorage.basket) {
-  basket = new Basket();
   const data = JSON.parse(localStorage.getItem('basket')!);
   basket.setData(data);
 } else {
-  basket = new Basket();
 }
 
 createApp(basketComp).mount('#basket-app');
