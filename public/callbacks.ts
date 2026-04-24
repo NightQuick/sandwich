@@ -5,21 +5,14 @@ import { basket } from '@elements/basket';
 import { ordersApi } from './api';
 import { order, Position } from '@ui/order';
 import { CardData } from '@elements/card';
+import { menuState } from '@script/dataProcessing/menuState';
 
 interface PubSubEvent<T> {
   message: string;
   data: T;
 }
 
-let loadedMenus: { [key: string]: Menu } = {};
-
-export const menuSwitcherCallback = (data: PubSubEvent<{ category: string }>) => {
-  if (!loadedMenus[data.data.category]) {
-    let menu = new Menu(data.data.category);
-    loadedMenus[data.data.category] = menu;
-  }
-  loadedMenus[data.data.category].render();
-};
+export const menuSwitcherCallback = (data: PubSubEvent<{ category: string }>) => {};
 
 export const addToBasketCallback = (
   data: PubSubEvent<{

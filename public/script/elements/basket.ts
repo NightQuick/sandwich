@@ -100,7 +100,6 @@ const btn = document.querySelector('.place-an-order')!;
 btn.addEventListener('click', () => {
   if (basket.orders.value.length === 0) return;
   pubSub.publish('openOrder', { message: 'User confirm order', data: basket.orders.value });
-  // basket.clearBasket();
 });
 
 watch(

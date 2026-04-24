@@ -1,5 +1,7 @@
 import { Card, CardData } from '@elements/card';
 import { dataApi } from '@api';
+import { App, createApp } from 'vue';
+import MenuElement from '@/components/menu.vue';
 type Product = { description?: string; id: string; image: string; name: string; price: number };
 //Меню продуктов
 export class Menu {
@@ -30,12 +32,9 @@ export class Menu {
   async render() {
     await this.initialized;
 
-    let menu = document.getElementById('menu') as HTMLElement;
-    menu.innerHTML = '';
-
-    this.data.forEach((card) => {
-      let cardElement = card.render();
-      menu.appendChild(cardElement);
-    });
+    // this.data.forEach((card) => {
+    //   let cardElement = card.render();
+    //   menu.appendChild(cardElement);
+    // });
   }
 }
