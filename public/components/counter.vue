@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref, watch} from 'vue';
-let counterValue=ref(1)
+const props=defineProps<{startsFrom:number, class?:string}>(
+)
+let counterValue=ref(props.startsFrom)
 function valueExtend(){
   counterValue.value+=1
 }

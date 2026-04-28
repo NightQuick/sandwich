@@ -10,13 +10,32 @@ const handleRemove = (indexToRemove: number) => {
 </script>
 
 <template>
-  <BasketPosition
-    v-for="(position, index) in basket.orders.value"
-    :key="position.name"
-    :position="position"
-    :index="index"
-    @remove:position="handleRemove"
-  />
+  <div id="basket-products-wrapper">
+    <table id="basket-products">
+      <thead>
+        <tr id="basket-products-head">
+          <td class="basket-products-columns" id="name">Название</td>
+          <td class="basket-products-columns" id="price">Цена</td>
+          <td class="basket-products-columns" id="count">Кол-во</td>
+        </tr>
+      </thead>
+      <tbody>
+        <BasketPosition
+          v-for="(position, index) in basket.orders.value"
+          :key="position.name"
+          :position="position"
+          :index="index"
+          @remove:position="handleRemove"
+        />
+      </tbody>
+    </table>
+  </div>
+  <div id="order-information">
+    <span id="order-status">Итого: {{ basket.totalPrice }} руб.</span>
+    <button :class="{ 'place-an-order-active': basket.orders.value.length > 0 }" class="place-an-order">
+      ОФОРМИТЬ ЗАКАЗ
+    </button>
+  </div>
 </template>
 
 <style>

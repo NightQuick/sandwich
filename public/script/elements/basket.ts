@@ -89,8 +89,8 @@ export let basket = new Basket();
 if (localStorage.basket) {
   const data = JSON.parse(localStorage.getItem('basket')!);
   basket.setData(data);
-} else {
 }
+console.log(basket.totalPrice.value);
 
 createApp(basketComp).mount('#basket-app');
 
@@ -99,21 +99,3 @@ btn.addEventListener('click', () => {
   if (basket.orders.value.length === 0) return;
   pubSub.publish('openOrder', { message: 'User confirm order', data: basket.orders.value });
 });
-
-watch(
-  basket.orders,
-  () => {
-    const data = basket.getData();
-
-    document.getElementById('total-price')!.textContent = String(data.totalPrice);
-
-    if (data.orders.length > 0) {
-      btn.classList.add('place-an-order-active');
-    } else {
-      btn.classList.remove('place-an-order-active');
-    }
-
-    pubSub.publish('updateBasket', { message: 'Basket was updated', data });
-  },
-  { deep: true }
-);

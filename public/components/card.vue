@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { basket } from '@script/elements/basket';
 import Counter from './counter.vue';
 import { pubSub } from '@script/dataProcessing/pubSub';
 const props = defineProps({
@@ -54,7 +53,7 @@ function openModal() {
     <span class="product-price">ЦЕНА: {{ props.data.price }} руб.</span>
     <span class="counter-description">КОЛИЧЕСТВО</span>
     <div class="counter">
-      <Counter @value-update="valueUpdateHandler" />
+      <Counter @value-update="valueUpdateHandler" :starts-from="1" />
     </div>
     <button class="product-add-to-basket" @click="addToBasket">В КОРЗИНУ</button>
   </div>
