@@ -31,8 +31,7 @@ export const openBuilderCallback = async (data: PubSubEvent<CardData>) => {
 };
 
 export const openOrderCallback = (data: PubSubEvent<Position[]>) => {
-  order.positionList = data.data;
-  order.renderOrderbox();
+  order.positionList.value = data.data;
 };
 
 export const confirmOrderCallback = (data: PubSubEvent<Position[]>) => {

@@ -90,6 +90,20 @@ if (localStorage.basket) {
   const data = JSON.parse(localStorage.getItem('basket')!);
   basket.setData(data);
 }
+watch(
+  basket.orders,
+  () => {
+    basket.totalPrice.value = basket.orders.value.reduce(
+      (sum, position) => sum + position.price * position.value,
+      0
+    );
+    const orders = basket.orders.value;
+    const totalPrice = basket.totalPrice.value;
+    localStorage.setItem('basket', JSON.stringify({ orders, totalPrice }));
+  },
+  { deep: true }
+);
+
 console.log(basket.totalPrice.value);
 
 createApp(basketComp).mount('#basket-app');

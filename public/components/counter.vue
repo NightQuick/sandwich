@@ -20,6 +20,9 @@ const emit =defineEmits(['value-update'])
 watch(counterValue,()=>{
   emit('value-update',counterValue.value)
 })
+watch(() => props.startsFrom, (newVal) => {
+  counterValue.value = newVal;
+});
 </script>
 
 <template>
