@@ -1,4 +1,3 @@
-import { SandwichBuilder } from '@elements/modal';
 import { store } from '@dp/store';
 import { basket } from '@elements/basket';
 import { ordersApi } from './api';
@@ -19,15 +18,13 @@ export const addToBasketCallback = (
     description: string;
   }>
 ) => {
-  console.log(data);
   basket.addProduct(data.data.name, data.data.value, data.data.price, data.data.image, data.data.description);
 };
 
 export const openBuilderCallback = async (data: PubSubEvent<CardData>) => {
   await store.initSandwichConfig(data.data);
   await store.loadIngredients();
-  const builder = new SandwichBuilder();
-  builder.openBuilder();
+  store.visible.value = true;
 };
 
 export const openOrderCallback = (data: PubSubEvent<Position[]>) => {

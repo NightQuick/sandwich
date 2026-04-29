@@ -36,3 +36,66 @@ const updateValueHandler = (newValue: number) => {
     <button class="order-remove-button" @click="emit('remove:position', props.index)">x</button>
   </div>
 </template>
+
+<style>
+.order-position {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 250px;
+  margin-top: 10px;
+  background-color: rgb(255, 255, 255, 0.3);
+  padding-left: 30px;
+  padding-right: 10px;
+}
+
+.order-position-image-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  height: 50%;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  border: 10px solid var(--color-brand);
+  filter: drop-shadow(0px 0px 3px rgba(0, 0, 0, 0.3));
+  overflow: hidden;
+}
+.order-position-image-wrapper img {
+  margin: auto;
+  width: 180px;
+  object-position: center;
+}
+
+.order-position-description {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-top: 20px;
+  margin-left: 300px;
+  font-size: 30px;
+}
+
+.order-position-info {
+  margin-top: 30px;
+  font-size: 20px;
+}
+
+.order-position-price {
+  margin-top: auto;
+  margin-bottom: 15px;
+}
+
+.order-remove-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  border: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  background-color: rgba(209, 209, 209, 0.6);
+}
+</style>

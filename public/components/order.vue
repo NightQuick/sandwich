@@ -33,7 +33,7 @@ const sendOrder = () => {
     <div id="order-box">
       <div id="order-box-header">
         <span>Проверьте и подтвердите заказ</span>
-        <button id="close-orderbox">x</button>
+        <button id="close-orderbox" @click="order.visible.value = false">x</button>
       </div>
       <div id="order-box-content-wrapper">
         <div id="order-box-content">
@@ -60,15 +60,6 @@ const sendOrder = () => {
 </template>
 
 <style>
-:root {
-  --color-brand: #ffc000;
-  --selected-card-bg: #fdd55c;
-  --card-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
-  --unselected-card-bg: #ebeae8;
-  --close-message-button: #ac8100;
-  --order-text: #545045;
-}
-
 #order {
   opacity: 1;
   display: flex;
@@ -147,67 +138,6 @@ const sendOrder = () => {
   overflow-x: hidden;
 }
 
-.order-position {
-  position: relative;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 250px;
-  margin-top: 10px;
-  background-color: rgb(255, 255, 255, 0.3);
-  padding-left: 30px;
-  padding-right: 10px;
-}
-
-.order-position-image-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
-  height: 50%;
-  aspect-ratio: 1/1;
-  border-radius: 50%;
-  border: 10px solid var(--color-brand);
-  filter: drop-shadow(0px 0px 3px rgba(0, 0, 0, 0.3));
-  overflow: hidden;
-}
-.order-position-image-wrapper img {
-  margin: auto;
-  width: 180px;
-  object-position: center;
-}
-
-.order-position-description {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  padding-top: 20px;
-  margin-left: 300px;
-  font-size: 30px;
-}
-
-.order-position-info {
-  margin-top: 30px;
-  font-size: 20px;
-}
-
-.order-position-price {
-  margin-top: auto;
-  margin-bottom: 15px;
-}
-
-.order-remove-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
-  border: 0;
-  width: 30px;
-  height: 30px;
-  border-radius: 10px;
-  background-color: rgba(209, 209, 209, 0.6);
-}
-
 #order-box-content::-webkit-scrollbar {
   width: 6px;
 }
@@ -253,7 +183,5 @@ const sendOrder = () => {
     0px 2px 0px rgba(0, 0, 0, 0.5);
   cursor: pointer;
   height: 35px;
-}
-.product-add-to-order {
 }
 </style>

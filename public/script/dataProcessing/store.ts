@@ -1,25 +1,26 @@
-import { pubSub } from '@dp/pubSub.js';
 import { dataApi } from '@api';
 import { settings } from '@constants';
 import { CardData } from '@constants';
+import { Ref, ref, watch } from 'vue';
 
 export type SandwichConfig = null | {
   basePrice: number;
   category: string;
-  components: {
+  components: Ref<{
     [key: string]: [string, string, number] | [string, string, number][] | [];
-  };
+  }>;
   description: string;
   image: string;
   market: string;
   name: string;
-  price: number;
+  price: Ref<number>;
   type: string;
   weight: number;
 };
 
 export type Category = 'size' | 'bread' | 'vegetable' | 'sauce' | 'filling' | 'finish';
 export class Store {
+  visible: Ref<boolean>;
   state: {
     sandwichConfig: SandwichConfig;
     ingredients: {
@@ -27,37 +28,18 @@ export class Store {
         [id: string]: { description?: string; id: string; image: string; name: string; price: number };
       };
     };
-    currentStep: string;
+    currentStep: Ref<string>;
   };
   isLoading: boolean;
 
   constructor() {
+    this.visible = ref(false);
     this.state = {
       sandwichConfig: null,
       ingredients: {},
-      currentStep: 'size'
+      currentStep: ref('size')
     };
     this.isLoading = false;
-  }
-
-  subscribe(callback: (data: unknown) => void) {
-    pubSub.subscribe('store:change', callback);
-  }
-
-  unsubscribe(callback: (data: unknown) => void) {
-    pubSub.unsubscribe('store:change', callback);
-  }
-
-  notify(action: string, payload: unknown) {
-    pubSub.publish('store:change', {
-      action,
-      payload,
-      state: this.getState()
-    });
-  }
-
-  getState() {
-    return JSON.parse(JSON.stringify(this.state));
   }
 
   async loadIngredients() {
@@ -75,80 +57,81 @@ export class Store {
     }
 
     this.isLoading = false;
-    this.notify('INGREDIENTS_LOADED', this.state.ingredients);
     return this.state.ingredients;
   }
 
   setStep(step: string) {
-    this.state.currentStep = step;
-    this.notify('STEP_CHANGED', step);
+    this.state.currentStep.value = step;
   }
 
   selectIngredient(category: Category, ingredient: { id: string; name: string; price: number }) {
     const multiple = settings[category]?.multiple;
 
     if (!multiple) {
-      this.state.sandwichConfig!.components[category] = [
+      this.state.sandwichConfig!.components.value[category] = [
         ingredient.id,
         ingredient.name,
         ingredient.price || 0
       ];
     } else {
-      const current = this.state.sandwichConfig!.components[category] as [string, string, number][];
+      const current = this.state.sandwichConfig!.components.value[category] as [string, string, number][];
       const exists = current.find((item) => item[0] === ingredient.id);
 
       if (exists) {
-        this.state.sandwichConfig!.components[category] = current.filter(
+        this.state.sandwichConfig!.components.value[category] = current.filter(
           (item) => item[0] !== ingredient.id
         ) as [string, string, number][];
-        return false;
       } else {
         if (category !== 'sauce') {
           current.push([ingredient.id, ingredient.name, ingredient.price || 0] as [string, string, number]);
-          return true;
         } else {
-          if (this.state.sandwichConfig!.components[category].length < 3) {
+          if (this.state.sandwichConfig!.components.value[category].length < 3) {
             current.push([ingredient.id, ingredient.name, ingredient.price || 0]);
-            return true;
           }
         }
       }
     }
 
     this.recalculatePrice();
-    this.notify('INGREDIENT_SELECTED', { category, ingredient });
   }
 
   async initSandwichConfig(data: CardData) {
     await this.loadIngredients();
-    this.state.sandwichConfig = JSON.parse(JSON.stringify(data));
-    this.state.sandwichConfig!.basePrice = data.price;
-    this.state.currentStep = 'size';
 
-    for (const component in this.state.sandwichConfig!.components) {
-      if (typeof this.state.sandwichConfig!.components[component] === 'string') {
-        this.state.sandwichConfig!.components[component] = [
-          this.state.sandwichConfig!.components[component],
-          this.state.ingredients[component][this.state.sandwichConfig!.components[component] as string].name,
+    const parsed = JSON.parse(JSON.stringify(data));
+
+    this.state.sandwichConfig = {
+      ...parsed,
+      components: ref(parsed.components),
+      price: ref(parsed.price)
+    };
+
+    this.state.sandwichConfig!.basePrice = data.price;
+    this.state.currentStep.value = 'size';
+
+    for (const component in this.state.sandwichConfig!.components.value) {
+      if (typeof this.state.sandwichConfig!.components.value[component] === 'string') {
+        this.state.sandwichConfig!.components.value[component] = [
+          this.state.sandwichConfig!.components.value[component],
+          this.state.ingredients[component][this.state.sandwichConfig!.components.value[component] as string]
+            .name,
           0
         ];
       } else {
-        this.state.sandwichConfig!.components[component] = this.state.sandwichConfig!.components[
+        this.state.sandwichConfig!.components.value[component] = this.state.sandwichConfig!.components.value[
           component
         ].map((item) => [item, '', 0]) as [string, string, number][];
       }
     }
-
-    this.notify('SANDWICH_INIT', this.state.sandwichConfig);
   }
 
   recalculatePrice() {
-    const basePrice = this.state.sandwichConfig!.basePrice || this.state.sandwichConfig!.price;
+    const basePrice = this.state.sandwichConfig!.basePrice;
     let finalPrice = basePrice;
 
-    for (const category in this.state.sandwichConfig!.components) {
+    for (const category in this.state.sandwichConfig!.components.value) {
       const isMultiple = settings[category as keyof typeof settings]?.multiple;
-      const comp = this.state.sandwichConfig!.components[category];
+      const comp = this.state.sandwichConfig!.components.value[category];
 
       if (Array.isArray(comp)) {
         if (!isMultiple && comp.length === 3 && typeof comp[0] === 'string') {
@@ -163,7 +146,7 @@ export class Store {
       }
     }
 
-    this.state.sandwichConfig!.price = finalPrice;
+    this.state.sandwichConfig!.price.value = finalPrice;
   }
 
   getCurrentStep() {

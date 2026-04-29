@@ -8,26 +8,25 @@ const props = defineProps({
   }
 });
 
-const data = {
-  name: props.data.name,
-  value: props.data.value,
-  price: props.data.price,
-  image: props.data.image,
-  description: props.data.description
-};
-
-data.value = 1;
+props.data.value = 1;
 
 const valueUpdateHandler = (newValue: number) => {
-  data.value = newValue;
+  props.data.value = newValue;
 };
 
 function addToBasket() {
+  const data = {
+    name: props.data.name,
+    value: props.data.value ?? 1,
+    price: props.data.price,
+    image: props.data.image,
+    description: props.data.description
+  };
   pubSub.publish('addToBasket', { message: 'User add product to basket', data });
 }
 
 function openModal() {
-  console.log('Открыть модалку');
+  pubSub.publish('openBuilder', { message: 'User open bulider', data: props.data });
 }
 </script>
 
@@ -60,14 +59,6 @@ function openModal() {
 </template>
 
 <style>
-:root {
-  --color-brand: #ffc000;
-  --selected-card-bg: #fdd55c;
-  --card-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
-  --unselected-card-bg: #ebeae8;
-  --close-message-button: #ac8100;
-  --basket-text: #545045;
-}
 .position-card {
   margin: 20px;
   display: grid;

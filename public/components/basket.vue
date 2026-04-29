@@ -103,9 +103,6 @@ const openOrderbox = () => {
 .remove-from-basket-button {
   cursor: pointer;
 }
-.basket-products-columns-count {
-  text-align: end;
-}
 
 #order-information {
   display: grid;

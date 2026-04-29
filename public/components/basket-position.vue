@@ -24,7 +24,7 @@ const removeCurrentPosition = () => {
     <td>{{ props.position.name }}</td>
     <td>{{ props.position.price }}</td>
     <td>{{ props.position.value }}</td>
-    <td @click="removeCurrentPosition" id="remove-from-basket-button">x</td>
+    <td @click="removeCurrentPosition" class="remove-from-basket-button">x</td>
   </tr>
 </template>
 

@@ -5,6 +5,10 @@
   --unselected-card-bg: #ebeae8;
   --close-message-button: #ac8100;
   --basket-text: #545045;
+  --order-text: #545045;
+}
+.no-scroll {
+  overflow: hidden;
 }
 
 body {

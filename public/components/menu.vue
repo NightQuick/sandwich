@@ -1,5 +1,5 @@
 <script setup>
-import { computed, inject, watch } from 'vue';
+import { computed } from 'vue';
 import Card from './card.vue';
 import { menuState } from '@script/dataProcessing/menuState';
 const cardList = computed(() => menuState.menuList.value);
