@@ -1,4 +1,4 @@
-import { store } from '@dp/store';
+import { useSandwichBuilderStore } from './stores/sandwichBuilderStore';
 import { basket } from '@elements/basket';
 import { ordersApi } from './api';
 import { order, Position } from '@ui/order';
@@ -22,9 +22,10 @@ export const addToBasketCallback = (
 };
 
 export const openBuilderCallback = async (data: PubSubEvent<CardData>) => {
+  const store = useSandwichBuilderStore();
   await store.initSandwichConfig(data.data);
   await store.loadIngredients();
-  store.visible.value = true;
+  store.visible = true;
 };
 
 export const openOrderCallback = (data: PubSubEvent<Position[]>) => {

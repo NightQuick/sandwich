@@ -46,7 +46,7 @@ interface Component {
 }
 export interface CardData {
   category: string;
-  components: Component[];
+  components: Component;
   description: string;
   image: string;
   market: string;

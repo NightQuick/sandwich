@@ -3,13 +3,14 @@ import { computed, Ref, ref, watch } from 'vue';
 import ModalCard from './modalCard.vue';
 import Counter from './counter.vue';
 import { settings } from '@constants';
-import { store, Category } from '@script/dataProcessing/store';
 import { pubSub } from '@script/dataProcessing/pubSub';
+import { Category, useSandwichBuilderStore } from '@/stores/sandwichBuilderStore';
+
+const store = useSandwichBuilderStore();
 const settingsKeys = Object.keys(settings);
-const currentKey: Ref<string> = ref('size');
-const currentIndex = ref(settingsKeys.indexOf(currentKey.value));
+const currentIndex = ref(settingsKeys.indexOf(store.currentStep));
 watch(currentIndex, () => {
-  currentKey.value = settingsKeys[currentIndex.value];
+  store.currentStep = settingsKeys[currentIndex.value];
 });
 const changeKey = (symb: string) => {
   if (currentIndex.value < settingsKeys.length - 1 && symb == '+') {
@@ -23,7 +24,7 @@ const changeKey = (symb: string) => {
   });
 };
 const footerIdHandler = () => {
-  if (currentKey.value == 'finish') {
+  if (store.currentStep == 'finish') {
     return 'modal-ready-footer';
   } else {
     return 'modal-footer';
@@ -32,18 +33,24 @@ const footerIdHandler = () => {
 const components = { size: 'Размер', bread: 'Хлеб', filling: 'Начинка', sauce: 'Соус', vegetable: 'Овощи' };
 const ingredientSwitcherHandler = (newKey: string) => {
   currentIndex.value = settingsKeys.indexOf(newKey);
+  console.log(store.sandwichConfig.image);
 };
 
 const checkSandwichComponent = (component: string) => {
   let result = false;
-  if (settings[currentKey.value as keyof typeof settings].multiple) {
-    store.state.sandwichConfig?.components.value[currentKey.value].forEach((elem) => {
+  if (settings[store.currentStep as keyof typeof settings].multiple) {
+    store.sandwichConfig.components[
+      store.currentStep as keyof typeof store.sandwichConfig.components
+    ].forEach((elem) => {
       if ((elem as Array<any>)[0] == component) {
         result = true;
       }
     });
   } else {
-    if (store.state.sandwichConfig?.components.value[currentKey.value][0] == component) {
+    if (
+      store.sandwichConfig.components[store.currentStep as keyof typeof store.sandwichConfig.components][0] ==
+      component
+    ) {
       result = true;
     } else {
     }
@@ -53,12 +60,16 @@ const checkSandwichComponent = (component: string) => {
 };
 const componentListHandler = (key: string) => {
   if (!settings[key as keyof typeof settings].multiple) {
-    return store.state.sandwichConfig?.components.value[key][1] ?? 'Не выбрано';
+    return (
+      store.sandwichConfig.components[key as keyof typeof store.sandwichConfig.components][1] ?? 'Не выбрано'
+    );
   } else {
     const list: Array<string> = [];
-    store.state.sandwichConfig?.components.value[key].forEach((component) => {
-      list.push((component as Array<any>)[1]);
-    });
+    store.sandwichConfig.components[key as keyof typeof store.sandwichConfig.components].forEach(
+      (component) => {
+        list.push((component as Array<any>)[1]);
+      }
+    );
     return list;
   }
 };
@@ -68,34 +79,34 @@ const valueUpdate = (newValue: number) => {
 };
 function addToBasket() {
   const data = {
-    name: store.state.sandwichConfig?.name,
-    description: store.state.sandwichConfig?.description,
-    image: store.state.sandwichConfig?.image,
+    name: store.sandwichConfig.name,
+    description: store.sandwichConfig?.description,
+    image: store.sandwichConfig?.image,
     value: value.value ?? 1,
-    price: store.state.sandwichConfig?.price.value
+    price: store.price
   };
   pubSub.publish('addToBasket', { message: 'User add product to basket', data });
   close();
 }
 function close() {
-  store.visible.value = false;
+  store.visible = false;
   currentIndex.value = 0;
-  currentKey.value = 'size';
+  store.currentStep = 'size';
 }
 </script>
 
 <template>
-  <div id="modal" :class="{ 'modal-visible': store.visible.value }">
+  <div id="modal" :class="{ 'modal-visible': store.visible }">
     <div id="modal-window">
       <div id="modal-header">
-        <span id="header-text">{{ settings[currentKey as keyof typeof settings].title }}</span>
+        <span id="header-text">{{ settings[store.currentStep as keyof typeof settings].title }}</span>
         <button id="close-modal" @click="close">×</button>
       </div>
       <div id="modal-content">
         <div id="modal-switcher-wrapper">
           <table id="ingredients-switcher">
             <td
-              :class="{ 'modal-switcher-active': currentKey == key }"
+              :class="{ 'modal-switcher-active': store.currentStep == key }"
               v-for="(setting, key) in settings"
               @click="ingredientSwitcherHandler(key)"
             >
@@ -115,19 +126,21 @@ function close() {
           </button>
         </div>
         <div id="modal-menu-wrapper">
-          <div id="modal-menu" v-if="currentKey != 'finish'">
+          <div id="modal-menu" v-if="store.currentStep != 'finish'">
             <ModalCard
-              @click="store.selectIngredient(currentKey as typeof Category, ingredient)"
-              v-for="(ingredient, key) in store.state.ingredients[currentKey]"
+              @click="store.selectIngredient(store.currentStep as typeof Category, ingredient)"
+              v-for="(ingredient, key) in store.ingredients[
+                store.currentStep as keyof typeof store.sandwichConfig.components
+              ]"
               :ingredientId="key as string"
               :data="ingredient"
               :selected="checkSandwichComponent(ingredient.id)"
             />
           </div>
 
-          <div id="modal-ready" v-if="currentKey == 'finish'">
+          <div id="modal-ready" v-if="store.currentStep == 'finish'">
             <div class="modal-card-img modal-ready">
-              <img :src="store.state.sandwichConfig?.image" />
+              <img :src="store.sandwichConfig.image" />
             </div>
             <div id="modal-ready-information">
               <span>Ваш сендвич готов!</span>
@@ -136,20 +149,20 @@ function close() {
                   {{ component }}:{{ componentListHandler(key).toString() }}
                 </li>
               </ul>
-              <span id="modal-ready-name">{{ store.state.sandwichConfig?.name }}</span>
+              <span id="modal-ready-name">{{ store.sandwichConfig.name }}</span>
             </div>
           </div>
         </div>
       </div>
       <div class="modal-footer" :id="footerIdHandler()">
-        <div v-if="currentKey != 'finish'">
-          <span>Итого:{{ store.state.sandwichConfig?.price }} руб.</span>
+        <div v-if="store.currentStep != 'finish'">
+          <span>Итого:{{ store.price }} руб.</span>
         </div>
-        <div v-if="currentKey == 'finish'">
+        <div v-if="store.currentStep == 'finish'">
           <span id="modal-counter-description">КОЛИЧЕСТВО</span>
           <div><Counter :starts-from="value ?? 1" @value-update="valueUpdate"></Counter></div>
           <div>
-            Итого:{{ store.state.sandwichConfig?.price }} руб.
+            Итого:{{ store.price }} руб.
             <button id="modal-add-to-basket" class="product-add-to-basket" @click="addToBasket()">
               В КОРЗИНУ
             </button>
