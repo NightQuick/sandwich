@@ -37,6 +37,20 @@ export const settings = {
   }
 };
 
+export interface Position {
+  description: string;
+  image: string;
+  name: string;
+  price: number;
+  value: number;
+}
+export interface Order {
+  description: string;
+  image: string;
+  name: string;
+  price: number;
+  value: number;
+}
 interface Component {
   size: string;
   bread: string;

@@ -1,15 +1,11 @@
 <script setup lang="ts">
-import { basket } from '@script/elements/basket';
+import { useBasketStore } from '@/stores/basketStore';
 import BasketPosition from './basket-position.vue';
-import { order } from '@script/UI/order';
 
-const handleRemove = (indexToRemove: number) => {
-  const { price, value } = basket.orders.value[indexToRemove];
-  basket.totalPrice.value -= price * value;
-  basket.orders.value.splice(indexToRemove, 1);
-};
+const basket = useBasketStore();
+basket.setData();
 const openOrderbox = () => {
-  order.visible.value = true;
+  basket.orderBoxVisible = true;
 };
 </script>
 
@@ -25,11 +21,11 @@ const openOrderbox = () => {
       </thead>
       <tbody>
         <BasketPosition
-          v-for="(position, index) in basket.orders.value"
+          v-for="(position, index) in basket.orders"
           :key="position.name"
           :position="position"
           :index="index"
-          @remove:position="handleRemove"
+          @remove:position="basket.removeProduct(index)"
         />
       </tbody>
     </table>
@@ -37,7 +33,7 @@ const openOrderbox = () => {
   <div id="order-information">
     <span id="order-status">Итого: {{ basket.totalPrice }} руб.</span>
     <button
-      :class="{ 'place-an-order-active': basket.orders.value.length > 0 }"
+      :class="{ 'place-an-order-active': basket.orders.length > 0 }"
       class="place-an-order"
       @click="openOrderbox"
     >

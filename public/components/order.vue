@@ -1,45 +1,44 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { watch } from 'vue';
 import OrderPosition from './orderPosition.vue';
-import { order } from '@script/UI/order';
-import { basket } from '@script/elements/basket';
 import { pubSub } from '@script/dataProcessing/pubSub';
+import { useBasketStore } from '@/stores/basketStore';
 
-watch(basket.orders.value, () => {
-  if (basket.orders.value.length === 0) {
-    document.body.classList.remove('no-scroll');
-    order.visible.value = false;
-  }
-});
-watch(order.visible, () => {
-  if (order.visible.value == true) {
+const basket = useBasketStore();
+watch(
+  basket,
+  () => {
+    if (basket.orders.length <= 0) {
+      basket.orderBoxVisible = false;
+    }
+  },
+  { deep: true }
+);
+watch(basket, () => {
+  if (basket.orderBoxVisible == true) {
     document.body.classList.add('no-scroll');
   } else {
     document.body.classList.remove('no-scroll');
   }
 });
-const handleRemove = (indexToRemove: number) => {
-  const { price, value } = basket.orders.value[indexToRemove];
-  basket.totalPrice.value -= price * value;
-  basket.orders.value.splice(indexToRemove, 1);
-};
 const sendOrder = () => {
-  pubSub.publish('confirmOrder', { message: 'User confirm order ', data: basket.orders.value });
+  basket.orderBoxVisible = false;
+  pubSub.publish('confirmOrder', { message: 'User confirm order ', data: basket.orders });
 };
 </script>
 
 <template>
-  <div id="order" :class="{ 'order-hidden': !order.visible.value }">
+  <div id="order" :class="{ 'order-hidden': !basket.orderBoxVisible }">
     <div id="order-box">
       <div id="order-box-header">
         <span>Проверьте и подтвердите заказ</span>
-        <button id="close-orderbox" @click="order.visible.value = false">x</button>
+        <button id="close-orderbox" @click="basket.orderBoxVisible = false">x</button>
       </div>
       <div id="order-box-content-wrapper">
         <div id="order-box-content">
           <OrderPosition
-            @remove:position="handleRemove"
-            v-for="(position, index) in basket.orders.value"
+            @remove:position="basket.removeProduct(index)"
+            v-for="(position, index) in basket.orders"
             :index="index"
             :image="position.image"
             :description="position.description"
@@ -52,7 +51,7 @@ const sendOrder = () => {
       </div>
 
       <div id="order-footer">
-        <span id="order-total-price">Итого: {{ basket.totalPrice.value }} руб.</span>
+        <span id="order-total-price">Итого: {{ basket.totalPrice }} руб.</span>
         <button id="order-confirm-button" @click="sendOrder">Подтвердить заказ</button>
       </div>
     </div>

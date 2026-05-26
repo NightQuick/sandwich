@@ -4,7 +4,6 @@ import {
   openBuilderCallback,
   confirmOrderCallback,
   updateLocalStorageCallback,
-  openOrderCallback,
   updateBasketValueCallback
 } from '@callbacks';
 export function subscribe() {
@@ -15,8 +14,6 @@ export function subscribe() {
   pubSub.subscribe('confirmOrder', confirmOrderCallback);
 
   pubSub.subscribe('updateBasket', updateLocalStorageCallback);
-
-  pubSub.subscribe('openOrder', openOrderCallback);
 
   pubSub.subscribe('updateBasketValue', updateBasketValueCallback);
 }

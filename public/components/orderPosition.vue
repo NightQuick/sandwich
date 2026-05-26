@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { basket } from '@script/elements/basket';
+import { useBasketStore } from '@/stores/basketStore';
 import Counter from './counter.vue';
 const props = defineProps<{
   index: number;
@@ -10,11 +10,12 @@ const props = defineProps<{
   name: string;
 }>();
 
+const basket = useBasketStore();
 const emit = defineEmits<{
   (e: 'remove:position', indexToRemove: number): void;
 }>();
 const updateValueHandler = (newValue: number) => {
-  basket.orders.value[props.index].value = newValue;
+  basket.orders[props.index].value = newValue;
 };
 </script>
 

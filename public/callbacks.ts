@@ -1,8 +1,8 @@
 import { useSandwichBuilderStore } from './stores/sandwichBuilderStore';
-import { basket } from '@elements/basket';
 import { ordersApi } from './api';
-import { order, Position } from '@ui/order';
-import { CardData } from '@constants';
+
+import { CardData, Position } from '@constants';
+import { useBasketStore } from './stores/basketStore';
 
 interface PubSubEvent<T> {
   message: string;
@@ -18,6 +18,7 @@ export const addToBasketCallback = (
     description: string;
   }>
 ) => {
+  const basket = useBasketStore();
   basket.addProduct(data.data.name, data.data.value, data.data.price, data.data.image, data.data.description);
 };
 
@@ -28,20 +29,18 @@ export const openBuilderCallback = async (data: PubSubEvent<CardData>) => {
   store.visible = true;
 };
 
-export const openOrderCallback = (data: PubSubEvent<Position[]>) => {
-  order.positionList.value = data.data;
-};
-
 export const confirmOrderCallback = (data: PubSubEvent<Position[]>) => {
   data.data.forEach((element) => {
     delete (element as Partial<Position>).image;
     delete (element as Partial<Position>).description;
   });
   ordersApi.create(data.data);
+  const basket = useBasketStore();
   basket.clearBasket();
 };
 
 export const updateBasketValueCallback = (data: PubSubEvent<[string, number, string, number]>) => {
+  const basket = useBasketStore();
   basket.changeValue(data.data[0], data.data[1], data.data[2], data.data[3]);
 };
 
