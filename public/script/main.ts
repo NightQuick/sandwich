@@ -19,7 +19,7 @@ const order = createApp(Order);
 const sandwichBuilder = createApp(SandwichBuilder);
 const basket = createApp(Basket);
 
-// app.use(pinia);
+app.use(pinia);
 // table.use(pinia);
 sandwichBuilder.use(pinia);
 // order.use(pinia);

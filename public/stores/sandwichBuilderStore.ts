@@ -107,7 +107,6 @@ export const useSandwichBuilderStore = defineStore('sandwichBuilder', {
       this.sandwichConfig.weight = data.weight;
 
       this.currentStep = 'size';
-      console.log(data);
 
       for (const component in this.sandwichConfig.components) {
         if (component === 'size' || component === 'bread') {

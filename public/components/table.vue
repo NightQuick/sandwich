@@ -3,16 +3,11 @@ import { pubSub } from '@script/dataProcessing/pubSub';
 import { ref, watch } from 'vue';
 import { switcherTable } from '@constants';
 import { slider } from '@script/UI/tableAnimate';
-import { menuState } from '@script/dataProcessing/menuState';
-let currentMenu = menuState.currentMenu;
-pubSub.publish('menuType', { message: 'User changed menu category', data: { category: 'pizza' } });
-watch(currentMenu, () => {
-  const category = currentMenu.value;
-  pubSub.publish('menuType', { message: 'User changed menu category', data: { category } });
-});
+import { useMenuStore } from '@/stores/menuStore';
+const menu = useMenuStore();
 
 function switcherClickHandler(event: MouseEvent, key: string) {
-  currentMenu.value = key;
+  menu.currentMenu = key;
 }
 slider.create();
 </script>
@@ -21,7 +16,7 @@ slider.create();
   <tr
     v-for="(menuType, key) in switcherTable"
     @click="switcherClickHandler($event, key)"
-    :class="{ 'menu-switcher-active': key == currentMenu }"
+    :class="{ 'menu-switcher-active': key == menu.currentMenu }"
   >
     <td :id="menuType.id" class="menu-button">
       {{ menuType.content }}

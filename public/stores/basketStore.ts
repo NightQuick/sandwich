@@ -69,7 +69,6 @@ export const useBasketStore = defineStore('basket', {
     },
 
     setData() {
-      //   console.log('Вызван');
       if (localStorage.getItem('basket')) {
         this.orders = JSON.parse(localStorage.getItem('basket') as string).orders;
       }
@@ -89,9 +88,7 @@ export const useBasketStore = defineStore('basket', {
     },
 
     clearBasket() {
-      console.log('basket before reset:', { orders: this.orders, totalPrice: this.totalPrice });
       this.orders = [];
-      console.log('basket after reset:', { orders: this.orders, totalPrice: this.totalPrice });
     }
   },
   hydrate(state) {

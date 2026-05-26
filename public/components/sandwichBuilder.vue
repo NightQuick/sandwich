@@ -33,7 +33,6 @@ const footerIdHandler = () => {
 const components = { size: 'Размер', bread: 'Хлеб', filling: 'Начинка', sauce: 'Соус', vegetable: 'Овощи' };
 const ingredientSwitcherHandler = (newKey: string) => {
   currentIndex.value = settingsKeys.indexOf(newKey);
-  console.log(store.sandwichConfig.image);
 };
 
 const checkSandwichComponent = (component: string) => {

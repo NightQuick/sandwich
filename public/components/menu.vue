@@ -1,13 +1,15 @@
 <script setup>
 import { computed } from 'vue';
 import Card from './card.vue';
-import { menuState } from '@script/dataProcessing/menuState';
+import { useMenuStore } from '@/stores/menuStore';
 const cardList = computed(() => menuState.menuList.value);
+const menu = useMenuStore();
+menu.init();
 </script>
 
 <template>
   <div id="menu">
-    <Card v-for="value in cardList" :data="value" />
+    <Card v-for="value in menu.menuList" :data="value" />
   </div>
 </template>
 
