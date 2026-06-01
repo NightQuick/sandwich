@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { watch } from 'vue';
 import OrderPosition from './orderPosition.vue';
-import { pubSub } from '@script/dataProcessing/pubSub';
 import { useBasketStore } from '@/stores/basketStore';
+import type { Position } from '@constants';
+import { ordersApi } from '@/api.js';
 
 const basket = useBasketStore();
 watch(
@@ -23,39 +24,49 @@ watch(basket, () => {
 });
 const sendOrder = () => {
   basket.orderBoxVisible = false;
-  pubSub.publish('confirmOrder', { message: 'User confirm order ', data: basket.orders });
+  const data = JSON.parse(JSON.stringify(basket.orders));
+  if (Array.isArray(data)) {
+    data.forEach((element) => {
+      delete (element as Partial<Position>).image;
+      delete (element as Partial<Position>).description;
+    });
+  }
+  ordersApi.create(data);
+  basket.clearBasket();
 };
 </script>
 
 <template>
-  <div id="order" :class="{ 'order-hidden': !basket.orderBoxVisible }">
-    <div id="order-box">
-      <div id="order-box-header">
-        <span>Проверьте и подтвердите заказ</span>
-        <button id="close-orderbox" @click="basket.orderBoxVisible = false">x</button>
-      </div>
-      <div id="order-box-content-wrapper">
-        <div id="order-box-content">
-          <OrderPosition
-            @remove:position="basket.removeProduct(index)"
-            v-for="(position, index) in basket.orders"
-            :index="index"
-            :image="position.image"
-            :description="position.description"
-            ,
-            :value="position.value"
-            :price="position.price"
-            :name="position.name"
-          />
+  <Teleport to="body">
+    <div id="order" :class="{ 'order-hidden': !basket.orderBoxVisible }">
+      <div id="order-box">
+        <div id="order-box-header">
+          <span>Проверьте и подтвердите заказ</span>
+          <button id="close-orderbox" @click="basket.orderBoxVisible = false">x</button>
+        </div>
+        <div id="order-box-content-wrapper">
+          <div id="order-box-content">
+            <OrderPosition
+              @remove:position="basket.removeProduct(index)"
+              v-for="(position, index) in basket.orders"
+              :index="index"
+              :image="position.image"
+              :description="position.description"
+              ,
+              :value="position.value"
+              :price="position.price"
+              :name="position.name"
+            />
+          </div>
+        </div>
+
+        <div id="order-footer">
+          <span id="order-total-price">Итого: {{ basket.totalPrice }} руб.</span>
+          <button id="order-confirm-button" @click="sendOrder">Подтвердить заказ</button>
         </div>
       </div>
-
-      <div id="order-footer">
-        <span id="order-total-price">Итого: {{ basket.totalPrice }} руб.</span>
-        <button id="order-confirm-button" @click="sendOrder">Подтвердить заказ</button>
-      </div>
     </div>
-  </div>
+  </Teleport>
 </template>
 
 <style>

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { pubSub } from '@script/dataProcessing/pubSub';
-import { ref, watch } from 'vue';
 import { switcherTable } from '@constants';
 import { slider } from '@script/UI/tableAnimate';
 import { useMenuStore } from '@/stores/menuStore';
@@ -9,19 +7,21 @@ const menu = useMenuStore();
 function switcherClickHandler(event: MouseEvent, key: string) {
   menu.currentMenu = key;
 }
-slider.create();
+// slider.create();
 </script>
 
 <template>
-  <tr
-    v-for="(menuType, key) in switcherTable"
-    @click="switcherClickHandler($event, key)"
-    :class="{ 'menu-switcher-active': key == menu.currentMenu }"
-  >
-    <td :id="menuType.id" class="menu-button">
-      {{ menuType.content }}
-    </td>
-  </tr>
+  <table id="menu-switcher">
+    <tr
+      v-for="(menuType, key) in switcherTable"
+      @click="switcherClickHandler($event, key)"
+      :class="{ 'menu-switcher-active': key == menu.currentMenu }"
+    >
+      <td :id="menuType.id" class="menu-button">
+        {{ menuType.content }}
+      </td>
+    </tr>
+  </table>
 </template>
 
 <style>

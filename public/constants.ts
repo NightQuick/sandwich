@@ -69,6 +69,7 @@ export interface CardData {
   type: string;
   weight: number;
 }
+export type Category = 'size' | 'bread' | 'vegetable' | 'sauce' | 'filling' | 'finish';
 
 export const switcherTable = {
   pizza: { content: 'Пицца', id: 'menu-switcher-pizza-button' },

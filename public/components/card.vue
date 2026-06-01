@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import { useSandwichBuilderStore } from '@/stores/sandwichBuilderStore.js';
 import Counter from './counter.vue';
-import { pubSub } from '@script/dataProcessing/pubSub';
+import { useBasketStore } from '@/stores/basketStore.js';
 const props = defineProps({
   data: {
     type: Object,
@@ -22,11 +23,16 @@ function addToBasket() {
     image: props.data.image,
     description: props.data.description
   };
-  pubSub.publish('addToBasket', { message: 'User add product to basket', data });
+  const basket = useBasketStore();
+  basket.addProduct(data.name, data.value, data.price, data.image, data.description);
 }
 
-function openModal() {
-  pubSub.publish('openBuilder', { message: 'User open bulider', data: props.data });
+async function openModal() {
+  const data = JSON.parse(JSON.stringify(props.data));
+  const store = useSandwichBuilderStore();
+  await store.initSandwichConfig(data);
+  await store.loadIngredients();
+  store.visible = true;
 }
 </script>
 

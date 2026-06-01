@@ -10,39 +10,115 @@ const openOrderbox = () => {
 </script>
 
 <template>
-  <div id="basket-products-wrapper">
-    <table id="basket-products">
-      <thead>
-        <tr id="basket-products-head">
-          <td class="basket-products-columns" id="name">Название</td>
-          <td class="basket-products-columns" id="price">Цена</td>
-          <td class="basket-products-columns" id="count">Кол-во</td>
-        </tr>
-      </thead>
-      <tbody>
-        <BasketPosition
-          v-for="(position, index) in basket.orders"
-          :key="position.name"
-          :position="position"
-          :index="index"
-          @remove:position="basket.removeProduct(index)"
-        />
-      </tbody>
-    </table>
-  </div>
-  <div id="order-information">
-    <span id="order-status">Итого: {{ basket.totalPrice }} руб.</span>
-    <button
-      :class="{ 'place-an-order-active': basket.orders.length > 0 }"
-      class="place-an-order"
-      @click="openOrderbox"
-    >
-      ОФОРМИТЬ ЗАКАЗ
-    </button>
+  <div id="basket">
+    <div id="basket-description">
+      <div id="basket-image">
+        <img id="basket-logo" src="../i/shopping-basket.svg" alt="" />
+        <div id="basket-shadow"></div>
+      </div>
+      <span id="basket-name">Корзина</span>
+    </div>
+
+    <div id="basket-app">
+      <div id="basket-products-wrapper">
+        <table id="basket-products">
+          <thead>
+            <tr id="basket-products-head">
+              <td class="basket-products-columns" id="name">Название</td>
+              <td class="basket-products-columns" id="price">Цена</td>
+              <td class="basket-products-columns" id="count">Кол-во</td>
+            </tr>
+          </thead>
+          <tbody>
+            <BasketPosition
+              v-for="(position, index) in basket.orders"
+              :key="position.name"
+              :position="position"
+              :index="index"
+              @remove:position="basket.removeProduct(index)"
+            />
+          </tbody>
+        </table>
+      </div>
+      <div id="order-information">
+        <span id="order-status">Итого: {{ basket.totalPrice }} руб.</span>
+        <button
+          :class="{ 'place-an-order-active': basket.orders.length > 0 }"
+          class="place-an-order"
+          @click="openOrderbox"
+        >
+          ОФОРМИТЬ ЗАКАЗ
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
 <style>
+#basket {
+  margin-top: 50px;
+  width: 250px;
+  height: fit-content;
+  border-radius: 10px;
+  background-color: #fdd55b;
+  padding-bottom: 10px;
+}
+#basket-button {
+  display: none;
+}
+
+/* Верхняя часть корзицы с изображением */
+#basket-description {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  width: 100%;
+  height: 4em;
+  background-color: var(--color-brand);
+}
+
+/* Обертка для рисунка */
+#basket-image {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+#basket-logo {
+  position: absolute;
+  z-index: 2;
+  height: 70%;
+  shape-outside: url(i/shopping-basket.svg);
+  filter: drop-shadow(2px 2px 0px #d7a100) drop-shadow(3px 3px 0px #d7a100) drop-shadow(4px 4px 0px #d7a100)
+    drop-shadow(5px 5px 0.5px #d7a100) drop-shadow(6px 6px 1px #d7a100);
+}
+
+#basket-shadow {
+  position: absolute;
+  margin-top: 40px;
+  margin-left: 10px;
+  background-image: linear-gradient(90deg, #d7a100 70%, transparent);
+  transform: rotate(45deg);
+  height: 45px;
+  width: 100px;
+  z-index: 1;
+  border-top-left-radius: 30px;
+}
+
+#basket-name {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-family: serif;
+  color: white;
+  text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
+  font-size: 30px;
+}
+
 #basket-products-wrapper {
   min-height: 50px;
   max-height: 190px;

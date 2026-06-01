@@ -1,4 +1,4 @@
-import { Position } from '@script/UI/order';
+import { Position } from '@constants';
 
 const API_BASE = '/api';
 

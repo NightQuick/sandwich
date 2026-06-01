@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { computed, Ref, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import ModalCard from './modalCard.vue';
 import Counter from './counter.vue';
 import { settings } from '@constants';
-import { pubSub } from '@script/dataProcessing/pubSub';
-import { Category, useSandwichBuilderStore } from '@/stores/sandwichBuilderStore';
+import type { Category } from '@constants';
+import { useSandwichBuilderStore } from '@/stores/sandwichBuilderStore';
+import { useBasketStore } from '@/stores/basketStore.js';
 
 const store = useSandwichBuilderStore();
 const settingsKeys = Object.keys(settings);
@@ -84,7 +85,8 @@ function addToBasket() {
     value: value.value ?? 1,
     price: store.price
   };
-  pubSub.publish('addToBasket', { message: 'User add product to basket', data });
+  const basket = useBasketStore();
+  basket.addProduct(data.name, data.value, data.price, data.image, data.description);
   close();
 }
 function close() {
@@ -92,84 +94,90 @@ function close() {
   currentIndex.value = 0;
   store.currentStep = 'size';
 }
+
+const currentTitle = computed(() => {
+  return store.currentStep as keyof typeof settings;
+});
 </script>
 
 <template>
-  <div id="modal" :class="{ 'modal-visible': store.visible }">
-    <div id="modal-window">
-      <div id="modal-header">
-        <span id="header-text">{{ settings[store.currentStep as keyof typeof settings].title }}</span>
-        <button id="close-modal" @click="close">×</button>
-      </div>
-      <div id="modal-content">
-        <div id="modal-switcher-wrapper">
-          <table id="ingredients-switcher">
-            <td
-              :class="{ 'modal-switcher-active': store.currentStep == key }"
-              v-for="(setting, key) in settings"
-              @click="ingredientSwitcherHandler(key)"
-            >
-              {{ setting.name }}
-            </td>
-          </table>
+  <teleport to="body">
+    <div id="modal" :class="{ 'modal-visible': store.visible }">
+      <div id="modal-window">
+        <div id="modal-header">
+          <span id="header-text">{{ settings[currentTitle].title }}</span>
+          <button id="close-modal" @click="close">×</button>
         </div>
-
-        <div id="modal-buttons">
-          <button class="modal-switcher" id="previous-modal" @click="changeKey('-')">
-            <span class="modal-button-arrow" id="previous-modal-arrow">&lt;</span>
-            <span class="modal-button-text" id="previous-modal-text">НАЗАД</span>
-          </button>
-          <button class="modal-switcher" id="next-modal" @click="changeKey('+')">
-            <span class="modal-button-text" id="next-modal-text">ВПЕРЕД</span>
-            <span class="modal-button-arrow" id="next-modal-arrow">></span>
-          </button>
-        </div>
-        <div id="modal-menu-wrapper">
-          <div id="modal-menu" v-if="store.currentStep != 'finish'">
-            <ModalCard
-              @click="store.selectIngredient(store.currentStep as typeof Category, ingredient)"
-              v-for="(ingredient, key) in store.ingredients[
-                store.currentStep as keyof typeof store.sandwichConfig.components
-              ]"
-              :ingredientId="key as string"
-              :data="ingredient"
-              :selected="checkSandwichComponent(ingredient.id)"
-            />
+        <div id="modal-content">
+          <div id="modal-switcher-wrapper">
+            <table id="ingredients-switcher">
+              <td
+                :class="{ 'modal-switcher-active': store.currentStep == key }"
+                v-for="(setting, key) in settings"
+                @click="ingredientSwitcherHandler(key)"
+              >
+                {{ setting.name }}
+              </td>
+            </table>
           </div>
 
-          <div id="modal-ready" v-if="store.currentStep == 'finish'">
-            <div class="modal-card-img modal-ready">
-              <img :src="store.sandwichConfig.image" />
-            </div>
-            <div id="modal-ready-information">
-              <span>Ваш сендвич готов!</span>
-              <ul id="modal-ready-information-ingredients">
-                <li v-for="(component, key) in components">
-                  {{ component }}:{{ componentListHandler(key).toString() }}
-                </li>
-              </ul>
-              <span id="modal-ready-name">{{ store.sandwichConfig.name }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer" :id="footerIdHandler()">
-        <div v-if="store.currentStep != 'finish'">
-          <span>Итого:{{ store.price }} руб.</span>
-        </div>
-        <div v-if="store.currentStep == 'finish'">
-          <span id="modal-counter-description">КОЛИЧЕСТВО</span>
-          <div><Counter :starts-from="value ?? 1" @value-update="valueUpdate"></Counter></div>
-          <div>
-            Итого:{{ store.price }} руб.
-            <button id="modal-add-to-basket" class="product-add-to-basket" @click="addToBasket()">
-              В КОРЗИНУ
+          <div id="modal-buttons">
+            <button class="modal-switcher" id="previous-modal" @click="changeKey('-')">
+              <span class="modal-button-arrow" id="previous-modal-arrow">&lt;</span>
+              <span class="modal-button-text" id="previous-modal-text">НАЗАД</span>
             </button>
+            <button class="modal-switcher" id="next-modal" @click="changeKey('+')">
+              <span class="modal-button-text" id="next-modal-text">ВПЕРЕД</span>
+              <span class="modal-button-arrow" id="next-modal-arrow">></span>
+            </button>
+          </div>
+          <div id="modal-menu-wrapper">
+            <div id="modal-menu" v-if="store.currentStep != 'finish'">
+              <ModalCard
+                @click="store.selectIngredient(store.currentStep as Category, ingredient)"
+                v-for="(ingredient, key) in store.ingredients[
+                  store.currentStep as keyof typeof store.sandwichConfig.components
+                ]"
+                :ingredientId="key as string"
+                :data="ingredient"
+                :selected="checkSandwichComponent(ingredient.id)"
+              />
+            </div>
+
+            <div id="modal-ready" v-if="store.currentStep == 'finish'">
+              <div class="modal-card-img modal-ready">
+                <img :src="store.sandwichConfig.image" />
+              </div>
+              <div id="modal-ready-information">
+                <span>Ваш сендвич готов!</span>
+                <ul id="modal-ready-information-ingredients">
+                  <li v-for="(component, key) in components">
+                    {{ component }}:{{ componentListHandler(key).toString() }}
+                  </li>
+                </ul>
+                <span id="modal-ready-name">{{ store.sandwichConfig.name }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer" :id="footerIdHandler()">
+          <div v-if="store.currentStep != 'finish'">
+            <span>Итого:{{ store.price }} руб.</span>
+          </div>
+          <div v-if="store.currentStep == 'finish'">
+            <span id="modal-counter-description">КОЛИЧЕСТВО</span>
+            <div><Counter :starts-from="value ?? 1" @value-update="valueUpdate"></Counter></div>
+            <div>
+              Итого:{{ store.price }} руб.
+              <button id="modal-add-to-basket" class="product-add-to-basket" @click="addToBasket()">
+                В КОРЗИНУ
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </teleport>
 </template>
 
 <style>

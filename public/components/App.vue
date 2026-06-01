@@ -1,3 +1,26 @@
+<script setup lang="ts">
+import Basket from './basket.vue';
+import Header from './header.vue';
+import Menu from './menu.vue';
+import Order from './order.vue';
+import SandwichBuilder from './sandwichBuilder.vue';
+import Table from './table.vue';
+</script>
+
+<template>
+  <Header></Header>
+  <div id="main-sheet">
+    <div id="active-panel">
+      <Table></Table>
+      <Basket></Basket>
+    </div>
+    <Menu></Menu>
+  </div>
+  <SandwichBuilder></SandwichBuilder>
+  <Order></Order>
+</template>
+
+<style>
 :root {
   --color-brand: #ffc000;
   --selected-card-bg: #fdd55c;
@@ -50,3 +73,4 @@ header {
   margin-right: 20px;
   width: calc(100% - 250px);
 }
+</style>
