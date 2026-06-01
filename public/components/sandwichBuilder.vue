@@ -6,8 +6,10 @@ import { settings } from '@constants';
 import type { Category } from '@constants';
 import { useSandwichBuilderStore } from '@/stores/sandwichBuilderStore';
 import { useBasketStore } from '@/stores/basketStore.js';
+import { useBodyScrollLock } from '@composables/useBodyScrollLock.js';
 
 const store = useSandwichBuilderStore();
+const { lock, unlock } = useBodyScrollLock();
 const settingsKeys = Object.keys(settings);
 const currentIndex = ref(settingsKeys.indexOf(store.currentStep));
 watch(currentIndex, () => {
@@ -97,6 +99,14 @@ function close() {
 
 const currentTitle = computed(() => {
   return store.currentStep as keyof typeof settings;
+});
+
+watch(store, () => {
+  if (store.visible) {
+    lock();
+  } else {
+    unlock();
+  }
 });
 </script>
 

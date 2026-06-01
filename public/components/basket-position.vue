@@ -1,9 +1,5 @@
 <script setup lang="ts">
-interface Position {
-  name: string;
-  price: number;
-  value: number;
-}
+import { Position } from '@constants';
 
 const props = defineProps<{
   position: Position;

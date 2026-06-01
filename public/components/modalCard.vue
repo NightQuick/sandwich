@@ -1,11 +1,6 @@
 <script setup lang="ts">
-interface Ingredient {
-  name: string;
-  description?: string;
-  price: number;
-  image: string;
-  id: string;
-}
+import { Ingredient } from '@constants';
+
 const props = defineProps<{
   ingredientId: string;
   data: Ingredient;

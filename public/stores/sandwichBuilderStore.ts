@@ -12,7 +12,7 @@ interface Ingredient {
 export const useSandwichBuilderStore = defineStore('sandwichBuilder', {
   state: () => {
     return {
-      visible: ref(false),
+      visible: false,
       isLoading: false,
       currentStep: 'size',
       ingredients: {

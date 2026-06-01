@@ -2,6 +2,7 @@
 import { useSandwichBuilderStore } from '@/stores/sandwichBuilderStore.js';
 import Counter from './counter.vue';
 import { useBasketStore } from '@/stores/basketStore.js';
+import { ref } from 'vue';
 const props = defineProps({
   data: {
     type: Object,
@@ -9,16 +10,16 @@ const props = defineProps({
   }
 });
 
-props.data.value = 1;
+const value = ref(1);
 
 const valueUpdateHandler = (newValue: number) => {
-  props.data.value = newValue;
+  value.value = newValue;
 };
 
 function addToBasket() {
   const data = {
     name: props.data.name,
-    value: props.data.value ?? 1,
+    value: value.value ?? 1,
     price: props.data.price,
     image: props.data.image,
     description: props.data.description

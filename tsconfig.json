@@ -18,7 +18,8 @@
       "@api": ["./public/api.ts"],
       "@dp/*": ["./public/script/dataProcessing/*"],
       "@elements/*": ["./public/script/elements/*"],
-      "@ui/*": ["./public/script/UI/*"]
+      "@ui/*": ["./public/script/UI/*"],
+      "@composables/*": ["./public/script/composables/*"]
     }
   },
   "include": ["src/**/*", "public/**/*", "env.d.ts"],

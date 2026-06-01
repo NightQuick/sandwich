@@ -2,10 +2,10 @@
 import { watch } from 'vue';
 import OrderPosition from './orderPosition.vue';
 import { useBasketStore } from '@/stores/basketStore';
-import type { Position } from '@constants';
-import { ordersApi } from '@/api.js';
+import { useBodyScrollLock } from '@composables/useBodyScrollLock';
 
 const basket = useBasketStore();
+const { lock, unlock } = useBodyScrollLock();
 watch(
   basket,
   () => {
@@ -16,23 +16,15 @@ watch(
   { deep: true }
 );
 watch(basket, () => {
-  if (basket.orderBoxVisible == true) {
-    document.body.classList.add('no-scroll');
+  if (basket.orderBoxVisible) {
+    lock();
   } else {
-    document.body.classList.remove('no-scroll');
+    unlock();
   }
 });
 const sendOrder = () => {
   basket.orderBoxVisible = false;
-  const data = JSON.parse(JSON.stringify(basket.orders));
-  if (Array.isArray(data)) {
-    data.forEach((element) => {
-      delete (element as Partial<Position>).image;
-      delete (element as Partial<Position>).description;
-    });
-  }
-  ordersApi.create(data);
-  basket.clearBasket();
+  basket.sendOrder();
 };
 </script>
 

@@ -1,17 +1,27 @@
 <script setup lang="ts">
+import { onMounted, onUnmounted, ref } from 'vue';
 import { switcherTable } from '@constants';
 import { slider } from '@script/UI/tableAnimate';
 import { useMenuStore } from '@/stores/menuStore';
+
 const menu = useMenuStore();
+const tableRef = ref<HTMLElement | null>(null);
 
 function switcherClickHandler(event: MouseEvent, key: string) {
   menu.currentMenu = key;
 }
-// slider.create();
+
+onMounted(() => {
+  slider.create(tableRef.value!);
+});
+
+onUnmounted(() => {
+  slider.destroy();
+});
 </script>
 
 <template>
-  <table id="menu-switcher">
+  <table id="menu-switcher" ref="tableRef">
     <tr
       v-for="(menuType, key) in switcherTable"
       @click="switcherClickHandler($event, key)"

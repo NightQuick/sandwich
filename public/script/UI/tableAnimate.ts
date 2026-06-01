@@ -1,19 +1,22 @@
 export class Slider {
   el: HTMLDivElement | null;
-  tableId: string;
+  tableEl: HTMLElement | null;
   targetTop: number;
   targetHeight: number;
   currentTop: number;
   currentHeight: number;
   isVisible: boolean;
-  constructor(tableId: string) {
+  private abortController: AbortController | null;
+
+  constructor() {
     this.el = null;
-    this.tableId = tableId;
+    this.tableEl = null;
     this.targetTop = 0;
     this.targetHeight = 0;
     this.currentTop = 0;
     this.currentHeight = 0;
     this.isVisible = false;
+    this.abortController = null;
   }
 
   lerp(a: number, b: number, t: number): number {
@@ -28,39 +31,57 @@ export class Slider {
     requestAnimationFrame(() => this.animate());
   }
 
-  create() {
-    const table = document.getElementById(this.tableId)!;
+  create(tableEl: HTMLElement) {
+    this.tableEl = tableEl;
 
     this.el = document.createElement('div');
     this.el.className = 'menu-slider';
-    table.prepend(this.el);
+    this.tableEl.prepend(this.el);
 
-    table.addEventListener('mouseover', (e) => {
-      const tr = (e.target as Element).closest('tr');
-      if (!tr) return;
+    this.abortController = new AbortController();
+    const { signal } = this.abortController;
 
-      const tableRect = table.getBoundingClientRect();
-      const rowRect = tr.getBoundingClientRect();
+    this.tableEl.addEventListener(
+      'mouseover',
+      (e) => {
+        const tr = (e.target as Element).closest('tr');
+        if (!tr) return;
 
-      if (!this.isVisible) {
-        this.currentTop = rowRect.top - tableRect.top;
-        this.currentHeight = rowRect.height;
-        this.isVisible = true;
-      }
+        const tableRect = this.tableEl!.getBoundingClientRect();
+        const rowRect = tr.getBoundingClientRect();
 
-      this.targetTop = rowRect.top - tableRect.top;
-      this.targetHeight = rowRect.height;
-      this.el!.classList.add('menu-slider--visible');
-    });
+        if (!this.isVisible) {
+          this.currentTop = rowRect.top - tableRect.top;
+          this.currentHeight = rowRect.height;
+          this.isVisible = true;
+        }
 
-    table.addEventListener('mouseout', (e) => {
-      if (!e.relatedTarget || !table.contains(e.relatedTarget as Node)) {
-        this.el!.classList.remove('menu-slider--visible');
-        this.isVisible = false;
-      }
-    });
+        this.targetTop = rowRect.top - tableRect.top;
+        this.targetHeight = rowRect.height;
+        this.el!.classList.add('menu-slider--visible');
+      },
+      { signal }
+    );
+
+    this.tableEl.addEventListener(
+      'mouseout',
+      (e) => {
+        if (!e.relatedTarget || !this.tableEl!.contains(e.relatedTarget as Node)) {
+          this.el!.classList.remove('menu-slider--visible');
+          this.isVisible = false;
+        }
+      },
+      { signal }
+    );
 
     this.animate();
   }
+
+  destroy() {
+    this.abortController?.abort();
+    this.el?.remove();
+    this.el = null;
+  }
 }
-export const slider = new Slider('menu-switcher');
+
+export const slider = new Slider();

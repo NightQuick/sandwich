@@ -22,7 +22,8 @@ export default defineConfig({
       '@dp': fileURLToPath(new URL('./public/script/dataProcessing', import.meta.url)),
       '@elements': fileURLToPath(new URL('./public/script/elements', import.meta.url)),
       '@ui': fileURLToPath(new URL('./public/script/UI', import.meta.url)),
-      '@components': fileURLToPath(new URL('./public/components', import.meta.url))
+      '@components': fileURLToPath(new URL('./public/components', import.meta.url)),
+      '@composables': fileURLToPath(new URL('./public/script/composables', import.meta.url))
     }
   },
 

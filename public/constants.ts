@@ -37,6 +37,14 @@ export const settings = {
   }
 };
 
+export interface Ingredient {
+  name: string;
+  description?: string;
+  price: number;
+  image: string;
+  id: string;
+}
+
 export interface Position {
   description: string;
   image: string;
@@ -44,6 +52,7 @@ export interface Position {
   price: number;
   value: number;
 }
+
 export interface Order {
   description: string;
   image: string;

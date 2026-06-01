@@ -5,6 +5,4 @@ import App from '@/components/App.vue';
 
 setWidth();
 
-const pinia = createPinia();
-
-createApp(App).use(pinia).mount('#app');
+createApp(App).use(createPinia()).mount('#app');

@@ -1,4 +1,5 @@
-import { Order } from '@/constants';
+import { ordersApi } from '@/api';
+import { Order, Position } from '@/constants';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
@@ -89,12 +90,18 @@ export const useBasketStore = defineStore('basket', {
 
     clearBasket() {
       this.orders = [];
-    }
-  },
-  hydrate(state) {
-    const saved = localStorage.getItem('basket');
-    if (saved) {
-      state.orders = JSON.parse(saved);
+    },
+
+    sendOrder() {
+      const data = JSON.parse(JSON.stringify(this.orders));
+      if (Array.isArray(data)) {
+        data.forEach((element) => {
+          delete (element as Partial<Position>).image;
+          delete (element as Partial<Position>).description;
+        });
+      }
+      ordersApi.create(data);
+      this.clearBasket();
     }
   }
 });
