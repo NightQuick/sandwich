@@ -15,7 +15,7 @@ const PORT = 3000;
 // 1. Базовые middleware
 app.use(
   cors({
-    origin: 'http://localhost:5173',
+    origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
     credentials: true
   })
 );
@@ -36,12 +36,14 @@ app.use('/api/test', (req, res) => {
   res.json({ message: 'API works', timestamp: new Date() });
 });
 
+const staticDir = process.env.NODE_ENV === 'production' ? join(__dirname, '../dist') : join(__dirname, '..');
+
 // 4. Статические файлы
-app.use(express.static(join(__dirname, '..')));
+app.use(express.static(staticDir));
 
 // 5. Фронтенд маршруты
 app.get('/', (req, res) => {
-  res.sendFile(join(__dirname, '../index.html'));
+  res.sendFile(join(staticDir, 'index.html'));
 });
 
 // 6. Обработка ошибок
