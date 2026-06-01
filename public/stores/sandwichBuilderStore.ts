@@ -1,9 +1,6 @@
-import { CardData } from '@constants';
+import { CardData, Category } from '@constants';
 import { dataApi } from '@api';
 import { defineStore } from 'pinia';
-import { Ref, ref } from 'vue';
-
-export type Category = 'size' | 'bread' | 'vegetable' | 'sauce' | 'filling' | 'finish';
 
 type multiComponent = [string, string, number][];
 interface Ingredient {

@@ -29,7 +29,7 @@ export const useMenuStore = defineStore('menu', {
   actions: {
     async init() {
       await this.loadData(this.currentMenu);
-      await this.$subscribe(
+      this.$subscribe(
         (state) => {
           if (this.loadedMenus[this.currentMenu as keyof typeof this.loadedMenus].length <= 0) {
             this.loadData(this.currentMenu);

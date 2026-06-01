@@ -1,8 +1,11 @@
 <script setup>
+import { onMounted } from 'vue';
 import Card from './card.vue';
 import { useMenuStore } from '@/stores/menuStore';
 const menu = useMenuStore();
-menu.init();
+onMounted(() => {
+  menu.init();
+});
 </script>
 
 <template>
