@@ -24,7 +24,7 @@ let jsonData: JsonData | null = null;
 
 function loadJSON() {
   try {
-    const dataPath = join(__dirname, '../../public/data.json');
+    const dataPath = join(__dirname, '..//data.json');
     const fileContent = readFileSync(dataPath, 'utf-8');
     jsonData = JSON.parse(fileContent);
   } catch (error) {

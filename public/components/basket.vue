@@ -13,7 +13,7 @@ const openOrderbox = () => {
   <div id="basket">
     <div id="basket-description">
       <div id="basket-image">
-        <img id="basket-logo" src="../i/shopping-basket.svg" alt="" />
+        <img id="basket-logo" src="../shopping-basket.svg" alt="" />
         <div id="basket-shadow"></div>
       </div>
       <span id="basket-name">Корзина</span>

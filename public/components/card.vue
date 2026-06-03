@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { useSandwichBuilderStore } from '@/stores/sandwichBuilderStore.js';
-import Counter from './counter.vue';
 import { useBasketStore } from '@/stores/basketStore.js';
+import Counter from './counter.vue';
+import { logoPaths } from '@constants';
 import { ref } from 'vue';
 const props = defineProps({
   data: {
@@ -9,7 +10,7 @@ const props = defineProps({
     required: true
   }
 });
-
+const logo = logoPaths[props.data.market as keyof typeof logoPaths];
 const value = ref(1);
 
 const valueUpdateHandler = (newValue: number) => {
@@ -17,15 +18,8 @@ const valueUpdateHandler = (newValue: number) => {
 };
 
 function addToBasket() {
-  const data = {
-    name: props.data.name,
-    value: value.value ?? 1,
-    price: props.data.price,
-    image: props.data.image,
-    description: props.data.description
-  };
   const basket = useBasketStore();
-  basket.addProduct(data.name, data.value, data.price, data.image, data.description);
+  basket.addProduct(props.data.name, value.value, props.data.price, props.data.image, props.data.description);
 }
 
 async function openModal() {
@@ -39,7 +33,7 @@ async function openModal() {
 
 <template id="card-template">
   <div class="position-card">
-    <img class="logo" src="" alt="" />
+    <img class="logo" :src="logo" alt="" />
     <div class="product-image-wrapper">
       <img class="product-image" :src="props.data.image" />
     </div>

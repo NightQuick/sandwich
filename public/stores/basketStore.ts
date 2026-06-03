@@ -1,7 +1,6 @@
 import { ordersApi } from '@/api';
 import { Order, Position } from '@/constants';
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
 
 export const useBasketStore = defineStore('basket', {
   state: () => {

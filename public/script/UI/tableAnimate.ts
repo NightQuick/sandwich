@@ -1,4 +1,4 @@
-export class Slider {
+class Slider {
   el: HTMLDivElement | null;
   tableEl: HTMLElement | null;
   targetTop: number;

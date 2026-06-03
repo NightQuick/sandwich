@@ -98,7 +98,7 @@ export const ingredientSwitcher = {
   finish: { content: 'Готово!', id: 'finish' }
 };
 export const logoPaths = {
-  doner: 'i/markets/doner.png',
-  sfc: 'i/markets/south_fried_chicken.png',
-  subway: 'i/markets/subway_logo.png'
+  doner: 'https://i.imgur.com/rCApUkF.png',
+  sfc: 'https://imgur.com/XXX5jIz.png',
+  subway: 'https://imgur.com/p4cMwMY.png'
 };
