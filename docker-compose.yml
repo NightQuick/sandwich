@@ -1,4 +1,10 @@
 services:
+  server:
+    build:
+      context: ./server
+    expose:
+      - "3000"
+  
   client:
     build:
       context: ./client
@@ -6,9 +12,3 @@ services:
       - "80:80"
     depends_on:
       - server
-
-  server:
-    build:
-      context: ./server
-    ports:
-      - "3000:3000"

@@ -9,18 +9,20 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "paths": {
-      "@script/*": ["./public/script/*"],
-      "@styles/*": ["./public/styles/*"],
+      "@script/*": ["./src/script/*"],
+      "@styles/*": ["./src/styles/*"],
       "@images/*": ["./public/i/*"],
-      "@/*": ["./public/*"],
-      "@constants": ["./public/constants.ts"],
-      "@api": ["./public/api.ts"],
-      "@dp/*": ["./public/script/dataProcessing/*"],
-      "@elements/*": ["./public/script/elements/*"],
-      "@ui/*": ["./public/script/UI/*"],
-      "@composables/*": ["./public/script/composables/*"]
+      "@/*": ["./src/*"],
+      "@constants": ["./src/constants.ts"],
+      "@api": ["./src/api.ts"],
+      "@callbacks": ["./src/callbacks.ts"],
+      "@dp/*": ["./src/script/dataProcessing/*"],
+      "@elements/*": ["./src/script/elements/*"],
+      "@ui/*": ["./src/script/UI/*"],
+      "@components/*": ["./src/components/*"],
+      "@composables/*": ["./src/script/composables/*"]
     }
   },
-  "include": ["public/**/*"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
 }
