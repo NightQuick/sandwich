@@ -4,6 +4,10 @@ services:
       context: ./server
     expose:
       - "3000"
+    depends_on:
+      - data
+    environment:
+      - MONGO_URL=mongodb://data:27017/myAppDB
   
   client:
     build:
@@ -12,3 +16,11 @@ services:
       - "80:80"
     depends_on:
       - server
+  
+  data:
+    build:
+      context: ./data
+    expose:
+      - "27017"
+    volumes:
+      - ./data/db:/data/db

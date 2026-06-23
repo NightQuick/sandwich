@@ -92,8 +92,7 @@ export const useSandwichBuilderStore = defineStore('sandwichBuilder', {
     },
     async initSandwichConfig(data: CardData) {
       await this.loadIngredients();
-
-      data = JSON.parse(JSON.stringify(data));
+      data = await JSON.parse(JSON.stringify(data));
       this.sandwichConfig!.basePrice = data.price;
       this.sandwichConfig.category = data.category;
       this.sandwichConfig.description = data.description;
@@ -121,21 +120,33 @@ export const useSandwichBuilderStore = defineStore('sandwichBuilder', {
       }
     },
     async loadIngredients() {
-      if (this.isLoading) {
-        return this.ingredients;
-      }
-      this.isLoading = true;
+  if (this.isLoading) {
+    return this.ingredients;
+  }
+  this.isLoading = true;
 
-      for (const key in this.ingredients) {
-        if (key === 'finish') continue;
-        const data = await dataApi.getAllIng(key);
+  for (const key in this.ingredients) {
+    if (key === 'finish') continue;
+    const data = await dataApi.getAllIng(key);
 
-        this.ingredients[key as keyof typeof this.ingredients] = data;
-      }
+    const indexed = Object.fromEntries(
+      data.map((item: any) => [
+        item.key,
+        {
+          name: item.name,
+          description: item.description,
+          price: item.price,
+          image: item.image,
+          id: item.key
+        }
+      ])
+    );
+    this.ingredients[key as keyof typeof this.ingredients] = indexed;
+  }
 
-      this.isLoading = false;
-      return this.ingredients;
-    },
+  this.isLoading = false;
+  return this.ingredients;
+},
 
     setStep(step: string) {
       this.currentStep = step;

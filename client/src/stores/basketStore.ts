@@ -94,6 +94,7 @@ export const useBasketStore = defineStore('basket', {
 
     sendOrder() {
       const data = JSON.parse(JSON.stringify(this.orders));
+      console.log(data)
       if (Array.isArray(data)) {
         data.forEach((element) => {
           delete (element as Partial<Position>).image;
