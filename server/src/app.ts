@@ -1,4 +1,5 @@
 import express from 'express';
+import { connectDB } from "./db.js";
 import { ErrorRequestHandler } from 'express';
 import cors from 'cors';
 import dataRoutes from './routes/data.js';
@@ -37,6 +38,15 @@ const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   res.status(500).json({ error: 'error on server' });
 };
 
+connectDB()
+  .then(() => {
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+  })
+  .catch((err) => {
+    console.error("Failed to connect to MongoDB", err);
+    process.exit(1);
+  });
+  
 app.use(errorHandler);
 
 app.listen(PORT, () => {

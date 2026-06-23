@@ -1,37 +1,62 @@
-import { Request, Response } from 'express';
+import { Request, Response } from "express";
+import { getDB } from "../db.js";
+import { ObjectId } from "mongodb";
 
-interface OrderItem {
-  price: number;
-  value: number;
-  [key: string]: unknown;
+
+export async function getOrders(req: Request, res: Response) {
+  const db = getDB();
+  const orders = await db.collection("orders").find().toArray();
+  res.json(orders);
 }
 
-interface Order {
-  id: number;
-  items: string;
-  total: number;
-  createdAt: Date;
-}
+export async function getOrderById(req: Request, res: Response) {
+  const db = getDB();
+  const id = req.params.id as string;
 
-let orders: Order[] = [];
-let nextOrderId = 1;
-
-export const createOrder = (req: Request, res: Response) => {
-  let items: OrderItem[] = req.body;
-
-  if (!items || items.length === 0) {
-    return res.status(400).json({ error: `Order can't be empty` });
+  if (!ObjectId.isValid(id)) {
+    return res.status(400).json({ error: "Invalid id format" });
   }
 
-  const total = items.reduce((sum, item) => sum + item.price * item.value, 0);
-  const newOrder: Order = {
-    id: nextOrderId++,
-    items: JSON.stringify(items),
-    total,
-    createdAt: new Date()
-  };
+  const order = await db.collection("orders").findOne({ _id: new ObjectId(id) });
+  if (!order) return res.status(404).json({ error: "Order not found" });
+  res.json(order);
+}
 
-  orders.push(newOrder);
-  res.status(201).json(newOrder);
-  console.log(`Orders Updated: `, orders);
-};
+export async function createOrder(req: Request, res: Response) {
+  const db = getDB();
+  const order = {
+    items: req.body,
+    createdAt: new Date(),
+    status: "pending"
+  };
+  const result = await db.collection("orders").insertOne(order);
+  res.status(201).json({ insertedId: result.insertedId });
+}
+
+//need for update status of orders
+export async function updateOrder(req: Request, res: Response) {
+  const db = getDB();
+  const id = req.params.id as string;
+
+  if (!ObjectId.isValid(id)) {
+    return res.status(400).json({ error: "Invalid id format" });
+  }
+
+  const result = await db.collection("orders").updateOne(
+    { _id: new ObjectId(id) },
+    { $set: req.body }
+  );
+  res.json({ modifiedCount: result.modifiedCount });
+}
+
+export async function deleteOrder(req: Request, res: Response) {
+  const db = getDB();
+  const id = req.params.id as string;
+
+  if (!ObjectId.isValid(id)) {
+    return res.status(400).json({ error: "Invalid id format" });
+  }
+
+  const result = await db.collection("orders").deleteOne({ _id: new ObjectId(id) });
+  res.json({ deletedCount: result.deletedCount });
+}
