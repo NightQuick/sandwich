@@ -22,10 +22,11 @@ function addToBasket() {
     value: value.value ?? 1,
     price: props.data.price,
     image: props.data.image,
-    description: props.data.description
+    description: props.data.description,
+    components: props.data.components
   };
   const basket = useBasketStore();
-  basket.addProduct(data.name, data.value, data.price, data.image, data.description);
+  basket.addProduct(data.name, data.value, data.price, data.image, data.description, data.components );
 }
 
 async function openModal() {

@@ -29,6 +29,7 @@ export async function createOrder(req: Request, res: Response) {
     createdAt: new Date(),
     status: "pending"
   };
+  console.log(order)
   const result = await db.collection("orders").insertOne(order);
   res.status(201).json({ insertedId: result.insertedId });
 }

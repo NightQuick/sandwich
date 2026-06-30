@@ -3,7 +3,7 @@ import { computed, ref, watch } from 'vue';
 import ModalCard from './modalCard.vue';
 import Counter from './counter.vue';
 import { settings } from '@constants';
-import type { Category } from '@constants';
+import type { Category, Component } from '@constants';
 import { useSandwichBuilderStore } from '@/stores/sandwichBuilderStore';
 import { useBasketStore } from '@/stores/basketStore.js';
 import { useBodyScrollLock } from '@composables/useBodyScrollLock.js';
@@ -80,15 +80,35 @@ const valueUpdate = (newValue: number) => {
   value.value = newValue;
 };
 function addToBasket() {
+  let components:Component={size:'',
+    bread:'',
+    vegetable:[],
+    sauce:[],
+    filling:[]
+  };
+  for( const elem in components){
+    if (elem === 'vegetable' || elem === 'sauce' || elem === 'filling') {
+    for (const comp of store.sandwichConfig.components[elem]){
+      components[elem].push(comp[0]);
+    }
+  }
+  if (elem === 'size') {
+  components.size = store.sandwichConfig.components.size[0];
+} else if (elem === 'bread') {
+  components.bread = store.sandwichConfig.components.bread[0];
+}
+
+  }
   const data = {
     name: store.sandwichConfig.name,
     description: store.sandwichConfig?.description,
     image: store.sandwichConfig?.image,
     value: value.value ?? 1,
-    price: store.price
+    price: store.price,
+    components
   };
   const basket = useBasketStore();
-  basket.addProduct(data.name, data.value, data.price, data.image, data.description);
+  basket.addProduct(data.name, data.value, data.price, data.image, data.description, data.components);
   close();
 }
 function close() {

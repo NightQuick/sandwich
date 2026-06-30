@@ -52,15 +52,15 @@ export interface Position {
   price: number;
   value: number;
 }
-
 export interface Order {
   description: string;
   image: string;
   name: string;
   price: number;
   value: number;
+  components?: Component
 }
-interface Component {
+export interface Component {
   size: string;
   bread: string;
   vegetable: string[];
