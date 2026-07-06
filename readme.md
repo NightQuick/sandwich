@@ -24,7 +24,8 @@ and run command in terminal
 
 ## 1.Run:
 
-docker compose up --build
+docker compose up --build (dev version)
+docker compose -f docker-compose.yml up --build (prod)
 
 ## 2.Access to app:
 
