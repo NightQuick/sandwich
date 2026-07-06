@@ -17,7 +17,7 @@ export const useSandwichBuilderStore = defineStore('sandwichBuilder', {
         bread: {} as Ingredient,
         vegetable: {} as Ingredient,
         sauce: {} as Ingredient,
-        filling: {} as Ingredient
+        filling: {} as Ingredient,
       },
       sandwichConfig: {
         name: '',
@@ -28,14 +28,14 @@ export const useSandwichBuilderStore = defineStore('sandwichBuilder', {
           bread: ['', '', 0] as [string, string, number],
           vegetable: [] as multiComponent,
           sauce: [] as multiComponent,
-          filling: [] as multiComponent
+          filling: [] as multiComponent,
         },
         description: '',
         image: '',
         market: '',
         type: '',
-        weight: 0
-      }
+        weight: 0,
+      },
     };
   },
 
@@ -45,7 +45,9 @@ export const useSandwichBuilderStore = defineStore('sandwichBuilder', {
       for (const component in state.sandwichConfig.components) {
         if (component == 'size' || component == 'bread') {
           componentsPrice +=
-            +state.sandwichConfig.components[component as keyof typeof state.sandwichConfig.components][2];
+            +state.sandwichConfig.components[
+              component as keyof typeof state.sandwichConfig.components
+            ][2];
         }
         if (component == 'vegetable' || component == 'sauce' || component == 'filling') {
           for (let comp of state.sandwichConfig.components[
@@ -60,14 +62,18 @@ export const useSandwichBuilderStore = defineStore('sandwichBuilder', {
         state.sandwichConfig.components[component as keyof typeof state.sandwichConfig.components];
       }
       return state.sandwichConfig.basePrice + componentsPrice;
-    }
+    },
   },
 
   actions: {
     selectIngredient(category: Category, ingredient: { id: string; name: string; price: number }) {
       if (category === 'size' || category === 'bread') {
         // Для size и bread — замена, а не добавление
-        this.sandwichConfig.components[category] = [ingredient.id, ingredient.name, ingredient.price];
+        this.sandwichConfig.components[category] = [
+          ingredient.id,
+          ingredient.name,
+          ingredient.price,
+        ];
       }
 
       if (category === 'filling' || category === 'sauce' || category === 'vegetable') {
@@ -76,7 +82,9 @@ export const useSandwichBuilderStore = defineStore('sandwichBuilder', {
 
         if (exists) {
           // Удаляем если уже есть
-          this.sandwichConfig.components[category] = current.filter((item) => item[0] !== ingredient.id);
+          this.sandwichConfig.components[category] = current.filter(
+            (item) => item[0] !== ingredient.id,
+          );
         } else {
           // Добавляем
           if (category !== 'sauce') {
@@ -109,7 +117,7 @@ export const useSandwichBuilderStore = defineStore('sandwichBuilder', {
           this.sandwichConfig.components[component] = [
             data.components[component],
             this.ingredients[component][data.components[component]].name,
-            this.ingredients[component][data.components[component]].price
+            this.ingredients[component][data.components[component]].price,
           ];
         }
         if (component == 'vegetable' || component == 'sauce' || component == 'filling') {
@@ -120,36 +128,36 @@ export const useSandwichBuilderStore = defineStore('sandwichBuilder', {
       }
     },
     async loadIngredients() {
-  if (this.isLoading) {
-    return this.ingredients;
-  }
-  this.isLoading = true;
+      if (this.isLoading) {
+        return this.ingredients;
+      }
+      this.isLoading = true;
 
-  for (const key in this.ingredients) {
-    if (key === 'finish') continue;
-    const data = await dataApi.getAllIng(key);
+      for (const key in this.ingredients) {
+        if (key === 'finish') continue;
+        const data = await dataApi.getAllIng(key);
 
-    const indexed = Object.fromEntries(
-      data.map((item: any) => [
-        item.key,
-        {
-          name: item.name,
-          description: item.description,
-          price: item.price,
-          image: item.image,
-          id: item.key
-        }
-      ])
-    );
-    this.ingredients[key as keyof typeof this.ingredients] = indexed;
-  }
+        const indexed = Object.fromEntries(
+          data.map((item: any) => [
+            item.key,
+            {
+              name: item.name,
+              description: item.description,
+              price: item.price,
+              image: item.image,
+              id: item.key,
+            },
+          ]),
+        );
+        this.ingredients[key as keyof typeof this.ingredients] = indexed;
+      }
 
-  this.isLoading = false;
-  return this.ingredients;
-},
+      this.isLoading = false;
+      return this.ingredients;
+    },
 
     setStep(step: string) {
       this.currentStep = step;
-    }
-  }
+    },
+  },
 });

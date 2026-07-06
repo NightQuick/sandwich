@@ -60,7 +60,7 @@ export class Slider {
         this.targetHeight = rowRect.height;
         this.el!.classList.add('menu-slider--visible');
       },
-      { signal }
+      { signal },
     );
 
     this.tableEl.addEventListener(
@@ -71,7 +71,7 @@ export class Slider {
           this.isVisible = false;
         }
       },
-      { signal }
+      { signal },
     );
 
     this.animate();

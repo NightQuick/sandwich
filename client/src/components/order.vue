@@ -13,7 +13,7 @@ watch(
       basket.orderBoxVisible = false;
     }
   },
-  { deep: true }
+  { deep: true },
 );
 watch(basket, () => {
   if (basket.orderBoxVisible) {

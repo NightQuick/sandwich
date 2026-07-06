@@ -6,8 +6,8 @@ import { ref } from 'vue';
 const props = defineProps({
   data: {
     type: Object,
-    required: true
-  }
+    required: true,
+  },
 });
 
 const value = ref(1);
@@ -23,10 +23,17 @@ function addToBasket() {
     price: props.data.price,
     image: props.data.image,
     description: props.data.description,
-    components: props.data.components
+    components: props.data.components,
   };
   const basket = useBasketStore();
-  basket.addProduct(data.name, data.value, data.price, data.image, data.description, data.components );
+  basket.addProduct(
+    data.name,
+    data.value,
+    data.price,
+    data.image,
+    data.description,
+    data.components,
+  );
 }
 
 async function openModal() {

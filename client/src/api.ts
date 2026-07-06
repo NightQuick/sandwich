@@ -8,9 +8,9 @@ async function request(endpoint: string, options: RequestInit = {}) {
   const config = {
     headers: {
       'Content-Type': 'application/json',
-      ...options.headers
+      ...options.headers,
     },
-    ...options
+    ...options,
   };
 
   try {
@@ -32,14 +32,14 @@ async function request(endpoint: string, options: RequestInit = {}) {
 }
 export const dataApi = {
   getAllIng: (category: string) => request(`/data/ingredients/${category}`),
-  getAllPositions: (category: string) => request(`/data/sandwiches/${category}`)
+  getAllPositions: (category: string) => request(`/data/sandwiches/${category}`),
 };
 export const ordersApi = {
   // Создать заказ
   create: (data: Omit<Position, 'image' | 'description'>[]) => {
     request('/orders', {
       method: 'POST',
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     });
-  }
+  },
 };

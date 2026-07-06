@@ -30,19 +30,23 @@ export default defineConfig({
   publicDir: 'public',
 
   server: {
-    port: 5173,
-    open: true,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:3000',
-        changeOrigin: true
-      },
-      '/uploads': {
-        target: 'http://localhost:3000',
-        changeOrigin: true
-      }
-    }
+  host: '0.0.0.0',
+  port: 5173,
+  open: false,
+  watch: {
+    usePolling: true
   },
+  proxy: {
+    '/api': {
+      target: 'http://server:3000',
+      changeOrigin: true
+    },
+    '/uploads': {
+      target: 'http://server:3000',
+      changeOrigin: true
+    }
+  }
+},
 
   build: {
     rollupOptions: {

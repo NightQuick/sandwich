@@ -92,8 +92,9 @@ const openOrderbox = () => {
   z-index: 2;
   height: 70%;
   shape-outside: url(/i/shopping-basket.svg);
-  filter: drop-shadow(2px 2px 0px #d7a100) drop-shadow(3px 3px 0px #d7a100) drop-shadow(4px 4px 0px #d7a100)
-    drop-shadow(5px 5px 0.5px #d7a100) drop-shadow(6px 6px 1px #d7a100);
+  filter: drop-shadow(2px 2px 0px #d7a100) drop-shadow(3px 3px 0px #d7a100)
+    drop-shadow(4px 4px 0px #d7a100) drop-shadow(5px 5px 0.5px #d7a100)
+    drop-shadow(6px 6px 1px #d7a100);
 }
 
 #basket-shadow {

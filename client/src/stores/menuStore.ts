@@ -12,9 +12,9 @@ export const useMenuStore = defineStore('menu', {
         burgers: [] as CardData[],
         chicken: [] as CardData[],
         salads: [] as CardData[],
-        drinks: [] as CardData[]
+        drinks: [] as CardData[],
       },
-      currentMenu: 'pizza'
+      currentMenu: 'pizza',
     };
   },
   getters: {
@@ -24,7 +24,7 @@ export const useMenuStore = defineStore('menu', {
       } else {
         return this.loadedMenus.pizza;
       }
-    }
+    },
   },
   actions: {
     async init() {
@@ -35,13 +35,13 @@ export const useMenuStore = defineStore('menu', {
             this.loadData(this.currentMenu);
           }
         },
-        { deep: true }
+        { deep: true },
       );
     },
 
     async loadData(currentMenu: string) {
       let data = await dataApi.getAllPositions(currentMenu);
       this.loadedMenus[currentMenu as keyof typeof this.loadedMenus] = data;
-    }
-  }
+    },
+  },
 });

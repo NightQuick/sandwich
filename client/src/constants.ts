@@ -3,38 +3,38 @@ export const settings = {
     name: 'Размер',
     object: 'sizes',
     title: 'Выберите размер сендвича',
-    multiple: false
+    multiple: false,
   },
   bread: {
     name: 'Хлеб',
     object: 'breads',
     title: 'Хлеб для сендвича на выбор',
-    multiple: false
+    multiple: false,
   },
   vegetable: {
     name: 'Овощи',
     object: 'vegetables',
     title: 'Дополнительные овощи бесплатно',
-    multiple: true
+    multiple: true,
   },
   sauce: {
     name: 'Соус',
     object: 'sauces',
     title: 'Выберите 3 бесплатных соуса по вкусу',
-    multiple: true
+    multiple: true,
   },
   filling: {
     name: 'Начинка',
     object: 'fillings',
     title: 'Добавьте начинку по вкусу',
-    multiple: true
+    multiple: true,
   },
   finish: {
     name: 'Готово!',
     object: 'ready',
     title: 'Проверьте и добавьте в корзину',
-    multiple: false
-  }
+    multiple: false,
+  },
 };
 
 export interface Ingredient {
@@ -58,7 +58,7 @@ export interface Order {
   name: string;
   price: number;
   value: number;
-  components?: Component
+  components?: Component;
 }
 export interface Component {
   size: string;
@@ -87,7 +87,7 @@ export const switcherTable = {
   burgers: { content: 'Бургеры', id: 'menu-switcher-burgers-button' },
   chicken: { content: 'Курица & Картофель', id: 'menu-switcher-chicken-button' },
   salads: { content: 'Тортилья & Салаты', id: 'menu-switcher-salads-button' },
-  drinks: { content: 'Напитки & Десерты', id: 'menu-switcher-drinks-button' }
+  drinks: { content: 'Напитки & Десерты', id: 'menu-switcher-drinks-button' },
 };
 export const ingredientSwitcher = {
   size: { content: 'Размер', id: 'size' },
@@ -95,10 +95,10 @@ export const ingredientSwitcher = {
   vegetable: { content: 'Овощи', id: 'vegetable' },
   sauce: { content: 'Соусы', id: 'sauce' },
   filling: { content: 'Начинка', id: 'filling' },
-  finish: { content: 'Готово!', id: 'finish' }
+  finish: { content: 'Готово!', id: 'finish' },
 };
 export const logoPaths = {
   doner: 'i/markets/doner.png',
   sfc: 'i/markets/south_fried_chicken.png',
-  subway: 'i/markets/subway_logo.png'
+  subway: 'i/markets/subway_logo.png',
 };

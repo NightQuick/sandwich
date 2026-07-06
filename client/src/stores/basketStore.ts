@@ -7,7 +7,7 @@ export const useBasketStore = defineStore('basket', {
   state: () => {
     return {
       orders: [] as Order[],
-      orderBoxVisible: false
+      orderBoxVisible: false,
     };
   },
   getters: {
@@ -19,30 +19,56 @@ export const useBasketStore = defineStore('basket', {
         });
         return total;
       } else return 0;
-    }
+    },
   },
   actions: {
-    addProduct(name: string, value: number, price: number, image: string = '', description: string = '', components?:Component) {
+    addProduct(
+      name: string,
+      value: number,
+      price: number,
+      image: string = '',
+      description: string = '',
+      components?: Component,
+    ) {
       const lineToChange: { name: string; price: number } = { name, price };
       for (let i = 0; i <= this.orders.length; i++) {
         let check = true;
-        
+
         if (this.orders.length === 0) {
           check = false;
         }
         if (this.orders[i]) {
           for (const elem in this.orders[i]) {
-            if (!(elem == 'image' || elem == 'description' || elem == 'value'||elem=='components'))
-              if (!(this.orders[i][elem as keyof Order] == lineToChange[elem as keyof typeof lineToChange])) {
+            if (!(
+              elem == 'image' ||
+              elem == 'description' ||
+              elem == 'value' ||
+              elem == 'components'
+            ))
+              if (
+                !(
+                  this.orders[i][elem as keyof Order] ==
+                  lineToChange[elem as keyof typeof lineToChange]
+                )
+              ) {
                 check = false;
               }
           }
-          if (components && this.orders[i].components){
-            for(const elem in this.orders[i].components){
-              if(this.orders[i].components![elem as keyof Component].length>0 || components[elem as keyof Component].length>0){
-              if(!(this.orders[i].components![elem as keyof Component] == components[elem as keyof Component])){
-                check =false;
-              }}
+          if (components && this.orders[i].components) {
+            for (const elem in this.orders[i].components) {
+              if (
+                this.orders[i].components![elem as keyof Component].length > 0 ||
+                components[elem as keyof Component].length > 0
+              ) {
+                if (
+                  !(
+                    this.orders[i].components![elem as keyof Component] ==
+                    components[elem as keyof Component]
+                  )
+                ) {
+                  check = false;
+                }
+              }
             }
           }
         } else check = false;
@@ -51,9 +77,9 @@ export const useBasketStore = defineStore('basket', {
           i = this.orders.length;
         }
         if (!check && i == this.orders.length) {
-          if (components){
-          this.orders.push({ name, price, value, image, description, components});
-        }else this.orders.push({ name, price, value, image, description}); 
+          if (components) {
+            this.orders.push({ name, price, value, image, description, components });
+          } else this.orders.push({ name, price, value, image, description });
           i = this.orders.length;
         }
       }
@@ -69,7 +95,12 @@ export const useBasketStore = defineStore('basket', {
         let check = true;
         for (const elem in this.orders[i]) {
           if (!(elem == 'image' || elem == 'description'))
-            if (!(this.orders[i][elem as keyof Order] == lineToChange[elem as keyof typeof lineToChange])) {
+            if (
+              !(
+                this.orders[i][elem as keyof Order] ==
+                lineToChange[elem as keyof typeof lineToChange]
+              )
+            ) {
               check = false;
             }
         }
@@ -88,14 +119,14 @@ export const useBasketStore = defineStore('basket', {
         () => {
           localStorage.setItem('basket', JSON.stringify({ orders: this.orders }));
         },
-        { deep: true }
+        { deep: true },
       );
     },
 
     getData() {
       return {
         orders: this.orders,
-        totalPrice: this.totalPrice
+        totalPrice: this.totalPrice,
       };
     },
 
@@ -113,6 +144,6 @@ export const useBasketStore = defineStore('basket', {
       }
       ordersApi.create(data);
       this.clearBasket();
-    }
-  }
+    },
+  },
 });

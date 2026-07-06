@@ -33,7 +33,13 @@ const footerIdHandler = () => {
     return 'modal-footer';
   }
 };
-const components = { size: 'Размер', bread: 'Хлеб', filling: 'Начинка', sauce: 'Соус', vegetable: 'Овощи' };
+const components = {
+  size: 'Размер',
+  bread: 'Хлеб',
+  filling: 'Начинка',
+  sauce: 'Соус',
+  vegetable: 'Овощи',
+};
 const ingredientSwitcherHandler = (newKey: string) => {
   currentIndex.value = settingsKeys.indexOf(newKey);
 };
@@ -50,8 +56,9 @@ const checkSandwichComponent = (component: string) => {
     });
   } else {
     if (
-      store.sandwichConfig.components[store.currentStep as keyof typeof store.sandwichConfig.components][0] ==
-      component
+      store.sandwichConfig.components[
+        store.currentStep as keyof typeof store.sandwichConfig.components
+      ][0] == component
     ) {
       result = true;
     } else {
@@ -63,14 +70,15 @@ const checkSandwichComponent = (component: string) => {
 const componentListHandler = (key: string) => {
   if (!settings[key as keyof typeof settings].multiple) {
     return (
-      store.sandwichConfig.components[key as keyof typeof store.sandwichConfig.components][1] ?? 'Не выбрано'
+      store.sandwichConfig.components[key as keyof typeof store.sandwichConfig.components][1] ??
+      'Не выбрано'
     );
   } else {
     const list: Array<string> = [];
     store.sandwichConfig.components[key as keyof typeof store.sandwichConfig.components].forEach(
       (component) => {
         list.push((component as Array<any>)[1]);
-      }
+      },
     );
     return list;
   }
@@ -80,24 +88,18 @@ const valueUpdate = (newValue: number) => {
   value.value = newValue;
 };
 function addToBasket() {
-  let components:Component={size:'',
-    bread:'',
-    vegetable:[],
-    sauce:[],
-    filling:[]
-  };
-  for( const elem in components){
+  let components: Component = { size: '', bread: '', vegetable: [], sauce: [], filling: [] };
+  for (const elem in components) {
     if (elem === 'vegetable' || elem === 'sauce' || elem === 'filling') {
-    for (const comp of store.sandwichConfig.components[elem]){
-      components[elem].push(comp[0]);
+      for (const comp of store.sandwichConfig.components[elem]) {
+        components[elem].push(comp[0]);
+      }
     }
-  }
-  if (elem === 'size') {
-  components.size = store.sandwichConfig.components.size[0];
-} else if (elem === 'bread') {
-  components.bread = store.sandwichConfig.components.bread[0];
-}
-
+    if (elem === 'size') {
+      components.size = store.sandwichConfig.components.size[0];
+    } else if (elem === 'bread') {
+      components.bread = store.sandwichConfig.components.bread[0];
+    }
   }
   const data = {
     name: store.sandwichConfig.name,
@@ -105,10 +107,17 @@ function addToBasket() {
     image: store.sandwichConfig?.image,
     value: value.value ?? 1,
     price: store.price,
-    components
+    components,
   };
   const basket = useBasketStore();
-  basket.addProduct(data.name, data.value, data.price, data.image, data.description, data.components);
+  basket.addProduct(
+    data.name,
+    data.value,
+    data.price,
+    data.image,
+    data.description,
+    data.components,
+  );
   close();
 }
 function close() {
