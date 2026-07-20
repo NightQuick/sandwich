@@ -29,7 +29,8 @@ docker compose -f docker-compose.yml up --build (prod)
 
 ## 2.Access to app:
 
-http://localhost/
+http://localhost/ (prod)
+http://localhost:5173/ (dev)
 
 ## 3.Shut down
 

@@ -1,9 +1,9 @@
 import Router from 'express';
-import {} from '../controllers/auth.js';
+import { loginUser, refreshSession } from '../controllers/auth.js';
 
 const router = Router();
 
-router.get('/ingredients/:category');
-router.get('/sandwiches/:category');
+router.get('/autorization/login', loginUser);
+router.get('/autorization/refreshToken', refreshSession);
 
 export default router;
