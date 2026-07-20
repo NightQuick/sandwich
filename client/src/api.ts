@@ -31,6 +31,11 @@ async function request(endpoint: string, options: RequestInit = {}) {
   }
 }
 export const dataApi = {
+  login: (email: string, password: string) =>
+    request(`/users/autorization/login`, {
+      method: 'POST',
+      body: JSON.stringify({ email, password }),
+    }),
   getAllIng: (category: string) => request(`/data/ingredients/${category}`),
   getAllPositions: (category: string) => request(`/data/sandwiches/${category}`),
 };

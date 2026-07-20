@@ -14,7 +14,15 @@ export async function loginUser(req: Request, res: Response) {
   const isValid = await bcrypt.compare(password, user.passwordHash);
   if (!isValid) return res.status(401).json({ error: 'Неверный логин или пароль' });
 
-  return generateJWT(user);
+  const {accessToken, refreshToken}=generateJWT(user)
+  res.cookie('refreshToken', refreshToken, {
+  httpOnly: true,
+  secure: true,
+  sameSite: 'strict',
+  maxAge: 7 * 24 * 60 * 60 * 1000, // 7 дней
+  path: '/api/auth'
+})
+  res.json({ accessToken, user: { email: user.email } });
 }
 
 export async function refreshSession(req: Request, res: Response) {

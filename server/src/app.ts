@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import { connectDB } from './db.js';
 import { ErrorRequestHandler } from 'express';
@@ -30,6 +31,7 @@ app.use((req, res, next) => {
 
 // 3. API маршруты
 app.use('/api/users', authRoutes);
+console.log('/api/users', authRoutes);
 app.use('/api/data', dataRoutes);
 app.use('/api/orders', ordersRoutes);
 app.use('/api/test', (req, res) => {

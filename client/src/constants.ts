@@ -37,6 +37,12 @@ export const settings = {
   },
 };
 
+export interface UserProfile{
+  id: string
+  email: string
+  role?: 'user' | 'admin'
+  avatarUrl?: string
+}
 export interface Ingredient {
   name: string;
   description?: string;

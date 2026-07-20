@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { useAuthStore } from '@/stores/sessionStore';
 import { Ref, ref } from 'vue';
 
+const sessionStore = useAuthStore();
 const currentType = ref('login');
 // const tableRef = ref<HTMLElement | null>(null);
 
@@ -49,7 +51,9 @@ function validatePasswordField(input: HTMLInputElement) {
   }
 }
 
-function handleAuthSubmit() {}
+function handleAuthSubmit() {
+  sessionStore.login(email.value, password.value);
+}
 
 function handleRegisterSubmit() {
   console.log(email, password);
