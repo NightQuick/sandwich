@@ -1,9 +1,11 @@
 import express from 'express';
-import { connectDB } from "./db.js";
+import { connectDB } from './db.js';
 import { ErrorRequestHandler } from 'express';
 import cors from 'cors';
 import dataRoutes from './routes/data.js';
 import ordersRoutes from './routes/orders.js';
+import authRoutes from './routes/auth.js';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 const PORT = 3000;
@@ -11,11 +13,12 @@ const PORT = 3000;
 // 1. Базовые middleware
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || 'http://localhost',  // Изменено с 3000 на 80
-    credentials: true
-  })
+    origin: process.env.CORS_ORIGIN || 'http://localhost',
+    credentials: true,
+  }),
 );
 
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -26,6 +29,7 @@ app.use((req, res, next) => {
 });
 
 // 3. API маршруты
+app.use('/api/users', authRoutes);
 app.use('/api/data', dataRoutes);
 app.use('/api/orders', ordersRoutes);
 app.use('/api/test', (req, res) => {
@@ -43,10 +47,10 @@ connectDB()
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
   })
   .catch((err) => {
-    console.error("Failed to connect to MongoDB", err);
+    console.error('Failed to connect to MongoDB', err);
     process.exit(1);
   });
-  
+
 app.use(errorHandler);
 
 app.listen(PORT, () => {
