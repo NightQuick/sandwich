@@ -40,6 +40,21 @@ sessionStore.refreshToken();
   </div>
 </template>
 <style>
+#logged-button {
+  float: right;
+  width: 300px;
+  margin-right: 10px;
+  margin-top: 5px;
+  border: 0;
+  border-radius: 3px;
+  background-color: var(--color-brand);
+  color: white;
+  text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+  font-size: 20px;
+  box-shadow:
+    0px 0px 5px rgba(0, 0, 0, 0.5),
+    0px 2px 0px rgba(0, 0, 0, 0.5);
+}
 #login-button {
   float: right;
   width: 200px;
