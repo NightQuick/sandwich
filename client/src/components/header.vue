@@ -3,7 +3,9 @@ import { ref, watch } from 'vue';
 import LoginModal from './loginModal.vue';
 import { useBodyScrollLock } from '@script/composables/useBodyScrollLock.js';
 import { useClickOutside } from '@script/composables/useClickOutside.js';
+import { useAuthStore } from '@/stores/sessionStore.js';
 
+const authStore = useAuthStore();
 const openModal = ref(false);
 function updateVisibility(newValue: boolean) {
   openModal.value = newValue;
@@ -21,14 +23,20 @@ const dropdownRef = ref<HTMLElement | null>(null);
 useClickOutside(dropdownRef, () => {
   openModal.value = false;
 });
+
+const sessionStore = useAuthStore();
+sessionStore.refreshToken();
 </script>
 <template>
   <header>
     <span id="heading"> СДЕЛАЙТЕ ЗАКАЗ НАПРЯМУЮ ИЗ РЕСТОРАНА </span>
-    <button id="login-button" @click="updateVisibility(true)">Войти</button>
+    <button id="login-button" @click="updateVisibility(true)" v-if="!authStore.user">Войти</button>
+    <button id="logged-button" v-if="authStore.user" @click="authStore.logout">
+      {{ authStore.user.email }}
+    </button>
   </header>
   <div ref="dropdownRef">
-    <LoginModal v-if="openModal" id="login-modal"></LoginModal>
+    <LoginModal v-if="openModal" id="login-modal" @login="updateVisibility"></LoginModal>
   </div>
 </template>
 <style>

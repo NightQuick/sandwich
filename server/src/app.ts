@@ -58,3 +58,4 @@ app.use(errorHandler);
 app.listen(PORT, () => {
   console.log(`Server works on http://localhost:${PORT}`);
 });
+console.log('CORS_ORIGIN: ', process.env.CORS_ORIGIN);

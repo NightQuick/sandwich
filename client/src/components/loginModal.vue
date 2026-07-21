@@ -1,9 +1,12 @@
 <script setup lang="ts">
+import { dataApi } from '@/api';
 import { useAuthStore } from '@/stores/sessionStore';
+import { checkLogin } from '@script/login';
 import { Ref, ref } from 'vue';
 
 const sessionStore = useAuthStore();
 const currentType = ref('login');
+
 // const tableRef = ref<HTMLElement | null>(null);
 
 const email: Ref<string> = ref('');
@@ -50,13 +53,21 @@ function validatePasswordField(input: HTMLInputElement) {
     passwordError.value = '';
   }
 }
-
-function handleAuthSubmit() {
-  sessionStore.login(email.value, password.value);
+const emit = defineEmits<{
+  login: [visibility: false];
+}>();
+async function handleAuthSubmit() {
+  await sessionStore.login(email.value, password.value);
+  if (sessionStore.user) {
+    emit('login', false);
+  }
 }
 
-function handleRegisterSubmit() {
-  console.log(email, password);
+async function handleRegisterSubmit() {
+  await sessionStore.register(email.value, password.value);
+  if (sessionStore.user) {
+    emit('login', false);
+  }
 }
 </script>
 
